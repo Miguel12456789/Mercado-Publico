@@ -669,6 +669,13 @@
                             paisSelect.addEventListener('change', atualizarDistritos);
                             distritoSelect.addEventListener('change', preencherConcelhos);
 
+
+                            document.querySelector('#search-contracts-button').addEventListener('click', () => {
+                                const resultsTable = document.querySelector('#results-table');
+                                resultsTable.style.display = 'block';
+                                resultsTable.scrollIntoView({ behavior: 'smooth' });
+                            });
+
                         });
                     </script>
 

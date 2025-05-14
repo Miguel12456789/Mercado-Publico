@@ -51,17 +51,21 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr data-contract-id="4">
-                                    <td>${c["Objeto do contrato"]}</td>
-                                    <td>${c["Tipo de procedimento"]}</td>
-                                    <td>${c["Entidades adjudicantes"]}</td>
-                                    <td>${c["Entidades adjudicatárias"]}</td>
-                                    <td>${c["Preço contratual"]}</td>
-                                    <td>${c["Data da publicação"]}</td>
-                                    <td><button class="details-button" aria-label="Ver detalhes" data-contract-id="4"><i
-                                                class="fas fa-plus-circle"></i></button>
-                                    </td>
-                                </tr>
+                                <% contracts.forEach(contract => { %>
+                                    <tr>
+                                        <td><%= contract.objetoContrato %></td>
+                                        <td><%= contract.tipoProcedimento %></td>
+                                        <td><%= contract.entidadeAdjudicante %></td>
+                                        <td><%= contract.entidadeAdjudicataria %></td>
+                                        <td><%= contract.precoContratual %></td>
+                                        <td><%= new Date(contract.dataPublicacao).toLocaleDateString() %></td>
+                                        <td>
+                                            <button class="details-button" aria-label="Ver detalhes">
+                                                <i class="fas fa-plus-circle"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                <% }); %>
                             </tbody>
                         </table>
                     </div>
@@ -122,7 +126,11 @@
 
                     spanData.textContent = `${hoje.getDate()} ${meses[hoje.getMonth()]} ${hoje.getFullYear()}`;
                 });
+
+
             });
+
+
         </script>
 </body>
 

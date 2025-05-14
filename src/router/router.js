@@ -5,9 +5,7 @@ const contractsController = require('../controller/contractsController');
 
 router.get("/", navegationController.home);
 
-router.get("/base_gov", navegationController.base_gov, contractsController.contentGet);
-
-
+router.get("/base_gov", contractsController.contractsGet);
 router.get("/estatisticas_setor_publico", navegationController.estatisticas_setor_publico);
 router.get("/estatisticas_setor_privado", navegationController.estatisticas_setor_privado);
 router.get("/oportunidade_contratacao_publica", navegationController.oportunidade_contratacao_publica);
