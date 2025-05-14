@@ -1,10 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const navegationController = require('./navegationController');
+const contractsController = require('../controller/contractsController');
 
 router.get("/", navegationController.home);
 
-router.get("/base_gov", navegationController.base_gov);
+router.get("/base_gov", navegationController.base_gov, contractsController.contentGet);
 
 
 router.get("/estatisticas_setor_publico", navegationController.estatisticas_setor_publico);
