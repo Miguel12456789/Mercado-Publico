@@ -51,22 +51,28 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <% contracts.forEach(contract => { %>
-                                    <tr>
-                                        <td><%= contract.objetoContrato %></td>
-                                        <td><%= contract.tipoProcedimento %></td>
-                                        <td><%= contract.entidadeAdjudicante %></td>
-                                        <td><%= contract.entidadeAdjudicataria %></td>
-                                        <td><%= contract.precoContratual %></td>
-                                        <td><%= new Date(contract.dataPublicacao).toLocaleDateString() %></td>
+                                <% if (contracts && contracts.length > 0) { %>
+                                    <% contracts.forEach((contract, index) => { %>
+                                      <tr>
+                                        <td><%= contract.Documentos || 'N/A' %></td>
+                                        <td><%= contract.tipoProcedimento || 'N/A' %></td>
+                                        <td><%= contract.entidadeAdjudicante || 'N/A' %></td>
+                                        <td><%= contract.entidadeAdjudicataria || 'N/A' %></td>
+                                        <td><%= contract.precoContratual ? contract.precoContratual + ' €' : 'N/A' %></td>
+                                        <td><%= contract.dataPublicacao ? new Date(contract.dataPublicacao).toLocaleDateString('pt-PT') : 'N/A' %></td>
                                         <td>
-                                            <button class="details-button" aria-label="Ver detalhes">
-                                                <i class="fas fa-plus-circle"></i>
-                                            </button>
+                                          <button class="details-button" aria-label="Ver detalhes" data-contract-id="<%= index %>">
+                                            <i class="fas fa-plus-circle"></i>
+                                          </button>
                                         </td>
+                                      </tr>
+                                    <% }); %>
+                                  <% } else { %>
+                                    <tr>
+                                      <td colspan="7" class="no-results">Nenhum contrato encontrado. Tente outros critérios de pesquisa.</td>
                                     </tr>
-                                <% }); %>
-                            </tbody>
+                                  <% } %>
+                              </tbody>
                         </table>
                     </div>
                 </div>
