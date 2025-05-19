@@ -201,132 +201,46 @@
         <%- include('components/button') %>
 
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                // Initialize Lucide icons
-                if (typeof lucide !== 'undefined') {
-                    lucide.createIcons();
-                } else {
-                    console.warn('Lucide is not globally defined. Ensure Lucide library is properly included.');
-                    window.lucide = { createIcons: function () { } };
-                }
+  document.addEventListener('DOMContentLoaded', () => {
+    // Initialize Lucide icons
+    (window.lucide || (
+      console.warn('Lucide is not globally defined. Ensure Lucide library is properly included.'),
+      window.lucide = { createIcons: () => {} }
+    )).createIcons();
 
-                // Dropdown functionality
-                const dropdownContainer = document.getElementById('contracts-dropdown');
-                const dropdownButton = document.getElementById('dropdown-button');
-                const dropdownText = document.getElementById('selected-contract');
-                const dropdownMenu = document.getElementById('dropdown-menu');
-                const dropdownItems = document.querySelectorAll('.dropdown-item');
+    // Dropdown functionality
+    const dropdownContainer = document.getElementById('contracts-dropdown');
+    const dropdownButton = document.getElementById('dropdown-button');
+    if (dropdownButton && dropdownContainer) {
+      dropdownButton.addEventListener('click', e => {
+        e.stopPropagation();
+        const active = dropdownContainer.classList.toggle('active');
+        dropdownButton.setAttribute('aria-expanded', active.toString());
+      });
+    }
 
-                // Toggle dropdown menu when clicking on the button
-                if (dropdownButton) {
-                    dropdownButton.addEventListener('click', function (e) {
-                        e.stopPropagation();
-                        dropdownContainer.classList.toggle('active');
+    // Advanced Search Form functionality
+    const advancedSearchBtn = document.getElementById('advanced-search-btn');
+    const advancedSearchForm = document.getElementById('advanced-search-form');
+    if (advancedSearchBtn && advancedSearchForm) {
+      advancedSearchBtn.addEventListener('click', () => {
+        advancedSearchForm.classList.toggle('visible');
+        if (advancedSearchForm.classList.contains('visible')) {
+          setTimeout(() => {
+            advancedSearchForm.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }, 100);
+        }
+      });
+    }
 
-                        // Update ARIA attributes
-                        const isExpanded = dropdownContainer.classList.contains('active');
-                        dropdownButton.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
-                    });
-                }
+    // Clear selection button functionality
+    document.querySelector('.clear-selection-button')?.addEventListener('click', () => {
+      document.querySelectorAll('.form-select').forEach(select => select.selectedIndex = 0);
+      document.querySelectorAll('.form-input').forEach(input => input.value = '');
+    });
+  });
+</script>
 
-                // Close dropdown when clicking outside
-                document.addEventListener('click', function () {
-                    if (dropdownContainer) {
-                        dropdownContainer.classList.remove('active');
-                        if (dropdownButton) {
-                            dropdownButton.setAttribute('aria-expanded', 'false');
-                        }
-                    }
-                });
-
-                // Prevent closing when clicking inside the dropdown menu
-                if (dropdownMenu) {
-                    dropdownMenu.addEventListener('click', function (e) {
-                        e.stopPropagation();
-                    });
-                }
-
-                // Select dropdown item
-                dropdownItems.forEach(function (item) {
-                    item.addEventListener('click', function () {
-                        const value = this.getAttribute('data-value');
-                        if (dropdownText) {
-                            dropdownText.textContent = value;
-                        }
-                        if (dropdownContainer) {
-                            dropdownContainer.classList.remove('active');
-                        }
-                        if (dropdownButton) {
-                            dropdownButton.setAttribute('aria-expanded', 'false');
-                        }
-
-                        // You could trigger an action here based on selection
-                        console.log('Selected:', value);
-                    });
-                });
-
-                // Close dropdown when pressing Escape key
-                document.addEventListener('keydown', function (e) {
-                    if (e.key === 'Escape' && dropdownContainer) {
-                        dropdownContainer.classList.remove('active');
-                        if (dropdownButton) {
-                            dropdownButton.setAttribute('aria-expanded', 'false');
-                        }
-                    }
-                });
-
-                // Advanced Search Form functionality
-                const advancedSearchBtn = document.getElementById('advanced-search-btn');
-                const advancedSearchForm = document.getElementById('advanced-search-form');
-
-                if (advancedSearchBtn && advancedSearchForm) {
-                    advancedSearchBtn.addEventListener('click', function () {
-                        advancedSearchForm.classList.toggle('visible');
-
-                        // Scroll to form if it's now visible
-                        if (advancedSearchForm.classList.contains('visible')) {
-                            setTimeout(function () {
-                                advancedSearchForm.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                            }, 100);
-                        }
-                    });
-                }
-
-                // Clear selection button functionality
-                const clearSelectionBtn = document.querySelector('.clear-selection-button');
-
-                if (clearSelectionBtn) {
-                    clearSelectionBtn.addEventListener('click', function () {
-                        // Reset all selects to first option
-                        const selects = document.querySelectorAll('.form-select');
-                        selects.forEach(select => {
-                            select.selectedIndex = 0;
-                        });
-
-                        // Clear all input fields
-                        const inputs = document.querySelectorAll('.form-input');
-                        inputs.forEach(input => {
-                            input.value = '';
-                        });
-                    });
-                }
-
-                // Make dropdown accessible via keyboard
-                if (dropdownButton) {
-                    dropdownButton.addEventListener('keydown', function (e) {
-                        if (e.key === 'Enter' || e.key === ' ') {
-                            e.preventDefault();
-                            if (dropdownContainer) {
-                                dropdownContainer.classList.toggle('active');
-
-                                const isExpanded = dropdownContainer.classList.contains('active');
-                                dropdownButton.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
-                            }
-                        }
-                    });
-                }
-            });
-        </script>
 </body>
 
 

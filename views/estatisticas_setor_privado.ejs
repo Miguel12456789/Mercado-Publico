@@ -156,91 +156,18 @@
     <%- include('components/button') %>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Initialize Lucide icons
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
-            } else {
-                console.warn('Lucide is not globally defined. Ensure Lucide library is properly included.');
-                window.lucide = { createIcons: function () { } };
-            }
+  document.addEventListener('DOMContentLoaded', () => {
+    // Initialize Lucide icons if available
+    (window.lucide || (console.warn('Lucide is not globally defined. Ensure Lucide library is properly included.'), window.lucide = { createIcons: () => {} })).createIcons();
 
-            // Clear selection button functionality
-            const clearSelectionBtn = document.querySelector('.clear-selection-button');
+    // Clear selection button functionality
+    document.querySelector('.clear-selection-button')?.addEventListener('click', () => {
+      document.querySelectorAll('.form-select').forEach(select => select.selectedIndex = 0);
+      document.querySelectorAll('.form-input').forEach(input => input.value = '');
+    });
+  });
+</script>
 
-            if (clearSelectionBtn) {
-                clearSelectionBtn.addEventListener('click', function () {
-                    // Reset all selects to first option
-                    const selects = document.querySelectorAll('.form-select');
-                    selects.forEach(select => {
-                        select.selectedIndex = 0;
-                    });
-
-                    // Clear all input fields
-                    const inputs = document.querySelectorAll('.form-input');
-                    inputs.forEach(input => {
-                        input.value = '';
-                    });
-                });
-            }
-
-            // Function to update districts based on selected region
-            document.querySelectorAll('.custom-select select').forEach(select => {
-                if (select.previousElementSibling && select.previousElementSibling.textContent === 'Região') {
-                    select.addEventListener('change', function () {
-                        const regiao = this.value;
-                        const distritos = document.querySelectorAll('.custom-select select')[2]; // Terceiro select (Distritos)
-
-                        // Limpa as opções atuais
-                        distritos.innerHTML = "<option>Todos</option>";
-
-                        // Se a região for "Norte", adiciona distritos do norte
-                        if (regiao === "Norte") {
-                            const distritosNorte = ["Porto", "Braga", "Viana do Castelo", "Vila Real", "Bragança"];
-                            distritosNorte.forEach((distrito) => {
-                                const option = document.createElement("option");
-                                option.textContent = distrito;
-                                distritos.appendChild(option);
-                            });
-                        }
-                        // Se a região for "Centro", adiciona distritos do centro
-                        else if (regiao === "Centro") {
-                            const distritosCentro = ["Aveiro", "Viseu", "Coimbra", "Leiria", "Castelo Branco", "Guarda"];
-                            distritosCentro.forEach((distrito) => {
-                                const option = document.createElement("option");
-                                option.textContent = distrito;
-                                distritos.appendChild(option);
-                            });
-                        }
-                        // Se a região for "Lisboa", adiciona distritos de Lisboa
-                        else if (regiao === "Lisboa") {
-                            const distritosLisboa = ["Lisboa", "Setúbal"];
-                            distritosLisboa.forEach((distrito) => {
-                                const option = document.createElement("option");
-                                option.textContent = distrito;
-                                distritos.appendChild(option);
-                            });
-                        }
-                        // Se a região for "Alentejo", adiciona distritos do Alentejo
-                        else if (regiao === "Alentejo") {
-                            const distritosAlentejo = ["Portalegre", "Évora", "Beja"];
-                            distritosAlentejo.forEach((distrito) => {
-                                const option = document.createElement("option");
-                                option.textContent = distrito;
-                                distritos.appendChild(option);
-                            });
-                        }
-                        // Se a região for "Algarve", adiciona Faro
-                        else if (regiao === "Algarve") {
-                            const option = document.createElement("option");
-                            option.textContent = "Faro";
-                            distritos.appendChild(option);
-                        }
-                    });
-                }
-            });
-        });
-    </script>
 </body>
 
 </html>
