@@ -606,6 +606,29 @@ main {
   background-color: #4d8836;
 }
 
+.phone-input-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.country-code {
+    background-color: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    border-right: none;
+    border-radius: 0.375rem 0 0 0.375rem;
+    padding: 0.75rem;
+    font-size: 0.9rem;
+    color: #4b5563;
+    font-weight: 500;
+}
+
+.phone-input {
+    border-radius: 0 0.375rem 0.375rem 0;
+    flex: 1;
+}
+
+
 /* CAPTCHA */
 .captcha-container {
   margin-top: 1.5rem;

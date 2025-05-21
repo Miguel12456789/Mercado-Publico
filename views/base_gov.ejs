@@ -57,7 +57,7 @@
                 <button type="submit" id="search-contracts-button" class="search-button">
                     <i data-lucide="search" class="icon-small"></i>
                     <span>Pesquisar</span>
-                  </button>
+                </button>
             </div>
 
             <!-- Advanced Search Form -->
@@ -293,13 +293,13 @@
                     <form id="downloadForm">
                         <!-- Nome -->
                         <div class="overlay-form-group">
-                            <label for="nome" class="form-label">Nome</label>
+                            <label for="nome" class="form-label">Nome*</label>
                             <input type="text" id="nome" name="nome" class="form-input" required>
                         </div>
 
                         <!-- Sobrenome -->
                         <div class="overlay-form-group">
-                            <label for="sobrenome" class="form-label">Sobrenome</label>
+                            <label for="sobrenome" class="form-label">Sobrenome*</label>
                             <input type="text" id="sobrenome" name="sobrenome" class="form-input" required>
                         </div>
 
@@ -312,7 +312,10 @@
                         <!-- Telefone Profissional -->
                         <div class="overlay-form-group">
                             <label for="telefone" class="form-label">Telefone Profissional</label>
-                            <input type="tel" id="telefone" name="telefone" class="form-input" required>
+                            <div class="phone-input-container">
+                                <div class="country-code">+351</div>
+                                <input type="tel" id="telefone" name="telefone" class="form-input phone-input" required>
+                            </div>
                         </div>
 
                         <!-- Setor de Atividade Profissional -->
@@ -677,7 +680,7 @@
                                 resultsTable.scrollIntoView({ behavior: 'smooth' });
                             });
 
-
+                            
                         });
                     </script>
 
