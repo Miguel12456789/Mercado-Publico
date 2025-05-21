@@ -7,15 +7,8 @@
   <title>Notificação</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body {
-      background-color: #f8f9fa;
-      padding: 20px;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #333;
-      line-height: 1.6;
-    }
-
-    .notificacao-container {
+    /* Scoped notification styles to avoid conflicts */
+    .custom-notif__container {
       position: fixed;
       bottom: 20px;
       left: 50%;
@@ -23,9 +16,13 @@
       z-index: 999;
       width: calc(100% - 40px);
       max-width: 1140px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      opacity: 0; /* Start hidden for animation */
+      animation: custom-notif-fadeIn 0.5s ease forwards;
+      animation-delay: 0.5s; /* Small delay before showing */
     }
 
-    .notificacao {
+    .custom-notif__wrapper {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -34,17 +31,18 @@
       background-color: #ffffff;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       transition: all 0.3s ease;
-      animation: slideIn 0.5s ease forwards;
       border-left: 4px solid #3c6c2a;
+      line-height: 1.6;
+      color: #333;
     }
 
-    .notificacao-conteudo {
+    .custom-notif__content {
       display: flex;
       align-items: center;
       flex: 1;
     }
 
-    .notificacao .icone {
+    .custom-notif__icon {
       margin-right: 16px;
       font-size: 20px;
       color: #3c6c2a;
@@ -55,94 +53,181 @@
       height: 40px;
       background-color: rgba(76, 175, 80, 0.1);
       border-radius: 50%;
+      flex-shrink: 0;
     }
 
-    .notificacao .texto {
+    .custom-notif__text {
       font-size: 15px;
       color: #555;
     }
 
-    .notificacao a {
+    .custom-notif__link {
       color: #3c6c2a;
       text-decoration: none;
       font-weight: 600;
       transition: color 0.2s;
+      display: inline-block;
+      padding: 2px 0;
     }
 
-    .notificacao a:hover {
+    .custom-notif__link:hover {
       text-decoration: underline;
     }
 
-    .fechar-btn {
+    .custom-notif__link:focus {
+      outline: 2px solid #3c6c2a;
+      outline-offset: 2px;
+    }
+
+    .custom-notif__close {
       background: none;
       border: none;
       color: #aaa;
       font-size: 20px;
       cursor: pointer;
-      padding: 5px 10px;
+      padding: 8px;
+      margin-left: 12px;
       transition: color 0.2s;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
     }
 
-    .fechar-btn:hover {
+    .custom-notif__close:hover {
       color: #666;
+      background-color: rgba(0, 0, 0, 0.05);
     }
 
-    @keyframes slideIn {
+    .custom-notif__close:focus {
+      outline: 2px solid #3c6c2a;
+      outline-offset: 2px;
+    }
+
+    /* Scoped animations to avoid conflicts */
+    @keyframes custom-notif-fadeIn {
       from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translate(-50%, 20px);
       }
 
       to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translate(-50%, 0);
+      }
+    }
+
+    /* Scoped responsive styles */
+    @media (max-width: 992px) {
+      .custom-notif__container {
+        max-width: 90%;
       }
     }
 
     @media (max-width: 768px) {
-      .notificacao {
-        flex-direction: column;
-        align-items: flex-start;
+      .custom-notif__wrapper {
         padding: 14px 16px;
       }
 
-      .notificacao .icone {
+      .custom-notif__content {
+        flex-direction: row;
+        align-items: flex-start;
+      }
+
+      .custom-notif__icon {
         width: 32px;
         height: 32px;
         font-size: 16px;
         margin-right: 12px;
       }
 
-      .notificacao .texto {
+      .custom-notif__text {
         font-size: 14px;
       }
+    }
 
-      .fechar-btn {
+    @media (max-width: 576px) {
+      .custom-notif__container {
+        bottom: 10px;
+        width: calc(100% - 20px);
+      }
+
+      .custom-notif__wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .custom-notif__content {
+        margin-bottom: 10px;
+        width: 100%;
+      }
+
+      .custom-notif__close {
         align-self: flex-end;
+        margin-top: -46px; /* Position the close button at the top right */
+      }
+    }
+
+    /* For very small screens */
+    @media (max-width: 360px) {
+      .custom-notif__wrapper {
+        padding: 12px;
+      }
+
+      .custom-notif__icon {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+        margin-right: 10px;
+      }
+
+      .custom-notif__text {
+        font-size: 13px;
+      }
+    }
+
+    /* For landscape orientation on mobile */
+    @media (max-height: 500px) and (orientation: landscape) {
+      .custom-notif__container {
+        max-width: 80%;
+      }
+
+      .custom-notif__wrapper {
+        flex-direction: row;
+      }
+
+      .custom-notif__content {
+        margin-bottom: 0;
+      }
+
+      .custom-notif__close {
+        margin-top: 0;
       }
     }
   </style>
 </head>
 
 <body>
-
-  <div class="notificacao-container" id="notificacao-container" style="display: none;">
-    <div class="notificacao">
-      <div class="notificacao-conteudo">
-        <div class="icone">
+  <!-- Notification that displays automatically -->
+  <div class="custom-notif__container" id="notificacao-container">
+    <div class="custom-notif__wrapper">
+      <div class="custom-notif__content">
+        <div class="custom-notif__icon">
           <i class="fas fa-envelope"></i>
         </div>
-        <div class="texto">
+        <div class="custom-notif__text">
           Deseja fazer download desta informação?
-          <a id="openPopupBtn">Clique aqui</a> e após inserir os seus dados iniciar-se-á o download.
+          <a class="custom-notif__link" id="openPopupBtn" >Clique aqui</a> e após inserir os seus dados iniciar-se-á o download.
         </div>
       </div>
-      <button class="fechar-btn" onclick="document.getElementById('notificacao-container').style.display='none'">
+      <button class="custom-notif__close" onclick="document.getElementById('notificacao-container').style.display='none'">
         &times;
       </button>
     </div>
   </div>
-
 </body>
 
 </html>
