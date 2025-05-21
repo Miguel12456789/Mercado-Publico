@@ -292,15 +292,18 @@
                 <div id="downloadStep1" class="download-step active">
                     <form id="downloadForm">
                         <!-- Nome -->
-                        <div class="overlay-form-group">
-                            <label for="nome" class="form-label">Nome*</label>
-                            <input type="text" id="nome" name="nome" class="form-input" required>
-                        </div>
+                        <div class="name-fields">
+                            <!-- Nome -->
+                            <div class="overlay-form-group">
+                                <label for="nome" class="form-label">Nome*</label>
+                                <input type="text" id="nome" name="nome" class="form-input" required>
+                            </div>
 
-                        <!-- Sobrenome -->
-                        <div class="overlay-form-group">
-                            <label for="sobrenome" class="form-label">Sobrenome*</label>
-                            <input type="text" id="sobrenome" name="sobrenome" class="form-input" required>
+                            <!-- Sobrenome -->
+                            <div class="overlay-form-group">
+                                <label for="sobrenome" class="form-label">Sobrenome*</label>
+                                <input type="text" id="sobrenome" name="sobrenome" class="form-input" required>
+                            </div>
                         </div>
 
                         <!-- E-mail Profissional -->
@@ -323,20 +326,45 @@
                             <label for="setor" class="form-label">Setor de Atividade Profissional</label>
                             <select id="setor" name="setor" class="form-select" required>
                                 <option value="" disabled selected>Selecione um setor</option>
-                                <option value="01">01 - Agricultura, produção animal, caça e atividades dos serviços
-                                    relacionados</option>
-                                <option value="02">02 - Silvicultura e exploração florestal</option>
-                                <option value="03">03 - Pesca e aquicultura</option>
-                                <option value="05">05 - Extração de hulha e lenhite</option>
-                                <option value="06">06 - Extração de petróleo bruto e gás natural</option>
-                                <option value="07">07 - Extração e preparação de minérios metálicos</option>
-                                <option value="08">08 - Outras indústrias extrativas</option>
-                                <option value="09">09 - Atividades dos serviços relacionados com as indústrias
-                                    extrativas</option>
-                                <option value="10">10 - Indústrias alimentares</option>
+                                <option value="01">01 - Setor Público </option>
+                                <option value="02">02 - Setor Privado</option>
                             </select>
                         </div>
 
+                        <!-- Setor de Atividade Profissional -->
+                        <div class="overlay-form-group">
+                            <label for="setor" class="form-label">Setor de Atividade Profissional</label>
+                            <select id="setor" name="setor" class="form-select" required>
+                                <option value="" disabled selected>Selecione um setor</option>
+                                <option value="1">Agricultura, produção animal, caça, floresta e pesca</option>
+                                <option value="2">Indústrias extractivas</option>
+                                <option value="3">Indústrias transformadoras</option>
+                                <option value="4">Electricidade, gás, vapor, água quente e fria e ar frio</option>
+                                <option value="5">Captação, tratamento e distribuição de água; saneamento, gestão de
+                                    resíduos e despoluição</option>
+                                <option value="6">Construção</option>
+                                <option value="7">Comércio por grosso e a retalho; reparação de veículos automóveis e
+                                    motociclos</option>
+                                <option value="8">Transportes e armazenagem</option>
+                                <option value="9">Alojamento, restauração e similares</option>
+                                <option value="10">Actividades de informação e de comunicação</option>
+                                <option value="11">Actividades financeiras e de seguros</option>
+                                <option value="12">Actividades imobiliárias</option>
+                                <option value="13">Actividades de consultoria, científicas, técnicas e similares
+                                </option>
+                                <option value="14">Actividades administrativas e dos serviços de apoio</option>
+                                <option value="15">Administração Pública e Defesa; Segurança Social Obrigatória</option>
+                                <option value="16">Educação</option>
+                                <option value="17">Actividades de saúde humana e apoio social</option>
+                                <option value="18">Actividades artísticas, de espectáculos, desportivas e recreativas
+                                </option>
+                                <option value="19">Outras actividades de serviços</option>
+                                <option value="20">Actividades das famílias empregadoras de pessoal doméstico e
+                                    actividades de produção das famílias para uso próprio</option>
+                                <option value="21">Actividades dos organismos internacionais e outras instituições
+                                    extra-territoriais</option>
+                            </select>
+                        </div>
                         <!-- Formato de Download -->
                         <div class="download-format-group">
                             <label class="form-label">Em que formato pretende efetuar o download:</label>
@@ -680,7 +708,7 @@
                                 resultsTable.scrollIntoView({ behavior: 'smooth' });
                             });
 
-                            
+
                         });
                     </script>
 

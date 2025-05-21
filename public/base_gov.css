@@ -480,7 +480,7 @@ main {
   border-radius: 8px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
   width: 90%;
-  max-width: 500px;
+  max-width: 600px;
   padding: 2rem;
   position: relative;
   animation: fadeIn 0.3s ease;
@@ -628,6 +628,15 @@ main {
     flex: 1;
 }
 
+.name-fields {
+  display: flex;
+  gap: 1rem; /* Espaço entre Nome e Sobrenome */
+}
+
+.name-fields .overlay-form-group {
+  flex: 1; /* Faz os campos terem o mesmo tamanho */
+  margin-bottom: 1.25rem; /* Preserva o espaçamento inferior */
+}
 
 /* CAPTCHA */
 .captcha-container {
