@@ -51,42 +51,114 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Função para mudar página
-            function changePage(page) {
+            // Função para carregar dados via AJAX
+            function loadContracts(page, limit) {
                 const url = new URL(window.location);
                 url.searchParams.set('page', page);
-                window.location.href = url.toString();
-            }
-
-            // Função para mudar limite de itens por página
-            function changeLimit(limit) {
-                const url = new URL(window.location);
                 url.searchParams.set('limit', limit);
-                url.searchParams.set('page', 1); // Reset para primeira página
-                window.location.href = url.toString();
+
+                fetch(url.toString(), {
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        // Atualizar a tabela
+                        updateTable(data.contracts);
+                        // Atualizar a paginação
+                        updatePagination(data.pagination);
+                    })
+                    .catch(error => console.error('Error:', error));
             }
 
-            // Event listeners para botões de página
-            document.querySelectorAll('.page-number, .page-button').forEach(button => {
-                button.addEventListener('click', function () {
-                    if (!this.disabled && this.dataset.page) {
-                        changePage(this.dataset.page);
-                    }
-                });
-            });
+            // Função para atualizar a tabela
+            function updateTable(contracts) {
+                const tbody = document.querySelector('.results-table tbody');
+                tbody.innerHTML = '';
+
+                if (contracts.length > 0) {
+                    contracts.forEach((contract, index) => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                        <td>${contract.tiposContrato || 'N/A'}</td>
+                        <td>${contract.tipoProcedimento || 'N/A'}</td>
+                        <td>${contract.entidadesAdjudicantes && contract.entidadesAdjudicantes.length > 0 ? contract.entidadesAdjudicantes[0].nome || contract.entidadesAdjudicantes[0] : 'N/A'}</td>
+                        <td>${contract.entidadesAdjudicatarias && contract.entidadesAdjudicatarias.length > 0 ? contract.entidadesAdjudicatarias[0].nome || contract.entidadesAdjudicatarias[0] : 'N/A'}</td>
+                        <td>${contract.precoContratual || 'N/A'}</td>
+                        <td>${contract.dataPublicacao ? new Date(contract.dataPublicacao).toLocaleDateString('pt-PT') : 'N/A'}</td>
+                        <td>
+                            <button class="details-button" aria-label="Ver detalhes" data-contract-id="${index}">
+                                <i class="fas fa-plus-circle"></i>
+                            </button>
+                        </td>
+                    `;
+                        tbody.appendChild(row);
+                    });
+                } else {
+                    const row = document.createElement('tr');
+                    row.innerHTML = '<td colspan="7" class="no-results">Nenhum contrato encontrado. Tente outros critérios de pesquisa.</td>';
+                    tbody.appendChild(row);
+                }
+            }
+
+            // Função para atualizar a paginação
+            function updatePagination(pagination) {
+                // Atualizar o contador
+                document.getElementById('count-number').textContent = pagination.totalContracts;
+
+                // Atualizar o texto "Mostrando X-Y de Z registros"
+                document.getElementById('showing-entries').textContent =
+                    `Mostrando ${pagination.startIndex}-${pagination.endIndex} de ${pagination.totalContracts} registros`;
+
+                // Atualizar o dropdown de itens por página
+                document.getElementById('items-select').value = pagination.limit;
+
+                // Atualizar os botões de página
+                const pageNumbers = document.getElementById('page-numbers');
+                pageNumbers.innerHTML = '';
+
+                const startPage = Math.max(1, pagination.currentPage - 2);
+                const endPage = Math.min(pagination.totalPages, pagination.currentPage + 2);
+
+                for (let i = startPage; i <= endPage; i++) {
+                    const button = document.createElement('button');
+                    button.className = `page-number ${i === pagination.currentPage ? 'active' : ''}`;
+                    button.dataset.page = i;
+                    button.textContent = i;
+                    button.addEventListener('click', function () {
+                        loadContracts(i, pagination.limit);
+                    });
+                    pageNumbers.appendChild(button);
+                }
+
+                // Atualizar botões de anterior/próximo
+                document.getElementById('prev-page').disabled = !pagination.hasPrevPage;
+                document.getElementById('next-page').disabled = !pagination.hasNextPage;
+
+                if (pagination.hasPrevPage) {
+                    document.getElementById('prev-page').onclick = function () {
+                        loadContracts(pagination.currentPage - 1, pagination.limit);
+                    };
+                }
+
+                if (pagination.hasNextPage) {
+                    document.getElementById('next-page').onclick = function () {
+                        loadContracts(pagination.currentPage + 1, pagination.limit);
+                    };
+                }
+            }
 
             // Event listener para mudança de limite
             document.getElementById('items-select').addEventListener('change', function () {
-                changeLimit(this.value);
+                loadContracts(1, this.value);
             });
 
             // Inicializar ícones Lucide
             if (typeof lucide !== 'undefined') {
                 lucide.createIcons();
             }
-            
-            });
-
+        });
     </script>
 </body>
 

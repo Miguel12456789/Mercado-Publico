@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    
+
     <main class="container py-8">
         <h1 class="titulo">Estatísticas Mercado Público</h1>
         <div class="banner">
@@ -727,14 +727,43 @@
                                             resultsTable.scrollIntoView({ behavior: 'smooth' });
                                         });
 
-document.querySelector('form[action="/base_gov"]').addEventListener('submit', function(e) {
-    e.preventDefault();
-    // Your AJAX code here to fetch and display results
-});
+                                        document.querySelector('form[action="/base_gov"]').addEventListener('submit', function (e) {
+                                            e.preventDefault();
+
+                                            // Coletar dados do formulário
+                                            const formData = new FormData(this);
+
+                                            // Enviar via AJAX
+                                            fetch('/base_gov', {
+                                                method: 'POST',
+                                                body: formData,
+                                                headers: {
+                                                    'Accept': 'application/json'
+                                                }
+                                            })
+                                                .then(response => response.json())
+                                                .then(data => {
+                                                    // Mostrar a tabela de resultados
+                                                    const resultsTable = document.querySelector('#results-table');
+                                                    resultsTable.style.display = 'block';
+
+                                                    // Atualizar a tabela e paginação
+                                                    updateTable(data.contracts);
+                                                    updatePagination(data.pagination);
+
+                                                    // Rolar para a tabela
+                                                    resultsTable.scrollIntoView({ behavior: 'smooth' });
+                                                })
+                                                .catch(error => console.error('Error:', error));
+                                        });
+
+                                        // Funções auxiliares (as mesmas do arquivo de paginação)
+                                        function updateTable(contracts) { /* ... */ }
+                                        function updatePagination(pagination) { /* ... */ }
 
 
                                     });
-                                    
+
                                 </script>
 
 </body>

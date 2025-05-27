@@ -29,7 +29,8 @@
 
                 <!-- Contador de Resultados -->
                 <div class="results-counter">
-                    <div id="count-display" class="count-display">
+                    <div id="count-display" class="count-display"
+                        data-total-contracts="<%= pagination.totalContracts || 0 %>">
                         <span id="count-number">0</span> contratos encontrados
                     </div>
                 </div>
@@ -118,53 +119,24 @@
                 // DOM elements
                 const countDisplay = document.getElementById('count-display');
                 const countNumber = document.getElementById('count-number');
-                const tableRows = document.querySelectorAll('.results-table tbody tr');
-                const contractCount = tableRows.length;
 
-                // Atualiza e mostra o contador
-                countNumber.textContent = 0;
+                // Obter o total de contratos do atributo data
+                const contractCount = parseInt(countDisplay.dataset.totalContracts) || 0;
+
+                // Atualiza e mostra o contador corretamente (sem animação)
+                countNumber.textContent = contractCount;
                 countDisplay.classList.add('visible');
-                animateCount(0, contractCount);
 
-                // Animação do contador
-                function animateCount(start, end) {
-                    if (start === end) {
-                        countNumber.textContent = end;
-                        return;
-                    }
-
-                    const duration = Math.min(1500, Math.max(500, end * 100));
-                    const increment = end > 100 ? 5 : 1;
-                    const steps = Math.ceil((end - start) / increment);
-                    const stepTime = duration / steps;
-                    let current = start;
-
-                    const timer = setInterval(() => {
-                        current += increment;
-                        if (current >= end) {
-                            current = end;
-                            clearInterval(timer);
-                        }
-                        countNumber.textContent = current;
-                    }, stepTime);
-                }
                 // =================== Data Atual =========================
-                document.addEventListener('DOMContentLoaded', () => {
-                    lucide.createIcons();
+                lucide.createIcons();
 
-                    const spanData = document.getElementById('data-atualizacao');
-                    if (!spanData) return;
-
+                const spanData = document.getElementById('data-atualizacao');
+                if (spanData) {
                     const hoje = new Date();
                     const meses = ['jan.', 'fev.', 'mar.', 'abr.', 'mai.', 'jun.', 'jul.', 'ago.', 'set.', 'out.', 'nov.', 'dez.'];
-
                     spanData.textContent = `${hoje.getDate()} ${meses[hoje.getMonth()]} ${hoje.getFullYear()}`;
-                });
-
-
+                }
             });
-
-
         </script>
 </body>
 
