@@ -689,66 +689,55 @@
                                             vila_real: ["Alijó", "Boticas", "Chaves", "Mesão Frio", "Mondim de Basto", "Montalegre", "Murça", "Peso da Régua", "Ribeira de Pena", "Sabrosa", "Santa Marta de Penaguião", "Valpaços", "Vila Pouca de Aguiar", "Vila Real"],
                                             viseu: ["Armamar", "Carregal do Sal", "Castro Daire", "Cinfães", "Lamego", "Mangualde", "Moimenta da Beira", "Mortágua", "Nelas", "Oliveira de Frades", "Penalva do Castelo", "Penedono", "Resende", "Santa Comba Dão", "São João da Pesqueira", "São Pedro do Sul", "Sátão", "Sernancelhe", "Tabuaço", "Tarouca", "Tondela", "Vila Nova de Paiva", "Viseu", "Vouzela"]
                                         };
-
-                                        function setDisabled(select, disabled) {
+                                        // Utilitário para ativar/desativar <select>
+                                        const setDisabled = (select, disabled) => {
                                             select.disabled = disabled;
                                             if (disabled) select.value = "";
-                                        }
+                                        };
 
-                                        function atualizarDistritos() {
+                                        // Atualiza o estado dos selects de distrito e concelho com base no país
+                                        const atualizarDistritos = () => {
                                             const isPortugal = paisSelect.value === "portugal";
                                             setDisabled(distritoSelect, !isPortugal);
                                             setDisabled(concelhoSelect, true);
                                             concelhoSelect.innerHTML = '<option value="">Selecione um concelho</option>';
-                                        }
+                                        };
 
-                                        function preencherConcelhos() {
-                                            const distrito = distritoSelect.value;
-                                            const concelhos = distritosConcelhos[distrito] || [];
-
+                                        // Preenche os concelhos com base no distrito selecionado
+                                        const preencherConcelhos = () => {
+                                            const concelhos = distritosConcelhos[distritoSelect.value] || [];
                                             concelhoSelect.innerHTML = '<option value="">Selecione um concelho</option>';
                                             setDisabled(concelhoSelect, concelhos.length === 0);
 
                                             concelhos.forEach(nome => {
-                                                const option = document.createElement('option');
-                                                option.value = nome.toLowerCase().replace(/\s+/g, '_');
-                                                option.textContent = nome;
+                                                const option = new Option(nome, nome.toLowerCase().replace(/\s+/g, '_'));
                                                 concelhoSelect.appendChild(option);
                                             });
-                                        }
+                                        };
 
-                                        paisSelect.addEventListener('change', atualizarDistritos);
-                                        distritoSelect.addEventListener('change', preencherConcelhos);
-
-
+                                        // Mostrar resultados ao clicar no botão de pesquisa
                                         document.querySelector('#search-contracts-button').addEventListener('click', () => {
                                             const resultsTable = document.querySelector('#results-table');
                                             resultsTable.style.display = 'block';
                                             resultsTable.scrollIntoView({ behavior: 'smooth' });
                                         });
 
-                                        document.querySelector('form[action="/base_gov"]').addEventListener('submit', function (e) {
+                                        // Envio do formulário com AJAX
+                                        document.querySelector('form[action="/base_gov"]').addEventListener('submit', e => {
                                             e.preventDefault();
 
-                                            const formData = new FormData(this);
+                                            const form = e.currentTarget;
+                                            const formData = new FormData(form);
                                             const limit = document.getElementById('items-select')?.value || 25;
 
-                                            // Adicionar parâmetros de paginação
                                             const url = new URL('/base_gov', window.location.origin);
                                             url.searchParams.set('limit', limit);
                                             url.searchParams.set('page', 1);
 
-                                            // Adicionar outros parâmetros do formulário
-                                            formData.forEach((value, key) => {
-                                                url.searchParams.set(key, value);
-                                            });
+                                            formData.forEach((value, key) => url.searchParams.set(key, value));
 
-                                            fetch(url, {
-                                                headers: {
-                                                    'Accept': 'application/json'
-                                                }
-                                            })
-                                                .then(response => response.json())
+                                            fetch(url, { headers: { 'Accept': 'application/json' } })
+                                                .then(res => res.json())
                                                 .then(data => {
                                                     const resultsTable = document.querySelector('#results-table');
                                                     resultsTable.style.display = 'block';
@@ -756,8 +745,13 @@
                                                     updatePagination(data.pagination);
                                                     resultsTable.scrollIntoView({ behavior: 'smooth' });
                                                 })
-                                                .catch(error => console.error('Error:', error));
+                                                .catch(err => console.error('Erro:', err));
                                         });
+
+                                        // Listeners de selects
+                                        paisSelect.addEventListener('change', atualizarDistritos);
+                                        distritoSelect.addEventListener('change', preencherConcelhos);
+
 
 
                                     });
