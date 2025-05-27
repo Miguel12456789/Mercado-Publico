@@ -34,254 +34,260 @@
         </div>
         </div>
 
-        <div class="search-container">
-            <div class="search-row">
-                <div class="dropdown" id="contracts-dropdown">
-                    <button id="dropdown-button" class="dropdown-select" aria-haspopup="true" aria-expanded="false">
-                        <span class="dropdown-text" id="selected-contract">Contrato</span>
-                        <i data-lucide="chevron-down" class="dropdown-icon"></i>
-                    </button>
+        <form action="/base_gov" method="get">
+            <div class="search-container">
+                <div class="search-row">
+                    <div class="dropdown" id="contracts-dropdown">
+                        <button id="dropdown-button" class="dropdown-select" aria-haspopup="true" aria-expanded="false">
+                            <span class="dropdown-text" id="selected-contract">Contrato</span>
+                            <i data-lucide="chevron-down" class="dropdown-icon"></i>
+                        </button>
 
-                    <div class="dropdown-menu" id="dropdown-menu">
-                        <div class="dropdown-item" data-value="Contrato">Contratos</div>
-                        <div class="dropdown-item" data-value="Entidades">Entidades</div>
-                        <div class="dropdown-item" data-value="Modificações contratuais">Modificações contratuais</div>
-                        <div class="dropdown-item" data-value="Bens móveis">Bens móveis</div>
-                        <div class="dropdown-item" data-value="Não Celebrações de contrato">Não Celebrações de contrato
+                        <div class="dropdown-menu" id="dropdown-menu">
+                            <div class="dropdown-item" data-value="Contrato">Contratos</div>
+                            <div class="dropdown-item" data-value="Entidades">Entidades</div>
+                            <div class="dropdown-item" data-value="Modificações contratuais">Modificações contratuais
+                            </div>
+                            <div class="dropdown-item" data-value="Bens móveis">Bens móveis</div>
+                            <div class="dropdown-item" data-value="Não Celebrações de contrato">Não Celebrações de
+                                contrato
+                            </div>
+                            <div class="dropdown-item" data-value="Impugnação">Impugnações</div>
                         </div>
-                        <div class="dropdown-item" data-value="Impugnação">Impugnações</div>
                     </div>
-                </div>
-
-                <input type="text" placeholder="Pesquisar pelo objeto do Contrato" class="search-input" />
-                <form action="/base_gov" method="get" >
-                    <button type="submit" id="search-contracts-button" class="search-button">
+                    <input type="text" placeholder="Pesquisar pelo objeto do Contrato" class="search-input" />
+                    <!-- <button type="submit" id="search-contracts-button" class="search-button">
                         <i data-lucide="search" class="icon-small"></i>
                         <span>Pesquisar</span>
-                    </button>
-                </form>
-            </div>
+                    </button> -->
+                </div>
 
-            <!-- Advanced Search Form -->
-            <div id="advanced-search-form" class="advanced-search-form">
-                <div class="form-content">
-                    <!-- First Row -->
-                    <div class="form-row">
-                        <div class="form-group">
-                            <input type="checkbox" id="special-measures" class="form-checkbox" />
-                            <label for="special-measures" class="form-label">
-                                Medidas especiais
-                            </label>
-                        </div>
+                <!-- Advanced Search Form -->
+                <div id="advanced-search-form" class="advanced-search-form">
+                    <div class="form-content">
+                        <!-- First Row -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input type="checkbox" id="special-measures" class="form-checkbox" />
+                                <label for="special-measures" class="form-label">
+                                    Medidas especiais
+                                </label>
+                            </div>
 
-                        <div class="form-group">
-                            <input type="checkbox" id="include-mec" class="form-checkbox" />
-                            <label for="include-mec" class="form-label">
-                                Incluir MEC ao abrigo do CCP
-                            </label>
-                        </div>
+                            <div class="form-group">
+                                <input type="checkbox" id="include-mec" class="form-checkbox" />
+                                <label for="include-mec" class="form-label">
+                                    Incluir MEC ao abrigo do CCP
+                                </label>
+                            </div>
 
-                        <div class="form-field">
-                            <label for="measure-type" class="form-label">
-                                Tipologia da medida especial
-                            </label>
-                            <select id="measure-type" class="form-select" disabled>
-                                <option>Todos</option>
-                                <option>Projetos financiados ou cofinanciados por fundos europeus - artigo 2º da Lei n.º
-                                    30/2021</option>
-                                <option>Habitação e descentralização - artigo 3º da Lei n.º 30/2021</option>
-                                <option>Tecnologias de informação e conhecimento - artigo 4º da Lei n.º 30/2021</option>
-                                <option>Setor da saúde e do apoio social - artigo 5º da Lei n.º 30/2021</option>
-                                <option>Plano de Recuperação e Resiliência (PRR) - artigo 2º da Lei n.º 30/2021, DL n.º
-                                    78/2022</option>
-                                <option>Sistema de Gestão Integrada de Fogos Rurais - artigo 7º da Lei n.º 30/2021
-                                </option>
-                                <option>Bens agro-alimentares - artigo 8º da Lei n.º 30/2021</option>
-                                <option>Programa de Estabilização Económica e Social (PEES) - artigo 6º da Lei n.º
-                                    30/2021</option>
-                                <option>Plano de Recuperação e Resiliência (PRR) - artigo 6º da Lei n.º 30/2021</option>
-                                <option>Regime especial de empreitadas de conceção-construção - artigo 2º-A da Lei n.º
-                                    30/2021, DL n.º 78/2022</option>
+                            <div class="form-field">
+                                <label for="measure-type" class="form-label">
+                                    Tipologia da medida especial
+                                </label>
+                                <select id="measure-type" class="form-select" disabled>
+                                    <option>Todos</option>
+                                    <option>Projetos financiados ou cofinanciados por fundos europeus - artigo 2º da Lei
+                                        n.º
+                                        30/2021</option>
+                                    <option>Habitação e descentralização - artigo 3º da Lei n.º 30/2021</option>
+                                    <option>Tecnologias de informação e conhecimento - artigo 4º da Lei n.º 30/2021
+                                    </option>
+                                    <option>Setor da saúde e do apoio social - artigo 5º da Lei n.º 30/2021</option>
+                                    <option>Plano de Recuperação e Resiliência (PRR) - artigo 2º da Lei n.º 30/2021, DL
+                                        n.º
+                                        78/2022</option>
+                                    <option>Sistema de Gestão Integrada de Fogos Rurais - artigo 7º da Lei n.º 30/2021
+                                    </option>
+                                    <option>Bens agro-alimentares - artigo 8º da Lei n.º 30/2021</option>
+                                    <option>Programa de Estabilização Económica e Social (PEES) - artigo 6º da Lei n.º
+                                        30/2021</option>
+                                    <option>Plano de Recuperação e Resiliência (PRR) - artigo 6º da Lei n.º 30/2021
+                                    </option>
+                                    <option>Regime especial de empreitadas de conceção-construção - artigo 2º-A da Lei
+                                        n.º
+                                        30/2021, DL n.º 78/2022</option>
 
-                            </select>
-                        </div>
-                    </div>
-
-                    <hr class="form-divider" />
-
-                    <!-- Second Row -->
-                    <div class="form-row">
-                        <div class="form-field">
-                            <label for="procedure-type" class="form-label">
-                                Tipo de Procedimento
-                            </label>
-                            <select id="procedure-type" class="form-select">
-                                <option value="0">Todos</option>
-                                <option value="8">Consulta Prévia</option>
-                                <option value="1">Ajuste Direto Regime Geral</option>
-                                <option value="2">Concurso público</option>
-                                <option value="3">Concurso limitado por prévia qualificação</option>
-                                <option value="4">Procedimento de negociação</option>
-                                <option value="5">Diálogo concorrencial</option>
-                                <option value="6">Ao abrigo de acordo-quadro (art.º 258.º)</option>
-                                <option value="7">Ao abrigo de acordo-quadro (art.º 259.º)</option>
-                                <option value="9">Parceria para a inovação</option>
-                                <option value="10">Disponibilização de bens móveis</option>
-                                <option value="11">Serviços sociais e outros serviços específicos</option>
-                                <option value="13">Concurso de conceção simplificado</option>
-                                <option value="14">Concurso de ideias simplificado</option>
-                                <option value="15">Consulta Prévia Simplificada</option>
-                                <option value="16">Concurso público simplificado</option>
-                                <option value="17">Concurso limitado por prévia qualificação simplificado</option>
-                                <option value="18">Ajuste Direto Regime Geral ao abrigo do artigo 7º da Lei n.º
-                                    30/2021, de 21.05</option>
-                                <option value="19">Consulta prévia ao abrigo do artigo 7º da Lei n.º 30/2021, de
-                                    21.05</option>
-                                <option value="20">Ajuste direto simplificado</option>
-                                <option value="21">Ajuste direto simplificado ao abrigo da Lei n.º 30/2021, de 21.05
-                                </option>
-                                <option value="22">Setores especiais - isenção parte II</option>
-                                <option value="23">Contratação excluída II</option>
-                            </select>
-                        </div>
-
-                        <div class="form-field">
-                            <label for="entity" class="form-label">
-                                Entidade Adjudicante
-                            </label>
-                            <input type="text" id="entity" class="form-input" />
-                        </div>
-                    </div>
-
-                    <!-- Third Row -->
-                    <div class="form-row">
-                        <div class="form-field">
-                            <label for="contract-type" class="form-label">
-                                Tipo de Contrato
-                            </label>
-                            <select id="contract-type" class="form-select">
-                                <option value="0">Todos</option>
-                                <option value="1">Aquisição de bens móveis</option>
-                                <option value="2">Aquisição de serviços</option>
-                                <option value="3">Concessão de obras públicas</option>
-                                <option value="4">Concessão de serviços públicos</option>
-                                <option value="5">Empreitadas de obras públicas</option>
-                                <option value="6">Locação de bens móveis</option>
-                                <option value="7">Sociedade</option>
-                                <option value="8">Outros</option>
-                            </select>
-                        </div>
-
-                        <div class="form-field">
-                            <label for="awarded-entity" class="form-label">
-                                Entidade Adjudicatária
-                            </label>
-                            <input type="text" id="awarded-entity" class="form-input" />
-                        </div>
-                    </div>
-
-                    <!-- Fourth Row -->
-                    <div class="form-row">
-                        <div class="form-field">
-                            <label for="cpv" class="form-label">
-                                CPV
-                            </label>
-                            <input type="text" id="cpv" class="form-input" />
-                        </div>
-
-                        <div class="form-group">
-                            <input type="checkbox" id="environmental-criteria" class="form-checkbox" />
-                            <label for="environmental-criteria" class="form-label">
-                                Critérios ambientais
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Fifth Row - Dates and Location -->
-                    <div class="form-row">
-                        <div class="form-field date-container">
-                            <label for="date-type" class="form-label">
-                                Datas
-                            </label>
-                            <select id="date-type" class="form-select">
-                                <option>Data do Contrato</option>
-                                <option>Data de Publicação</option>
-                                <option>Data de Fecho</option>
-                            </select>
-
-                            <div class="date-range">
-                                <div class="date-field">
-                                    <label for="date-from" class="form-label">De:</label>
-                                    <div class="date-selects">
-                                        <select id="from-year" class="date-select"></select>
-                                        <select id="from-month" class="date-select"></select>
-                                        <select id="from-day" class="date-select"></select>
-                                    </div>
-                                </div>
-
-                                <div class="date-field">
-                                    <label for="date-to" class="form-label">Até:</label>
-                                    <div class="date-selects">
-                                        <select id="to-year" class="date-select"></select>
-                                        <select id="to-month" class="date-select"></select>
-                                        <select id="to-day" class="date-select"></select>
-                                    </div>
-                                </div>
+                                </select>
                             </div>
                         </div>
 
-                        <div class="form-field location-container">
-                            <label class="form-label">
-                                Local de Execução (País, Distrito, Concelho)
-                            </label>
-                            <select id="pais-select" class="form-select location-select">
-                                <option>Todos</option>
-                                <option value="portugal">Portugal</option>
-                                <option value="espanha">Outro</option>
-                            </select>
-                            </select>
-                            <select id="distrito-select" class="form-select location-select" disabled>
-                                <option value="">Todos</option>
-                                <option value="aveiro">Aveiro</option>
-                                <option value="beja">Beja</option>
-                                <option value="braga">Braga</option>
-                                <option value="braganca">Bragança</option>
-                                <option value="castelo_branco">Castelo Branco</option>
-                                <option value="coimbra">Coimbra</option>
-                                <option value="evora">Évora</option>
-                                <option value="faro">Faro</option>
-                                <option value="guarda">Guarda</option>
-                                <option value="leiria">Leiria</option>
-                                <option value="lisboa">Lisboa</option>
-                                <option value="portalegre">Portalegre</option>
-                                <option value="porto">Porto</option>
-                                <option value="santarem">Santarém</option>
-                                <option value="setubal">Setúbal</option>
-                                <option value="viana_do_castelo">Viana do Castelo</option>
-                                <option value="vila_real">Vila Real</option>
-                                <option value="viseu">Viseu</option>
-                            </select>
-                            <select id="concelho-select" class="form-select location-select" disabled>
-                                <option value="">Selecione um concelho</option>
-                                <!-- Será preenchido dinamicamente com JavaScript -->
-                            </select>
-                        </div>
-                    </div>
+                        <hr class="form-divider" />
 
-                    <!-- Form Buttons -->
-                    <div class="form-buttons">
-                        <button id="clear-form-btn" class="clear-button">
-                            <i data-lucide="x" class="icon-small"></i>
-                            <span>LIMPAR</span>
-                        </button>
-                        <button type="submit" id="search-contracts-button" class="submit-button">
-                            <i data-lucide="search" class="icon-small"></i>
-                            <span>PESQUISAR</span>
-                        </button>
+                        <!-- Second Row -->
+                        <div class="form-row">
+                            <div class="form-field">
+                                <label for="procedure-type" class="form-label">
+                                    Tipo de Procedimento
+                                </label>
+                                <select id="procedure-type" class="form-select">
+                                    <option value="0">Todos</option>
+                                    <option value="8">Consulta Prévia</option>
+                                    <option value="1">Ajuste Direto Regime Geral</option>
+                                    <option value="2">Concurso público</option>
+                                    <option value="3">Concurso limitado por prévia qualificação</option>
+                                    <option value="4">Procedimento de negociação</option>
+                                    <option value="5">Diálogo concorrencial</option>
+                                    <option value="6">Ao abrigo de acordo-quadro (art.º 258.º)</option>
+                                    <option value="7">Ao abrigo de acordo-quadro (art.º 259.º)</option>
+                                    <option value="9">Parceria para a inovação</option>
+                                    <option value="10">Disponibilização de bens móveis</option>
+                                    <option value="11">Serviços sociais e outros serviços específicos</option>
+                                    <option value="13">Concurso de conceção simplificado</option>
+                                    <option value="14">Concurso de ideias simplificado</option>
+                                    <option value="15">Consulta Prévia Simplificada</option>
+                                    <option value="16">Concurso público simplificado</option>
+                                    <option value="17">Concurso limitado por prévia qualificação simplificado</option>
+                                    <option value="18">Ajuste Direto Regime Geral ao abrigo do artigo 7º da Lei n.º
+                                        30/2021, de 21.05</option>
+                                    <option value="19">Consulta prévia ao abrigo do artigo 7º da Lei n.º 30/2021, de
+                                        21.05</option>
+                                    <option value="20">Ajuste direto simplificado</option>
+                                    <option value="21">Ajuste direto simplificado ao abrigo da Lei n.º 30/2021, de 21.05
+                                    </option>
+                                    <option value="22">Setores especiais - isenção parte II</option>
+                                    <option value="23">Contratação excluída II</option>
+                                </select>
+                            </div>
+
+                            <div class="form-field">
+                                <label for="entity" class="form-label">
+                                    Entidade Adjudicante
+                                </label>
+                                <input type="text" id="entity" class="form-input" />
+                            </div>
+                        </div>
+
+                        <!-- Third Row -->
+                        <div class="form-row">
+                            <div class="form-field">
+                                <label for="contract-type" class="form-label">
+                                    Tipo de Contrato
+                                </label>
+                                <select id="contract-type" class="form-select">
+                                    <option value="0">Todos</option>
+                                    <option value="1">Aquisição de bens móveis</option>
+                                    <option value="2">Aquisição de serviços</option>
+                                    <option value="3">Concessão de obras públicas</option>
+                                    <option value="4">Concessão de serviços públicos</option>
+                                    <option value="5">Empreitadas de obras públicas</option>
+                                    <option value="6">Locação de bens móveis</option>
+                                    <option value="7">Sociedade</option>
+                                    <option value="8">Outros</option>
+                                </select>
+                            </div>
+
+                            <div class="form-field">
+                                <label for="awarded-entity" class="form-label">
+                                    Entidade Adjudicatária
+                                </label>
+                                <input type="text" id="awarded-entity" class="form-input" />
+                            </div>
+                        </div>
+
+                        <!-- Fourth Row -->
+                        <div class="form-row">
+                            <div class="form-field">
+                                <label for="cpv" class="form-label">
+                                    CPV
+                                </label>
+                                <input type="text" id="cpv" class="form-input" />
+                            </div>
+
+                            <div class="form-group">
+                                <input type="checkbox" id="environmental-criteria" class="form-checkbox" />
+                                <label for="environmental-criteria" class="form-label">
+                                    Critérios ambientais
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Fifth Row - Dates and Location -->
+                        <div class="form-row">
+                            <div class="form-field date-container">
+                                <label for="date-type" class="form-label">
+                                    Datas
+                                </label>
+                                <select id="date-type" class="form-select">
+                                    <option>Data do Contrato</option>
+                                    <option>Data de Publicação</option>
+                                    <option>Data de Fecho</option>
+                                </select>
+
+                                <div class="date-range">
+                                    <div class="date-field">
+                                        <label for="date-from" class="form-label">De:</label>
+                                        <div class="date-selects">
+                                            <select id="from-year" class="date-select"></select>
+                                            <select id="from-month" class="date-select"></select>
+                                            <select id="from-day" class="date-select"></select>
+                                        </div>
+                                    </div>
+
+                                    <div class="date-field">
+                                        <label for="date-to" class="form-label">Até:</label>
+                                        <div class="date-selects">
+                                            <select id="to-year" class="date-select"></select>
+                                            <select id="to-month" class="date-select"></select>
+                                            <select id="to-day" class="date-select"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-field location-container">
+                                <label class="form-label">
+                                    Local de Execução (País, Distrito, Concelho)
+                                </label>
+                                <select id="pais-select" class="form-select location-select">
+                                    <option>Todos</option>
+                                    <option value="portugal">Portugal</option>
+                                    <option value="espanha">Outro</option>
+                                </select>
+                                </select>
+                                <select id="distrito-select" class="form-select location-select" disabled>
+                                    <option value="">Todos</option>
+                                    <option value="aveiro">Aveiro</option>
+                                    <option value="beja">Beja</option>
+                                    <option value="braga">Braga</option>
+                                    <option value="braganca">Bragança</option>
+                                    <option value="castelo_branco">Castelo Branco</option>
+                                    <option value="coimbra">Coimbra</option>
+                                    <option value="evora">Évora</option>
+                                    <option value="faro">Faro</option>
+                                    <option value="guarda">Guarda</option>
+                                    <option value="leiria">Leiria</option>
+                                    <option value="lisboa">Lisboa</option>
+                                    <option value="portalegre">Portalegre</option>
+                                    <option value="porto">Porto</option>
+                                    <option value="santarem">Santarém</option>
+                                    <option value="setubal">Setúbal</option>
+                                    <option value="viana_do_castelo">Viana do Castelo</option>
+                                    <option value="vila_real">Vila Real</option>
+                                    <option value="viseu">Viseu</option>
+                                </select>
+                                <select id="concelho-select" class="form-select location-select" disabled>
+                                    <option value="">Selecione um concelho</option>
+                                    <!-- Será preenchido dinamicamente com JavaScript -->
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Form Buttons -->
+                        <div class="form-buttons">
+                            <button id="clear-form-btn" class="clear-button">
+                                <i data-lucide="x" class="icon-small"></i>
+                                <span>LIMPAR</span>
+                            </button>
+                            <button type="submit" id="search-contracts-button" class="submit-button">
+                                <i data-lucide="search" class="icon-small"></i>
+                                <span>PESQUISAR</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
 
 
 
@@ -345,7 +351,8 @@
                                 <option value="5">Captação, tratamento e distribuição de água; saneamento, gestão de
                                     resíduos e despoluição</option>
                                 <option value="6">Construção</option>
-                                <option value="7">Comércio por grosso e a retalho; reparação de veículos automóveis e
+                                <option value="7">Comércio por grosso e a retalho; reparação de veículos automóveis
+                                    e
                                     motociclos</option>
                                 <option value="8">Transportes e armazenagem</option>
                                 <option value="9">Alojamento, restauração e similares</option>
@@ -355,10 +362,12 @@
                                 <option value="13">Actividades de consultoria, científicas, técnicas e similares
                                 </option>
                                 <option value="14">Actividades administrativas e dos serviços de apoio</option>
-                                <option value="15">Administração Pública e Defesa; Segurança Social Obrigatória</option>
+                                <option value="15">Administração Pública e Defesa; Segurança Social Obrigatória
+                                </option>
                                 <option value="16">Educação</option>
                                 <option value="17">Actividades de saúde humana e apoio social</option>
-                                <option value="18">Actividades artísticas, de espectáculos, desportivas e recreativas
+                                <option value="18">Actividades artísticas, de espectáculos, desportivas e
+                                    recreativas
                                 </option>
                                 <option value="19">Outras actividades de serviços</option>
                                 <option value="20">Actividades das famílias empregadoras de pessoal doméstico e
@@ -434,285 +443,292 @@
             </div>
         </div>
     </main>
-    <%- include('components/tab_base') %>
-        <%- include('components/detalhes') %>
-            <%- include('components/mail_receive') %>
-                <%- include('components/button') %>
 
-                    <script>
-                        document.addEventListener('DOMContentLoaded', () => {
-                            // ========== Utils ==========
-                            const qs = (s, p = document) => p.querySelector(s);
-                            const qsa = (s, p = document) => [...p.querySelectorAll(s)];
+    <% if (typeof contracts !=='undefined' ) { %>
+        <%- include('components/tab_base', {contracts: contracts}) %>
+            <% } else { %>
+                <div class="no-contracts">
+                    <p>Nenhum dado de contrato disponível no momento.</p>
+                </div>
+                <% } %>
+                    <%- include('components/detalhes') %>
+                        <%- include('components/mail_receive') %>
+                            <%- include('components/button') %>
 
-                            // ========== Preencher selects de data ==========
-                            function populateDateSelectors(yearId, monthId, dayId) {
-                                const yearSelect = document.getElementById(yearId);
-                                const monthSelect = document.getElementById(monthId);
-                                const daySelect = document.getElementById(dayId);
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', () => {
+                                        // ========== Utils ==========
+                                        const qs = (s, p = document) => p.querySelector(s);
+                                        const qsa = (s, p = document) => [...p.querySelectorAll(s)];
 
-                                const currentYear = new Date().getFullYear();
+                                        // ========== Preencher selects de data ==========
+                                        function populateDateSelectors(yearId, monthId, dayId) {
+                                            const yearSelect = document.getElementById(yearId);
+                                            const monthSelect = document.getElementById(monthId);
+                                            const daySelect = document.getElementById(dayId);
 
-                                // Placeholders
-                                yearSelect.innerHTML = '<option disabled selected>Ano:</option>';
-                                monthSelect.innerHTML = '<option disabled selected>Mês:</option>';
-                                daySelect.innerHTML = '<option disabled selected>Dia:</option>';
+                                            const currentYear = new Date().getFullYear();
 
-                                // Preencher anos (do ano atual até 1900)
-                                for (let y = currentYear; y >= 1900; y--) {
-                                    yearSelect.innerHTML += `<option value="${y}">${y}</option>`;
-                                }
+                                            // Placeholders
+                                            yearSelect.innerHTML = '<option disabled selected>Ano:</option>';
+                                            monthSelect.innerHTML = '<option disabled selected>Mês:</option>';
+                                            daySelect.innerHTML = '<option disabled selected>Dia:</option>';
 
-                                // Preencher meses (01 a 12)
-                                for (let m = 1; m <= 12; m++) {
-                                    const paddedMonth = m.toString().padStart(2, '0');
-                                    monthSelect.innerHTML += `<option value="${m}">${paddedMonth}</option>`;
-                                }
+                                            // Preencher anos (do ano atual até 1900)
+                                            for (let y = currentYear; y >= 1900; y--) {
+                                                yearSelect.innerHTML += `<option value="${y}">${y}</option>`;
+                                            }
 
-                                // Atualizar dias com base no mês e ano selecionados
-                                function updateDays() {
-                                    const year = parseInt(yearSelect.value);
-                                    const month = parseInt(monthSelect.value);
+                                            // Preencher meses (01 a 12)
+                                            for (let m = 1; m <= 12; m++) {
+                                                const paddedMonth = m.toString().padStart(2, '0');
+                                                monthSelect.innerHTML += `<option value="${m}">${paddedMonth}</option>`;
+                                            }
 
-                                    if (!year || !month) return;
+                                            // Atualizar dias com base no mês e ano selecionados
+                                            function updateDays() {
+                                                const year = parseInt(yearSelect.value);
+                                                const month = parseInt(monthSelect.value);
 
-                                    const daysInMonth = new Date(year, month, 0).getDate();
-                                    daySelect.innerHTML = '<option disabled selected>Dia:</option>';
+                                                if (!year || !month) return;
 
-                                    for (let d = 1; d <= daysInMonth; d++) {
-                                        const paddedDay = d.toString().padStart(2, '0');
-                                        daySelect.innerHTML += `<option value="${d}">${paddedDay}</option>`;
-                                    }
-                                }
+                                                const daysInMonth = new Date(year, month, 0).getDate();
+                                                daySelect.innerHTML = '<option disabled selected>Dia:</option>';
 
-                                yearSelect.addEventListener('change', updateDays);
-                                monthSelect.addEventListener('change', updateDays);
+                                                for (let d = 1; d <= daysInMonth; d++) {
+                                                    const paddedDay = d.toString().padStart(2, '0');
+                                                    daySelect.innerHTML += `<option value="${d}">${paddedDay}</option>`;
+                                                }
+                                            }
 
-                                // Inicializar com valores padrão
-                                yearSelect.value = currentYear;
-                                monthSelect.value = 1;
-                                updateDays();
-                            }
+                                            yearSelect.addEventListener('change', updateDays);
+                                            monthSelect.addEventListener('change', updateDays);
 
-                            populateDateSelectors('from-year', 'from-month', 'from-day');
-                            populateDateSelectors('to-year', 'to-month', 'to-day');
-
-
-                            // ========== Ícones Lucide ==========
-                            (typeof lucide === 'undefined' ? { createIcons: () => { } } : lucide).createIcons();
-
-                            // ========== Limpar formulário ==========
-                            qs('#clear-form-btn')?.addEventListener('click', () => {
-                                const form = qs('#advancedSearchForm');
-                                form?.querySelectorAll('input').forEach(i => i.type === 'checkbox' ? i.checked = false : i.value = '');
-                                form?.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
-                            });
-
-                            // ========== Mostrar resultados ==========
-                            const resultsTable = qs('#results-table');
-                            const notifContainer = qs('#notificacao-container');
-                            qsa('.search-button, .submit-button').forEach(btn =>
-                                btn.addEventListener('click', () => {
-                                    resultsTable?.style.setProperty('display', 'block');
-                                    notifContainer?.style.setProperty('display', 'block');
-                                    resultsTable?.scrollIntoView({ behavior: 'smooth' });
-                                })
-                            );
-
-                            // ========== Detalhes de contratos ==========
-                            const contractDetails = qsa('.contract-details');
-                            const toggleDetail = (id, show) => {
-                                contractDetails.forEach(el => el.style.display = el.id === `details-${id}` && show ? 'block' : 'none');
-                                const btn = qs(`.details-button[data-contract-id="${id}"]`);
-                                const icon = btn?.querySelector('i');
-                                qs('#main-container')?.style.setProperty('display', show ? 'block' : 'none');
-                                icon?.classList.toggle('fa-plus-circle', !show);
-                                icon?.classList.toggle('fa-minus-circle', show);
-                                (show ? qs('#main-container') : qs('.results-table'))?.scrollIntoView({ behavior: 'smooth' });
-                            };
-
-                            qsa('.details-button').forEach(btn => {
-                                const id = btn.dataset.contractId;
-                                ['click', 'keydown'].forEach(evt => {
-                                    btn.addEventListener(evt, e => {
-                                        if (evt === 'click' || ['Enter', ' '].includes(e.key)) {
-                                            e.preventDefault?.();
-                                            toggleDetail(id, true);
+                                            // Inicializar com valores padrão
+                                            yearSelect.value = currentYear;
+                                            monthSelect.value = 1;
+                                            updateDays();
                                         }
-                                    });
-                                });
-                            });
 
-                            qsa('.close-details').forEach(btn => {
-                                const id = btn.dataset.contractId;
-                                ['click', 'keydown'].forEach(evt => {
-                                    btn.addEventListener(evt, e => {
-                                        if (evt === 'click' || ['Enter', ' '].includes(e.key)) {
-                                            e.preventDefault?.();
-                                            toggleDetail(id, false);
+                                        populateDateSelectors('from-year', 'from-month', 'from-day');
+                                        populateDateSelectors('to-year', 'to-month', 'to-day');
+
+
+                                        // ========== Ícones Lucide ==========
+                                        (typeof lucide === 'undefined' ? { createIcons: () => { } } : lucide).createIcons();
+
+                                        // ========== Limpar formulário ==========
+                                        qs('#clear-form-btn')?.addEventListener('click', () => {
+                                            const form = qs('#advancedSearchForm');
+                                            form?.querySelectorAll('input').forEach(i => i.type === 'checkbox' ? i.checked = false : i.value = '');
+                                            form?.querySelectorAll('select').forEach(s => s.selectedIndex = 0);
+                                        });
+
+                                        // ========== Mostrar resultados ==========
+                                        const resultsTable = qs('#results-table');
+                                        const notifContainer = qs('#notificacao-container');
+                                        qsa('.search-button, .submit-button').forEach(btn =>
+                                            btn.addEventListener('click', () => {
+                                                resultsTable?.style.setProperty('display', 'block');
+                                                notifContainer?.style.setProperty('display', 'block');
+                                                resultsTable?.scrollIntoView({ behavior: 'smooth' });
+                                            })
+                                        );
+
+                                        // ========== Detalhes de contratos ==========
+                                        const contractDetails = qsa('.contract-details');
+                                        const toggleDetail = (id, show) => {
+                                            contractDetails.forEach(el => el.style.display = el.id === `details-${id}` && show ? 'block' : 'none');
+                                            const btn = qs(`.details-button[data-contract-id="${id}"]`);
+                                            const icon = btn?.querySelector('i');
+                                            qs('#main-container')?.style.setProperty('display', show ? 'block' : 'none');
+                                            icon?.classList.toggle('fa-plus-circle', !show);
+                                            icon?.classList.toggle('fa-minus-circle', show);
+                                            (show ? qs('#main-container') : qs('.results-table'))?.scrollIntoView({ behavior: 'smooth' });
+                                        };
+
+                                        qsa('.details-button').forEach(btn => {
+                                            const id = btn.dataset.contractId;
+                                            ['click', 'keydown'].forEach(evt => {
+                                                btn.addEventListener(evt, e => {
+                                                    if (evt === 'click' || ['Enter', ' '].includes(e.key)) {
+                                                        e.preventDefault?.();
+                                                        toggleDetail(id, true);
+                                                    }
+                                                });
+                                            });
+                                        });
+
+                                        qsa('.close-details').forEach(btn => {
+                                            const id = btn.dataset.contractId;
+                                            ['click', 'keydown'].forEach(evt => {
+                                                btn.addEventListener(evt, e => {
+                                                    if (evt === 'click' || ['Enter', ' '].includes(e.key)) {
+                                                        e.preventDefault?.();
+                                                        toggleDetail(id, false);
+                                                    }
+                                                });
+                                            });
+                                        });
+
+                                        // ========== Dropdown ==========
+                                        const dropdownBtn = qs('#dropdown-button');
+                                        const dropdownMenu = qs('#dropdown-menu');
+                                        const searchInput = qs('.search-input');
+                                        const selectedContract = qs('#selected-contract');
+
+                                        const placeholderMap = {
+                                            Contrato: "Pesquisar pelo objeto do Contrato",
+                                            Anúncios: "Pesquisar pelo objeto do Anúncio",
+                                            Entidades: "Pesquisar pelo nome da Entidade",
+                                            "Modificações contratuais": "Pesquisar pela modificação contratual",
+                                            "Bens móveis": "Pesquisar pelo bem móvel",
+                                            "Não Celebrações de contrato": "Pesquisar pela não celebração",
+                                            Impugnação: "Pesquisar pela impugnação",
+                                        };
+
+                                        dropdownBtn?.addEventListener('click', () => {
+                                            const expanded = dropdownBtn.getAttribute("aria-expanded") === "true";
+                                            dropdownBtn.setAttribute("aria-expanded", String(!expanded));
+                                            dropdownMenu.style.display = expanded ? "none" : "block";
+                                        });
+
+                                        document.addEventListener('click', e => {
+                                            if (!dropdownBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                                                dropdownBtn.setAttribute("aria-expanded", "false");
+                                                dropdownMenu.style.display = "none";
+                                            }
+                                        });
+
+                                        qsa('.dropdown-item').forEach(item =>
+                                            item.addEventListener('click', e => {
+                                                const val = e.currentTarget.dataset.value;
+                                                selectedContract.textContent = val;
+                                                searchInput.placeholder = placeholderMap[val] || '';
+                                                dropdownBtn.setAttribute("aria-expanded", "false");
+                                                dropdownMenu.style.display = "none";
+                                            })
+                                        );
+
+                                        // ========== Popup de Download ==========
+                                        const openBtn = qs('#openPopupBtn'), closeBtn = qs('#closeBtn'), overlay = qs('#overlay');
+                                        const form = qs('#downloadForm'), verifyBtn = qs('#verifyCodeBtn'), resendBtn = qs('#resendCodeBtn');
+                                        const step1 = qs('#downloadStep1'), step2 = qs('#downloadStep2'), step3 = qs('#downloadStep3');
+                                        const inputs = qsa('.verification-input');
+                                        let code = '', email = '';
+
+                                        const showStep = step => [step1, step2, step3].forEach(s => s.classList.toggle('active', s === step));
+                                        const genCode = () => (code = Math.floor(100 + Math.random() * 900).toString());
+                                        const sendCode = (email, code) => {
+                                            console.log(`Enviando código ${code} para ${email}`);
+                                            return new Promise(res => setTimeout(() => res(true), 1000));
+                                        };
+
+                                        openBtn?.addEventListener('click', () => {
+                                            overlay.style.display = 'flex';
+                                            document.body.style.overflow = 'hidden';
+                                        });
+
+                                        const closePopup = () => {
+                                            overlay.style.display = 'none';
+                                            document.body.style.overflow = 'auto';
+                                            showStep(step1);
+                                            form.reset();
+                                        };
+
+                                        closeBtn?.addEventListener('click', closePopup);
+                                        overlay?.addEventListener('click', e => e.target === overlay && closePopup());
+
+                                        form?.addEventListener('submit', e => {
+                                            e.preventDefault();
+                                            email = qs('#email').value;
+                                            sendCode(email, genCode()).then(() => {
+                                                showStep(step2);
+                                                inputs[0]?.focus();
+                                            });
+                                        });
+
+                                        // Referências aos elementos
+                                        const checkboxes = [
+                                            document.getElementById('special-measures'),
+                                            document.getElementById('include-mec')
+                                        ];
+                                        const measureTypeSelect = document.getElementById('measure-type');
+                                        // Função para atualizar o estado do dropdown
+                                        const updateDropdownState = () => {
+                                            measureTypeSelect.disabled = !checkboxes.some(cb => cb.checked);
+                                        };
+                                        // Adicionar evento a todos os checkboxes
+                                        checkboxes.forEach(cb => cb.addEventListener('change', updateDropdownState));
+                                        // Estado inicial
+                                        updateDropdownState();
+
+                                        // ========== Listar os Conselhos ==========
+                                        // Referências aos elementos
+                                        const paisSelect = document.getElementById('pais-select');
+                                        const distritoSelect = document.getElementById('distrito-select');
+                                        const concelhoSelect = document.getElementById('concelho-select');
+                                        const distritosConcelhos = {
+                                            aveiro: ["Águeda", "Albergaria-a-Velha", "Anadia", "Arouca", "Aveiro", "Castelo de Paiva", "Espinho", "Estarreja", "Ílhavo", "Mealhada", "Murtosa", "Oliveira de Azeméis", "Oliveira do Bairro", "Ovar", "Santa Maria da Feira", "São João da Madeira", "Sever do Vouga", "Vagos", "Vale de Cambra"],
+                                            beja: ["Aljustrel", "Almodôvar", "Alvito", "Barrancos", "Beja", "Castro Verde", "Cuba", "Ferreira do Alentejo", "Mértola", "Moura", "Odemira", "Ourique", "Serpa", "Vidigueira"],
+                                            braga: ["Amares", "Barcelos", "Braga", "Cabeceiras de Basto", "Celorico de Basto", "Esposende", "Fafe", "Guimarães", "Póvoa de Lanhoso", "Terras de Bouro", "Vieira do Minho", "Vila Nova de Famalicão", "Vila Verde", "Vizela"],
+                                            braganca: ["Alfândega da Fé", "Bragança", "Carrazeda de Ansiães", "Freixo de Espada à Cinta", "Macedo de Cavaleiros", "Miranda do Douro", "Mirandela", "Mogadouro", "Torre de Moncorvo", "Vila Flor", "Vimioso", "Vinhais"],
+                                            castelo_branco: ["Belmonte", "Castelo Branco", "Covilhã", "Fundão", "Idanha-a-Nova", "Oleiros", "Penamacor", "Proença-a-Nova", "Sertã", "Vila de Rei", "Vila Velha de Ródão"],
+                                            coimbra: ["Arganil", "Cantanhede", "Coimbra", "Condeixa-a-Nova", "Figueira da Foz", "Góis", "Lousã", "Mira", "Miranda do Corvo", "Montemor-o-Velho", "Oliveira do Hospital", "Pampilhosa da Serra", "Penacova", "Penela", "Soure", "Tábua", "Vila Nova de Poiares"],
+                                            evora: ["Alandroal", "Arraiolos", "Borba", "Estremoz", "Évora", "Montemor-o-Novo", "Mora", "Mourão", "Portel", "Redondo", "Reguengos de Monsaraz", "Vendas Novas", "Viana do Alentejo", "Vila Viçosa"],
+                                            faro: ["Albufeira", "Alcoutim", "Aljezur", "Castro Marim", "Faro", "Lagoa", "Lagos", "Loulé", "Monchique", "Olhão", "Portimão", "São Brás de Alportel", "Silves", "Tavira", "Vila do Bispo", "Vila Real de Santo António"],
+                                            guarda: ["Aguiar da Beira", "Almeida", "Celorico da Beira", "Figueira de Castelo Rodrigo", "Fornos de Algodres", "Gouveia", "Guarda", "Manteigas", "Mêda", "Pinhel", "Sabugal", "Seia", "Trancoso", "Vila Nova de Foz Côa"],
+                                            leiria: ["Alcobaça", "Alvaiázere", "Ansião", "Batalha", "Bombarral", "Caldas da Rainha", "Castanheira de Pêra", "Figueiró dos Vinhos", "Leiria", "Marinha Grande", "Nazaré", "Óbidos", "Pedrógão Grande", "Peniche", "Pombal", "Porto de Mós"],
+                                            lisboa: ["Alenquer", "Amadora", "Arruda dos Vinhos", "Azambuja", "Cadaval", "Cascais", "Lisboa", "Loures", "Lourinhã", "Mafra", "Odivelas", "Oeiras", "Sintra", "Sobral de Monte Agraço", "Torres Vedras", "Vila Franca de Xira"],
+                                            portalegre: ["Alter do Chão", "Arronches", "Avis", "Campo Maior", "Castelo de Vide", "Crato", "Elvas", "Fronteira", "Gavião", "Marvão", "Monforte", "Nisa", "Ponte de Sor", "Portalegre", "Sousel"],
+                                            porto: ["Amarante", "Baião", "Felgueiras", "Gondomar", "Lousada", "Maia", "Marco de Canaveses", "Matosinhos", "Paços de Ferreira", "Paredes", "Penafiel", "Porto", "Póvoa de Varzim", "Santo Tirso", "São João da Madeira", "Trofa", "Valongo", "Vila do Conde", "Vila Nova de Gaia"],
+                                            santarem: ["Abrantes", "Alcanena", "Almeirim", "Alpiarça", "Benavente", "Cartaxo", "Chamusca", "Constância", "Coruche", "Entroncamento", "Ferreira do Zêzere", "Golegã", "Mação", "Ourém", "Rio Maior", "Salvaterra de Magos", "Santarém", "Sardoal", "Tomar", "Torres Novas", "Vila Nova da Barquinha"],
+                                            setubal: ["Alcácer do Sal", "Almada", "Barreiro", "Grândola", "Moita", "Montijo", "Palmela", "Santiago do Cacém", "Seixal", "Sesimbra", "Setúbal", "Sines"],
+                                            viana_do_castelo: ["Arcos de Valdevez", "Caminha", "Melgaço", "Monção", "Paredes de Coura", "Ponte da Barca", "Ponte de Lima", "Valença", "Viana do Castelo", "Vila Nova de Cerveira"],
+                                            vila_real: ["Alijó", "Boticas", "Chaves", "Mesão Frio", "Mondim de Basto", "Montalegre", "Murça", "Peso da Régua", "Ribeira de Pena", "Sabrosa", "Santa Marta de Penaguião", "Valpaços", "Vila Pouca de Aguiar", "Vila Real"],
+                                            viseu: ["Armamar", "Carregal do Sal", "Castro Daire", "Cinfães", "Lamego", "Mangualde", "Moimenta da Beira", "Mortágua", "Nelas", "Oliveira de Frades", "Penalva do Castelo", "Penedono", "Resende", "Santa Comba Dão", "São João da Pesqueira", "São Pedro do Sul", "Sátão", "Sernancelhe", "Tabuaço", "Tarouca", "Tondela", "Vila Nova de Paiva", "Viseu", "Vouzela"]
+                                        };
+
+                                        function setDisabled(select, disabled) {
+                                            select.disabled = disabled;
+                                            if (disabled) select.value = "";
                                         }
+
+                                        function atualizarDistritos() {
+                                            const isPortugal = paisSelect.value === "portugal";
+                                            setDisabled(distritoSelect, !isPortugal);
+                                            setDisabled(concelhoSelect, true);
+                                            concelhoSelect.innerHTML = '<option value="">Selecione um concelho</option>';
+                                        }
+
+                                        function preencherConcelhos() {
+                                            const distrito = distritoSelect.value;
+                                            const concelhos = distritosConcelhos[distrito] || [];
+
+                                            concelhoSelect.innerHTML = '<option value="">Selecione um concelho</option>';
+                                            setDisabled(concelhoSelect, concelhos.length === 0);
+
+                                            concelhos.forEach(nome => {
+                                                const option = document.createElement('option');
+                                                option.value = nome.toLowerCase().replace(/\s+/g, '_');
+                                                option.textContent = nome;
+                                                concelhoSelect.appendChild(option);
+                                            });
+                                        }
+
+                                        paisSelect.addEventListener('change', atualizarDistritos);
+                                        distritoSelect.addEventListener('change', preencherConcelhos);
+
+
+                                        document.querySelector('#search-contracts-button').addEventListener('click', () => {
+                                            const resultsTable = document.querySelector('#results-table');
+                                            resultsTable.style.display = 'block';
+                                            resultsTable.scrollIntoView({ behavior: 'smooth' });
+                                        });
+
+
                                     });
-                                });
-                            });
-
-                            // ========== Dropdown ==========
-                            const dropdownBtn = qs('#dropdown-button');
-                            const dropdownMenu = qs('#dropdown-menu');
-                            const searchInput = qs('.search-input');
-                            const selectedContract = qs('#selected-contract');
-
-                            const placeholderMap = {
-                                Contrato: "Pesquisar pelo objeto do Contrato",
-                                Anúncios: "Pesquisar pelo objeto do Anúncio",
-                                Entidades: "Pesquisar pelo nome da Entidade",
-                                "Modificações contratuais": "Pesquisar pela modificação contratual",
-                                "Bens móveis": "Pesquisar pelo bem móvel",
-                                "Não Celebrações de contrato": "Pesquisar pela não celebração",
-                                Impugnação: "Pesquisar pela impugnação",
-                            };
-
-                            dropdownBtn?.addEventListener('click', () => {
-                                const expanded = dropdownBtn.getAttribute("aria-expanded") === "true";
-                                dropdownBtn.setAttribute("aria-expanded", String(!expanded));
-                                dropdownMenu.style.display = expanded ? "none" : "block";
-                            });
-
-                            document.addEventListener('click', e => {
-                                if (!dropdownBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
-                                    dropdownBtn.setAttribute("aria-expanded", "false");
-                                    dropdownMenu.style.display = "none";
-                                }
-                            });
-
-                            qsa('.dropdown-item').forEach(item =>
-                                item.addEventListener('click', e => {
-                                    const val = e.currentTarget.dataset.value;
-                                    selectedContract.textContent = val;
-                                    searchInput.placeholder = placeholderMap[val] || '';
-                                    dropdownBtn.setAttribute("aria-expanded", "false");
-                                    dropdownMenu.style.display = "none";
-                                })
-                            );
-
-                            // ========== Popup de Download ==========
-                            const openBtn = qs('#openPopupBtn'), closeBtn = qs('#closeBtn'), overlay = qs('#overlay');
-                            const form = qs('#downloadForm'), verifyBtn = qs('#verifyCodeBtn'), resendBtn = qs('#resendCodeBtn');
-                            const step1 = qs('#downloadStep1'), step2 = qs('#downloadStep2'), step3 = qs('#downloadStep3');
-                            const inputs = qsa('.verification-input');
-                            let code = '', email = '';
-
-                            const showStep = step => [step1, step2, step3].forEach(s => s.classList.toggle('active', s === step));
-                            const genCode = () => (code = Math.floor(100 + Math.random() * 900).toString());
-                            const sendCode = (email, code) => {
-                                console.log(`Enviando código ${code} para ${email}`);
-                                return new Promise(res => setTimeout(() => res(true), 1000));
-                            };
-
-                            openBtn?.addEventListener('click', () => {
-                                overlay.style.display = 'flex';
-                                document.body.style.overflow = 'hidden';
-                            });
-
-                            const closePopup = () => {
-                                overlay.style.display = 'none';
-                                document.body.style.overflow = 'auto';
-                                showStep(step1);
-                                form.reset();
-                            };
-
-                            closeBtn?.addEventListener('click', closePopup);
-                            overlay?.addEventListener('click', e => e.target === overlay && closePopup());
-
-                            form?.addEventListener('submit', e => {
-                                e.preventDefault();
-                                email = qs('#email').value;
-                                sendCode(email, genCode()).then(() => {
-                                    showStep(step2);
-                                    inputs[0]?.focus();
-                                });
-                            });
-
-                            // Referências aos elementos
-                            const checkboxes = [
-                                document.getElementById('special-measures'),
-                                document.getElementById('include-mec')
-                            ];
-                            const measureTypeSelect = document.getElementById('measure-type');
-                            // Função para atualizar o estado do dropdown
-                            const updateDropdownState = () => {
-                                measureTypeSelect.disabled = !checkboxes.some(cb => cb.checked);
-                            };
-                            // Adicionar evento a todos os checkboxes
-                            checkboxes.forEach(cb => cb.addEventListener('change', updateDropdownState));
-                            // Estado inicial
-                            updateDropdownState();
-
-                            // ========== Listar os Conselhos ==========
-                            // Referências aos elementos
-                            const paisSelect = document.getElementById('pais-select');
-                            const distritoSelect = document.getElementById('distrito-select');
-                            const concelhoSelect = document.getElementById('concelho-select');
-                            const distritosConcelhos = {
-                                aveiro: ["Águeda", "Albergaria-a-Velha", "Anadia", "Arouca", "Aveiro", "Castelo de Paiva", "Espinho", "Estarreja", "Ílhavo", "Mealhada", "Murtosa", "Oliveira de Azeméis", "Oliveira do Bairro", "Ovar", "Santa Maria da Feira", "São João da Madeira", "Sever do Vouga", "Vagos", "Vale de Cambra"],
-                                beja: ["Aljustrel", "Almodôvar", "Alvito", "Barrancos", "Beja", "Castro Verde", "Cuba", "Ferreira do Alentejo", "Mértola", "Moura", "Odemira", "Ourique", "Serpa", "Vidigueira"],
-                                braga: ["Amares", "Barcelos", "Braga", "Cabeceiras de Basto", "Celorico de Basto", "Esposende", "Fafe", "Guimarães", "Póvoa de Lanhoso", "Terras de Bouro", "Vieira do Minho", "Vila Nova de Famalicão", "Vila Verde", "Vizela"],
-                                braganca: ["Alfândega da Fé", "Bragança", "Carrazeda de Ansiães", "Freixo de Espada à Cinta", "Macedo de Cavaleiros", "Miranda do Douro", "Mirandela", "Mogadouro", "Torre de Moncorvo", "Vila Flor", "Vimioso", "Vinhais"],
-                                castelo_branco: ["Belmonte", "Castelo Branco", "Covilhã", "Fundão", "Idanha-a-Nova", "Oleiros", "Penamacor", "Proença-a-Nova", "Sertã", "Vila de Rei", "Vila Velha de Ródão"],
-                                coimbra: ["Arganil", "Cantanhede", "Coimbra", "Condeixa-a-Nova", "Figueira da Foz", "Góis", "Lousã", "Mira", "Miranda do Corvo", "Montemor-o-Velho", "Oliveira do Hospital", "Pampilhosa da Serra", "Penacova", "Penela", "Soure", "Tábua", "Vila Nova de Poiares"],
-                                evora: ["Alandroal", "Arraiolos", "Borba", "Estremoz", "Évora", "Montemor-o-Novo", "Mora", "Mourão", "Portel", "Redondo", "Reguengos de Monsaraz", "Vendas Novas", "Viana do Alentejo", "Vila Viçosa"],
-                                faro: ["Albufeira", "Alcoutim", "Aljezur", "Castro Marim", "Faro", "Lagoa", "Lagos", "Loulé", "Monchique", "Olhão", "Portimão", "São Brás de Alportel", "Silves", "Tavira", "Vila do Bispo", "Vila Real de Santo António"],
-                                guarda: ["Aguiar da Beira", "Almeida", "Celorico da Beira", "Figueira de Castelo Rodrigo", "Fornos de Algodres", "Gouveia", "Guarda", "Manteigas", "Mêda", "Pinhel", "Sabugal", "Seia", "Trancoso", "Vila Nova de Foz Côa"],
-                                leiria: ["Alcobaça", "Alvaiázere", "Ansião", "Batalha", "Bombarral", "Caldas da Rainha", "Castanheira de Pêra", "Figueiró dos Vinhos", "Leiria", "Marinha Grande", "Nazaré", "Óbidos", "Pedrógão Grande", "Peniche", "Pombal", "Porto de Mós"],
-                                lisboa: ["Alenquer", "Amadora", "Arruda dos Vinhos", "Azambuja", "Cadaval", "Cascais", "Lisboa", "Loures", "Lourinhã", "Mafra", "Odivelas", "Oeiras", "Sintra", "Sobral de Monte Agraço", "Torres Vedras", "Vila Franca de Xira"],
-                                portalegre: ["Alter do Chão", "Arronches", "Avis", "Campo Maior", "Castelo de Vide", "Crato", "Elvas", "Fronteira", "Gavião", "Marvão", "Monforte", "Nisa", "Ponte de Sor", "Portalegre", "Sousel"],
-                                porto: ["Amarante", "Baião", "Felgueiras", "Gondomar", "Lousada", "Maia", "Marco de Canaveses", "Matosinhos", "Paços de Ferreira", "Paredes", "Penafiel", "Porto", "Póvoa de Varzim", "Santo Tirso", "São João da Madeira", "Trofa", "Valongo", "Vila do Conde", "Vila Nova de Gaia"],
-                                santarem: ["Abrantes", "Alcanena", "Almeirim", "Alpiarça", "Benavente", "Cartaxo", "Chamusca", "Constância", "Coruche", "Entroncamento", "Ferreira do Zêzere", "Golegã", "Mação", "Ourém", "Rio Maior", "Salvaterra de Magos", "Santarém", "Sardoal", "Tomar", "Torres Novas", "Vila Nova da Barquinha"],
-                                setubal: ["Alcácer do Sal", "Almada", "Barreiro", "Grândola", "Moita", "Montijo", "Palmela", "Santiago do Cacém", "Seixal", "Sesimbra", "Setúbal", "Sines"],
-                                viana_do_castelo: ["Arcos de Valdevez", "Caminha", "Melgaço", "Monção", "Paredes de Coura", "Ponte da Barca", "Ponte de Lima", "Valença", "Viana do Castelo", "Vila Nova de Cerveira"],
-                                vila_real: ["Alijó", "Boticas", "Chaves", "Mesão Frio", "Mondim de Basto", "Montalegre", "Murça", "Peso da Régua", "Ribeira de Pena", "Sabrosa", "Santa Marta de Penaguião", "Valpaços", "Vila Pouca de Aguiar", "Vila Real"],
-                                viseu: ["Armamar", "Carregal do Sal", "Castro Daire", "Cinfães", "Lamego", "Mangualde", "Moimenta da Beira", "Mortágua", "Nelas", "Oliveira de Frades", "Penalva do Castelo", "Penedono", "Resende", "Santa Comba Dão", "São João da Pesqueira", "São Pedro do Sul", "Sátão", "Sernancelhe", "Tabuaço", "Tarouca", "Tondela", "Vila Nova de Paiva", "Viseu", "Vouzela"]
-                            };
-
-                            function setDisabled(select, disabled) {
-                                select.disabled = disabled;
-                                if (disabled) select.value = "";
-                            }
-
-                            function atualizarDistritos() {
-                                const isPortugal = paisSelect.value === "portugal";
-                                setDisabled(distritoSelect, !isPortugal);
-                                setDisabled(concelhoSelect, true);
-                                concelhoSelect.innerHTML = '<option value="">Selecione um concelho</option>';
-                            }
-
-                            function preencherConcelhos() {
-                                const distrito = distritoSelect.value;
-                                const concelhos = distritosConcelhos[distrito] || [];
-
-                                concelhoSelect.innerHTML = '<option value="">Selecione um concelho</option>';
-                                setDisabled(concelhoSelect, concelhos.length === 0);
-
-                                concelhos.forEach(nome => {
-                                    const option = document.createElement('option');
-                                    option.value = nome.toLowerCase().replace(/\s+/g, '_');
-                                    option.textContent = nome;
-                                    concelhoSelect.appendChild(option);
-                                });
-                            }
-
-                            paisSelect.addEventListener('change', atualizarDistritos);
-                            distritoSelect.addEventListener('change', preencherConcelhos);
-
-
-                            document.querySelector('#search-contracts-button').addEventListener('click', () => {
-                                const resultsTable = document.querySelector('#results-table');
-                                resultsTable.style.display = 'block';
-                                resultsTable.scrollIntoView({ behavior: 'smooth' });
-                            });
-
-
-                        });
-                    </script>
+                                </script>
 
 </body>
 

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-pt">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,40 +9,83 @@
     <!-- Add Lucide icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
+
 <body>
     <div class="pagination-container">
         <div class="pagination-info">
-            <span id="showing-entries">Mostrando 1-25 de 100 registros</span>
+            <span id="showing-entries">
+                Mostrando <%= pagination.startIndex %>-<%= pagination.endIndex %> de <%= pagination.totalContracts %>
+                            registros
+            </span>
         </div>
         <div class="pagination-controls">
             <div class="items-per-page">
                 <label for="items-select">Contratos por página:</label>
                 <select id="items-select" class="items-select">
-                    <option value="25" selected>25</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
+                    <option value="25" <%=pagination.limit===25 ? 'selected' : '' %>>25</option>
+                    <option value="50" <%=pagination.limit===50 ? 'selected' : '' %>>50</option>
+                    <option value="100" <%=pagination.limit===100 ? 'selected' : '' %>>100</option>
                 </select>
             </div>
             <div class="page-navigation">
-                <button id="prev-page" class="page-button" disabled>
-                    <i data-lucide="chevron-left" class="page-icon"></i>
+                <button id="prev-page" class="page-button" <%=!pagination.hasPrevPage ? 'disabled' : '' %>
+                    data-page="<%= pagination.currentPage - 1 %>">
+                        <i data-lucide="chevron-left" class="page-icon"></i>
                 </button>
                 <div id="page-numbers" class="page-numbers">
-                    <button class="page-number active">1</button>
-                    <button class="page-number">2</button>
-                    <button class="page-number">3</button>
-                    <button class="page-number">4</button>
+                    <% for(let i=Math.max(1, pagination.currentPage - 2); i <=Math.min(pagination.totalPages,
+                        pagination.currentPage + 2); i++) { %>
+                        <button class="page-number <%= i === pagination.currentPage ? 'active' : '' %>"
+                            data-page="<%= i %>">
+                            <%= i %>
+                        </button>
+                        <% } %>
                 </div>
-                <button id="next-page" class="page-button">
-                    <i data-lucide="chevron-right" class="page-icon"></i>
+                <button id="next-page" class="page-button" <%=!pagination.hasNextPage ? 'disabled' : '' %>
+                    data-page="<%= pagination.currentPage + 1 %>">
+                        <i data-lucide="chevron-right" class="page-icon"></i>
                 </button>
             </div>
         </div>
     </div>
 
     <script>
-        // Initialize Lucide icons
-        lucide.createIcons();
+        document.addEventListener('DOMContentLoaded', function () {
+            // Função para mudar página
+            function changePage(page) {
+                const url = new URL(window.location);
+                url.searchParams.set('page', page);
+                window.location.href = url.toString();
+            }
+
+            // Função para mudar limite de itens por página
+            function changeLimit(limit) {
+                const url = new URL(window.location);
+                url.searchParams.set('limit', limit);
+                url.searchParams.set('page', 1); // Reset para primeira página
+                window.location.href = url.toString();
+            }
+
+            // Event listeners para botões de página
+            document.querySelectorAll('.page-number, .page-button').forEach(button => {
+                button.addEventListener('click', function () {
+                    if (!this.disabled && this.dataset.page) {
+                        changePage(this.dataset.page);
+                    }
+                });
+            });
+
+            // Event listener para mudança de limite
+            document.getElementById('items-select').addEventListener('change', function () {
+                changeLimit(this.value);
+            });
+
+            // Inicializar ícones Lucide
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
+        });
     </script>
 </body>
+
 </html>

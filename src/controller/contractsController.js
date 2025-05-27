@@ -1,20 +1,46 @@
 const mongoose = require('mongoose');
 const express = require('express');
+const { base_gov } = require('../model/model'); // Ajuste o caminho conforme necessário
 
-const baseGovSchema = new mongoose.Schema({}, { strict: false });
-const BaseGov = mongoose.model('Base_gov_2020', baseGovSchema, 'Base_gov_2020');
-
-const contractsGet = async (req, res, next) => {
+// Modifique o contractsController:
+const contractsGet = async (req, res) => {
   try {
-    console.log('Iniciando busca de contratos...');
-    console.log('Iniciando busca de contratos na coleção:', BaseGov.collection.name); // Indica o início da busca
-    const contracts = await BaseGov.find({});
-    console.log('Busca de contratos concluída. Resultados:', contracts); // Indica que a busca foi concluída
-    res.render('components/tab_base', { contracts });
+    console.log('Iniciando consulta ao MongoDB com paginação...');
+
+    // Parâmetros de paginação
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 25;
+    const skip = (page - 1) * limit;
+
+    // Consulta com paginação
+    const contracts = await base_gov.find({})
+      .skip(skip)
+      .limit(limit)
+      .lean();
+
+    // Contar total de documentos
+    const totalContracts = await base_gov.countDocuments({});
+
+    // Cálculos de paginação
+    const totalPages = Math.ceil(totalContracts / limit);
+    const pagination = {
+      currentPage: page,
+      totalPages: totalPages,
+      totalContracts: totalContracts,
+      limit: limit,
+      hasNextPage: page < totalPages,
+      hasPrevPage: page > 1,
+      startIndex: skip + 1,
+      endIndex: Math.min(skip + limit, totalContracts)
+    };
+
+    console.log(`Página ${page}: ${contracts.length} contratos de ${totalContracts} total`);
+
+    res.render('base_gov', { contracts, pagination });
   } catch (error) {
-    console.error('Erro ao buscar dados:', error);
-    res.status(500).send('Erro ao buscar dados da base_gov');
+    console.error('Erro completo:', error);
+    res.status(500).send('Erro no servidor');
   }
 };
 
-module.exports = { contractsGet };
+module.exports = { contractsGet };  
