@@ -11,6 +11,7 @@
 </head>
 
 <body>
+    
     <main class="container py-8">
         <h1 class="titulo">Estatísticas Mercado Público</h1>
         <div class="banner">
@@ -329,20 +330,20 @@
                             </div>
                         </div>
 
-                        <!-- Setor de Atividade Profissional -->
+                        <!-- Setor de Atividade Profissional (Setor Público/Privado) -->
                         <div class="overlay-form-group">
-                            <label for="setor" class="form-label">Setor de Atividade Profissional*</label>
-                            <select id="setor" name="setor" class="form-select" required>
+                            <label for="setor-principal" class="form-label">Setor de Atividade Profissional*</label>
+                            <select id="setor-principal" name="setor-principal" class="form-select" required>
                                 <option value="" disabled selected>Selecione um setor</option>
                                 <option value="01">01 - Setor Público </option>
                                 <option value="02">02 - Setor Privado</option>
                             </select>
                         </div>
 
-                        <!-- Setor de Atividade Profissional -->
+                        <!-- Setor de Atividade Profissional (Área de atividade) -->
                         <div class="overlay-form-group">
-                            <label for="setor" class="form-label">Setor de Atividade Profissional*</label>
-                            <select id="setor" name="setor" class="form-select" required>
+                            <label for="setor-atividade" class="form-label">Área de Atividade Profissional*</label>
+                            <select id="setor-atividade" name="setor-atividade" class="form-select" required>
                                 <option value="" disabled selected>Selecione um setor</option>
                                 <option value="1">Agricultura, produção animal, caça, floresta e pesca</option>
                                 <option value="2">Indústrias extractivas</option>
@@ -726,8 +727,14 @@
                                             resultsTable.scrollIntoView({ behavior: 'smooth' });
                                         });
 
+document.querySelector('form[action="/base_gov"]').addEventListener('submit', function(e) {
+    e.preventDefault();
+    // Your AJAX code here to fetch and display results
+});
+
 
                                     });
+                                    
                                 </script>
 
 </body>
