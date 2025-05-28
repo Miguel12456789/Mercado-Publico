@@ -30,97 +30,123 @@
         </div>
     </div>
 </div>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const itemsSelect = document.getElementById('items-select');
-        const pageNumbers = document.getElementById('page-numbers');
-        const prevPageBtn = document.getElementById('prev-page');
-        const nextPageBtn = document.getElementById('next-page');
-        const showingEntries = document.getElementById('showing-entries');
 
-        function loadContracts(page = 1, limit = itemsSelect.value) {
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Função para carregar dados via AJAX
+        function loadContracts(page, limit) {
             const url = new URL(window.location);
             url.searchParams.set('page', page);
             url.searchParams.set('limit', limit);
 
-            fetch(url, { headers: { 'Accept': 'application/json' } })
-                .then(res => res.json())
-                .then(({ contracts, pagination }) => {
-                    updateTable(contracts);
-                    updatePagination(pagination);
-                })
-                .catch(err => console.error('Erro ao carregar contratos:', err));
+            fetch(url.toString(), {
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                updateTable(data.contracts);
+                updatePagination(data.pagination);
+            })
+            .catch(error => console.error('Error:', error));
         }
 
+        // Função para atualizar a tabela
         function updateTable(contracts) {
             const tbody = document.querySelector('.results-table tbody');
             tbody.innerHTML = '';
 
-            if (contracts.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" class="no-results">Nenhum contrato encontrado. Tente outros critérios de pesquisa.</td></tr>`;
-                return;
-            }
-
-            contracts.forEach((contract, index) => {
+            if (contracts.length > 0) {
+                contracts.forEach((contract, index) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${contract.tiposContrato || 'N/A'}</td>
+                        <td>${contract.tipoProcedimento || 'N/A'}</td>
+                        <td>${contract.entidadesAdjudicantes?.[0]?.nome || contract.entidadesAdjudicantes?.[0] || 'N/A'}</td>
+                        <td>${contract.entidadesAdjudicatarias?.[0]?.nome || contract.entidadesAdjudicatarias?.[0] || 'N/A'}</td>
+                        <td>${contract.precoContratual || 'N/A'}</td>
+                        <td>${contract.dataPublicacao ? new Date(contract.dataPublicacao).toLocaleDateString('pt-PT') : 'N/A'}</td>
+                        <td>
+                            <button class="details-button" aria-label="Ver detalhes" data-contract-id="${index}">
+                                <i class="fas fa-plus-circle"></i>
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } else {
                 const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${contract.tiposContrato ?? 'N/A'}</td>
-                    <td>${contract.tipoProcedimento ?? 'N/A'}</td>
-                    <td>${contract.entidadesAdjudicantes?.[0]?.nome ?? contract.entidadesAdjudicantes?.[0] ?? 'N/A'}</td>
-                    <td>${contract.entidadesAdjudicatarias?.[0]?.nome ?? contract.entidadesAdjudicatarias?.[0] ?? 'N/A'}</td>
-                    <td>${contract.precoContratual ?? 'N/A'}</td>
-                    <td>${contract.dataPublicacao ? new Date(contract.dataPublicacao).toLocaleDateString('pt-PT') : 'N/A'}</td>
-                    <td>
-                        <button class="details-button" aria-label="Ver detalhes" data-contract-id="${index}">
-                            <i class="fas fa-plus-circle"></i>
-                        </button>
-                    </td>
-                `;
+                row.innerHTML = '<td colspan="7" class="no-results">Nenhum contrato encontrado. Tente outros critérios de pesquisa.</td>';
                 tbody.appendChild(row);
-            });
+            }
         }
 
-        function updatePagination({ currentPage, totalPages, limit, startIndex, endIndex, totalContracts, hasPrevPage, hasNextPage }) {
-            showingEntries.textContent = `Mostrando ${startIndex}-${endIndex} de ${totalContracts} registros`;
-            itemsSelect.value = limit;
+        // Função para atualizar a paginação
+        function updatePagination(pagination) {
+            document.getElementById('showing-entries').textContent =
+                `Mostrando ${pagination.startIndex}-${pagination.endIndex} de ${pagination.totalContracts} registros`;
+
+            document.getElementById('items-select').value = pagination.limit;
+
+            const pageNumbers = document.getElementById('page-numbers');
             pageNumbers.innerHTML = '';
 
-            const createPageButton = (page) => {
-                const btn = document.createElement('button');
-                btn.className = `page-number ${page === currentPage ? 'active' : ''}`;
-                btn.dataset.page = page;
-                btn.textContent = page;
-                btn.onclick = () => loadContracts(page, limit);
-                return btn;
-            };
-
-            const startPage = Math.max(1, currentPage - 2);
-            const endPage = Math.min(totalPages, currentPage + 2);
+            const startPage = Math.max(1, pagination.currentPage - 2);
+            const endPage = Math.min(pagination.totalPages, pagination.currentPage + 2);
 
             for (let i = startPage; i <= endPage; i++) {
-                pageNumbers.appendChild(createPageButton(i));
+                const button = document.createElement('button');
+                button.className = `page-number ${i === pagination.currentPage ? 'active' : ''}`;
+                button.dataset.page = i;
+                button.textContent = i;
+                button.addEventListener('click', function () {
+                    loadContracts(i, pagination.limit);
+                });
+                pageNumbers.appendChild(button);
             }
 
-            prevPageBtn.disabled = !hasPrevPage;
-            nextPageBtn.disabled = !hasNextPage;
+            const prevPageBtn = document.getElementById('prev-page');
+            const nextPageBtn = document.getElementById('next-page');
 
-            if (hasPrevPage) prevPageBtn.onclick = () => loadContracts(currentPage - 1, limit);
-            if (hasNextPage) nextPageBtn.onclick = () => loadContracts(currentPage + 1, limit);
+            prevPageBtn.disabled = !pagination.hasPrevPage;
+            nextPageBtn.disabled = !pagination.hasNextPage;
 
-            if (typeof lucide !== 'undefined') lucide.createIcons();
+            if (pagination.hasPrevPage) {
+                prevPageBtn.onclick = function () {
+                    loadContracts(pagination.currentPage - 1, pagination.limit);
+                };
+            }
+
+            if (pagination.hasNextPage) {
+                nextPageBtn.onclick = function () {
+                    loadContracts(pagination.currentPage + 1, pagination.limit);
+                };
+            }
+
+            // Recarregar ícones Lucide após atualizar DOM
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            }
         }
 
-        // Event listeners
-        itemsSelect.addEventListener('change', () => loadContracts(1, itemsSelect.value));
+        // Listener para mudança de limite (itens por página)
+        document.getElementById('items-select').addEventListener('change', function () {
+            loadContracts(1, this.value);
+        });
 
-        document.querySelectorAll('.page-number').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const page = parseInt(btn.dataset.page, 10);
-                loadContracts(page, itemsSelect.value);
+        // Listener inicial para botões de página gerados pelo EJS (antes de usar AJAX)
+        document.querySelectorAll('.page-number').forEach(button => {
+            button.addEventListener('click', function () {
+                const page = parseInt(this.dataset.page, 10);
+                const limit = parseInt(document.getElementById('items-select').value, 10);
+                loadContracts(page, limit);
             });
         });
 
-        if (typeof lucide !== 'undefined') lucide.createIcons();
+        // Inicializar ícones Lucide
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
     });
 </script>
-

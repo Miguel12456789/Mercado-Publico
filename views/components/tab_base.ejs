@@ -116,61 +116,16 @@
 
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                // Adicione event listeners para os botões de detalhes
-                document.querySelectorAll('.details-button').forEach(button => {
-                    button.addEventListener('click', function () {
-                        const contractId = this.getAttribute('data-contract-id');
-                        showContractDetails(contractId);
-                    });
-                });
+                // DOM elements
+                const countDisplay = document.getElementById('count-display');
+                const countNumber = document.getElementById('count-number');
 
-                // Função para mostrar os detalhes do contrato
-                function showContractDetails(contractId) {
-                    // Primeiro, esconda todos os detalhes de contrato
-                    document.querySelectorAll('.contract-details').forEach(detail => {
-                        detail.style.display = 'none';
-                    });
+                // Obter o total de contratos do atributo data
+                const contractCount = parseInt(countDisplay.dataset.totalContracts) || 0;
 
-                    // Mostre o container principal
-                    const mainContainer = document.getElementById('main-container');
-                    if (mainContainer) {
-                        mainContainer.style.display = 'block';
-                    }
-
-                    // Encontre os detalhes específicos do contrato e mostre-os
-                    const detailsContainer = document.getElementById(`details-${contractId}`);
-                    if (detailsContainer) {
-                        detailsContainer.style.display = 'block';
-                    }
-
-                    // Role a página para os detalhes
-                    detailsContainer?.scrollIntoView({ behavior: 'smooth' });
-                }
-
-                // Adicione event listener para o botão de voltar
-                document.querySelectorAll('.close-details').forEach(button => {
-                    button.addEventListener('click', function () {
-                        const contractId = this.getAttribute('data-contract-id');
-                        hideContractDetails(contractId);
-                    });
-                });
-
-                // Função para esconder os detalhes do contrato
-                function hideContractDetails(contractId) {
-                    const detailsContainer = document.getElementById(`details-${contractId}`);
-                    if (detailsContainer) {
-                        detailsContainer.style.display = 'none';
-                    }
-
-                    // Esconda o container principal se não houver mais detalhes visíveis
-                    const mainContainer = document.getElementById('main-container');
-                    if (mainContainer && !document.querySelector('.contract-details[style*="display: block"]')) {
-                        mainContainer.style.display = 'none';
-                    }
-
-                    // Role de volta para a tabela
-                    document.querySelector('.results-table')?.scrollIntoView({ behavior: 'smooth' });
-                }
+                // Atualiza e mostra o contador corretamente (sem animação)
+                countNumber.textContent = contractCount;
+                countDisplay.classList.add('visible');
 
                 // =================== Data Atual =========================
                 lucide.createIcons();
