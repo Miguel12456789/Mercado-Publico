@@ -48,6 +48,7 @@
             </div>
         </div>
     </div>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -64,9 +65,7 @@
                 })
                     .then(response => response.json())
                     .then(data => {
-                        // Atualizar a tabela
                         updateTable(data.contracts);
-                        // Atualizar a paginação
                         updatePagination(data.pagination);
                     })
                     .catch(error => console.error('Error:', error));
@@ -83,8 +82,8 @@
                         row.innerHTML = `
                         <td>${contract.tiposContrato || 'N/A'}</td>
                         <td>${contract.tipoProcedimento || 'N/A'}</td>
-                        <td>${contract.entidadesAdjudicantes && contract.entidadesAdjudicantes.length > 0 ? contract.entidadesAdjudicantes[0].nome || contract.entidadesAdjudicantes[0] : 'N/A'}</td>
-                        <td>${contract.entidadesAdjudicatarias && contract.entidadesAdjudicatarias.length > 0 ? contract.entidadesAdjudicatarias[0].nome || contract.entidadesAdjudicatarias[0] : 'N/A'}</td>
+                        <td>${contract.entidadesAdjudicantes?.[0]?.nome || contract.entidadesAdjudicantes?.[0] || 'N/A'}</td>
+                        <td>${contract.entidadesAdjudicatarias?.[0]?.nome || contract.entidadesAdjudicatarias?.[0] || 'N/A'}</td>
                         <td>${contract.precoContratual || 'N/A'}</td>
                         <td>${contract.dataPublicacao ? new Date(contract.dataPublicacao).toLocaleDateString('pt-PT') : 'N/A'}</td>
                         <td>
@@ -104,17 +103,11 @@
 
             // Função para atualizar a paginação
             function updatePagination(pagination) {
-                // Atualizar o contador
-                document.getElementById('count-number').textContent = pagination.totalContracts;
-
-                // Atualizar o texto "Mostrando X-Y de Z registros"
                 document.getElementById('showing-entries').textContent =
                     `Mostrando ${pagination.startIndex}-${pagination.endIndex} de ${pagination.totalContracts} registros`;
 
-                // Atualizar o dropdown de itens por página
                 document.getElementById('items-select').value = pagination.limit;
 
-                // Atualizar os botões de página
                 const pageNumbers = document.getElementById('page-numbers');
                 pageNumbers.innerHTML = '';
 
@@ -132,34 +125,48 @@
                     pageNumbers.appendChild(button);
                 }
 
-                // Atualizar botões de anterior/próximo
-                document.getElementById('prev-page').disabled = !pagination.hasPrevPage;
-                document.getElementById('next-page').disabled = !pagination.hasNextPage;
+                const prevPageBtn = document.getElementById('prev-page');
+                const nextPageBtn = document.getElementById('next-page');
+
+                prevPageBtn.disabled = !pagination.hasPrevPage;
+                nextPageBtn.disabled = !pagination.hasNextPage;
 
                 if (pagination.hasPrevPage) {
-                    document.getElementById('prev-page').onclick = function () {
+                    prevPageBtn.onclick = function () {
                         loadContracts(pagination.currentPage - 1, pagination.limit);
                     };
                 }
 
                 if (pagination.hasNextPage) {
-                    document.getElementById('next-page').onclick = function () {
+                    nextPageBtn.onclick = function () {
                         loadContracts(pagination.currentPage + 1, pagination.limit);
                     };
                 }
+
+                // Recarregar ícones Lucide após atualizar DOM
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                }
             }
 
-            // Event listener para mudança de limite
+            // Listener para mudança de limite (itens por página)
             document.getElementById('items-select').addEventListener('change', function () {
                 loadContracts(1, this.value);
             });
 
-            // Inicializar ícones Lucide
-            if (typeof lucide !== 'undefined') {
-                lucide.createIcons();
-            }
+            // Listener inicial para botões de página gerados pelo EJS (antes de usar AJAX)
+            document.querySelectorAll('.page-number').forEach(button => {
+                button.addEventListener('click', function () {
+                    const page = parseInt(this.dataset.page, 10);
+                    const limit = parseInt(document.getElementById('items-select').value, 10);
+                    loadContracts(page, limit);
+                });
+
+                // Inicializar ícones Lucide
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                }
+            });
         });
     </script>
 </body>
-
-</html>

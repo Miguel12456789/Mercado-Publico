@@ -730,13 +730,21 @@
                                         document.querySelector('form[action="/base_gov"]').addEventListener('submit', function (e) {
                                             e.preventDefault();
 
-                                            // Coletar dados do formulário
-                                            const formData = new FormData(this);
 
-                                            // Enviar via AJAX
-                                            fetch('/base_gov', {
-                                                method: 'POST',
-                                                body: formData,
+                                            const formData = new FormData(this);
+                                            const limit = document.getElementById('items-select')?.value || 25;
+
+                                            // Adicionar parâmetros de paginação
+                                            const url = new URL('/base_gov', window.location.origin);
+                                            url.searchParams.set('limit', limit);
+                                            url.searchParams.set('page', 1);
+
+                                            // Adicionar outros parâmetros do formulário
+                                            formData.forEach((value, key) => {
+                                                url.searchParams.set(key, value);
+                                            });
+
+                                            fetch(url, {
                                                 headers: {
                                                     'Accept': 'application/json'
                                                 }
@@ -756,11 +764,6 @@
                                                 })
                                                 .catch(error => console.error('Error:', error));
                                         });
-
-                                        // Funções auxiliares (as mesmas do arquivo de paginação)
-                                        function updateTable(contracts) { /* ... */ }
-                                        function updatePagination(pagination) { /* ... */ }
-
 
                                     });
 

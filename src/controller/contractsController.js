@@ -5,12 +5,16 @@ const { base_gov } = require('../model/model'); // Ajuste o caminho conforme nec
 // Modifique o contractsController:
 const contractsGet = async (req, res) => {
   try {
-    console.log('Iniciando consulta ao MongoDB com paginação...');
-    
-    // Parâmetros de paginação
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 25;
+
+    console.log('Recebidos query params:', req.query); // Adicione isto para depuração
+
+    // Parâmetros de paginação - garantir que são números válidos
+    const page = Math.max(1, parseInt(req.query.page) || 1);
+    const limit = [25, 50, 100].includes(parseInt(req.query.limit))
+      ? parseInt(req.query.limit)
+      : 25;
     const skip = (page - 1) * limit;
+
 
     // Consulta com paginação
     const contracts = await base_gov.find({})
