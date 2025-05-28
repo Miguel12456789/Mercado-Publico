@@ -730,34 +730,36 @@
                                         document.querySelector('form[action="/base_gov"]').addEventListener('submit', function (e) {
                                             e.preventDefault();
 
+                                            // Coletar dados do formulário
                                             const formData = new FormData(this);
-                                            const limit = document.getElementById('items-select')?.value || 25;
 
-                                            // Adicionar parâmetros de paginação
-                                            const url = new URL('/base_gov', window.location.origin);
-                                            url.searchParams.set('limit', limit);
-                                            url.searchParams.set('page', 1);
-
-                                            // Adicionar outros parâmetros do formulário
-                                            formData.forEach((value, key) => {
-                                                url.searchParams.set(key, value);
-                                            });
-
-                                            fetch(url, {
+                                            // Enviar via AJAX
+                                            fetch('/base_gov', {
+                                                method: 'POST',
+                                                body: formData,
                                                 headers: {
                                                     'Accept': 'application/json'
                                                 }
                                             })
                                                 .then(response => response.json())
                                                 .then(data => {
+                                                    // Mostrar a tabela de resultados
                                                     const resultsTable = document.querySelector('#results-table');
                                                     resultsTable.style.display = 'block';
+
+                                                    // Atualizar a tabela e paginação
                                                     updateTable(data.contracts);
                                                     updatePagination(data.pagination);
+
+                                                    // Rolar para a tabela
                                                     resultsTable.scrollIntoView({ behavior: 'smooth' });
                                                 })
                                                 .catch(error => console.error('Error:', error));
                                         });
+
+                                        // Funções auxiliares (as mesmas do arquivo de paginação)
+                                        function updateTable(contracts) { /* ... */ }
+                                        function updatePagination(pagination) { /* ... */ }
 
 
                                     });
