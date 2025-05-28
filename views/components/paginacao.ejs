@@ -1,160 +1,134 @@
-<!DOCTYPE html>
-<html lang="pt-pt">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="paginacao.css">
-    <title>Paginação</title>
-    <!-- Add Lucide icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-</head>
-
-<body>
-    <div class="pagination-container">
-        <div class="pagination-info">
-            <span id="showing-entries">
-                Mostrando <%= pagination.startIndex %>-<%= pagination.endIndex %> de <%= pagination.totalContracts %>
-                            registros
-            </span>
+<div class="pagination-container">
+    <div class="pagination-info">
+        <span id="showing-entries">
+            Mostrando <%= pagination.startIndex %>-<%= pagination.endIndex %> de <%= pagination.totalContracts %>
+                        registros
+        </span>
+    </div>
+    <div class="pagination-controls">
+        <div class="items-per-page">
+            <label for="items-select">Contratos por página:</label>
+            <select id="items-select" class="items-select">
+                <option value="25" <%=pagination.limit===25 ? 'selected' : '' %>>25</option>
+                <option value="50" <%=pagination.limit===50 ? 'selected' : '' %>>50</option>
+                <option value="100" <%=pagination.limit===100 ? 'selected' : '' %>>100</option>
+            </select>
         </div>
-        <div class="pagination-controls">
-            <div class="items-per-page">
-                <label for="items-select">Contratos por página:</label>
-                <select id="items-select" class="items-select">
-                    <option value="25" <%=pagination.limit===25 ? 'selected' : '' %>>25</option>
-                    <option value="50" <%=pagination.limit===50 ? 'selected' : '' %>>50</option>
-                    <option value="100" <%=pagination.limit===100 ? 'selected' : '' %>>100</option>
-                </select>
+        <div class="page-navigation">
+            <button id="prev-page" class="page-button" <%=!pagination.hasPrevPage ? 'disabled' : '' %> data-page="<%=
+                    pagination.currentPage - 1 %>">
+                    <i data-lucide="chevron-left" class="page-icon"></i>
+            </button>
+            <div id="page-numbers" class="page-numbers">
+                <% for (let i=Math.max(1, pagination.currentPage - 2); i <=Math.min(pagination.totalPages,
+                    pagination.currentPage + 2); i++) { %>
+                    <button class="page-number <%= i === pagination.currentPage ? 'active' : '' %>"
+                        data-page="<%= i %>">
+                        <%= i %>
+                    </button>
+                    <% } %>
             </div>
-            <div class="page-navigation">
-                <button id="prev-page" class="page-button" <%=!pagination.hasPrevPage ? 'disabled' : '' %>
-                    data-page="<%= pagination.currentPage - 1 %>">
-                        <i data-lucide="chevron-left" class="page-icon"></i>
-                </button>
-                <div id="page-numbers" class="page-numbers">
-                    <% for(let i=Math.max(1, pagination.currentPage - 2); i <=Math.min(pagination.totalPages,
-                        pagination.currentPage + 2); i++) { %>
-                        <button class="page-number <%= i === pagination.currentPage ? 'active' : '' %>"
-                            data-page="<%= i %>">
-                            <%= i %>
-                        </button>
-                        <% } %>
-                </div>
-                <button id="next-page" class="page-button" <%=!pagination.hasNextPage ? 'disabled' : '' %>
-                    data-page="<%= pagination.currentPage + 1 %>">
-                        <i data-lucide="chevron-right" class="page-icon"></i>
-                </button>
-            </div>
+            <button id="next-page" class="page-button" <%=!pagination.hasNextPage ? 'disabled' : '' %> data-page="<%=
+                    pagination.currentPage + 1 %>">
+                    <i data-lucide="chevron-right" class="page-icon"></i>
+            </button>
         </div>
     </div>
-    <<<<<<< HEAD </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const itemsSelect = document.getElementById('items-select');
+        const pageNumbers = document.getElementById('page-numbers');
+        const prevPageBtn = document.getElementById('prev-page');
+        const nextPageBtn = document.getElementById('next-page');
+        const showingEntries = document.getElementById('showing-entries');
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                // Função para carregar dados via AJAX
-                function loadContracts(page, limit) {
-                    const url = new URL(window.location);
-                    url.searchParams.set('page', page);
-                    url.searchParams.set('limit', limit);
+        function loadContracts(page = 1, limit = itemsSelect.value) {
+            const url = new URL(window.location);
+            url.searchParams.set('page', page);
+            url.searchParams.set('limit', limit);
 
-                    fetch(url.toString(), {
-                        headers: {
-                            'Accept': 'application/json'
-                        }
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            updateTable(data.contracts);
-                            updatePagination(data.pagination);
-                        })
-                        .catch(error => console.error('Error:', error));
-                }
+            fetch(url, { headers: { 'Accept': 'application/json' } })
+                .then(res => res.json())
+                .then(({ contracts, pagination }) => {
+                    window.updateTable(contracts);
+                    window.updatePagination(pagination);
+                })
+                .catch(err => console.error('Erro ao carregar contratos:', err));
+        }
 
-                // Função para atualizar a tabela
-                function updateTable(contracts) {
-                    const tbody = document.querySelector('.results-table tbody');
-                    tbody.innerHTML = '';
+        function updateTable(contracts) {
+            const tbody = document.querySelector('.results-table tbody');
+            tbody.innerHTML = '';
 
-                    if (contracts.length > 0) {
-                        contracts.forEach((contract, index) => {
-                            const row = document.createElement('tr');
-                            row.innerHTML = `
-                        tbody.appendChild(row);
-                    });
-                } else {
-                    const row = document.createElement('tr');
-                    row.innerHTML = '<td colspan="7" class="no-results">Nenhum contrato encontrado. Tente outros critérios de pesquisa.</td>';
-                    tbody.appendChild(row);
-                }
+            if (contracts.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="no-results">Nenhum contrato encontrado. Tente outros critérios de pesquisa.</td></tr>`;
+                return;
             }
 
-            // Função para atualizar a paginação
-            function updatePagination(pagination) {
-                document.getElementById('showing-entries').textContent =
-                    `Mostrando ${ pagination.startIndex } -${ pagination.endIndex } de ${ pagination.totalContracts } registros`;
-
-                document.getElementById('items-select').value = pagination.limit;
-
-                const pageNumbers = document.getElementById('page-numbers');
-                pageNumbers.innerHTML = '';
-
-                const startPage = Math.max(1, pagination.currentPage - 2);
-                const endPage = Math.min(pagination.totalPages, pagination.currentPage + 2);
-
-                for (let i = startPage; i <= endPage; i++) {
-                    const button = document.createElement('button');
-                    button.className = `page - number ${ i === pagination.currentPage ? 'active' : '' }`;
-                    button.dataset.page = i;
-                    button.textContent = i;
-                    button.addEventListener('click', function () {
-                        loadContracts(i, pagination.limit);
-                    });
-                    pageNumbers.appendChild(button);
-                }
-
-                const prevPageBtn = document.getElementById('prev-page');
-                const nextPageBtn = document.getElementById('next-page');
-
-                prevPageBtn.disabled = !pagination.hasPrevPage;
-                nextPageBtn.disabled = !pagination.hasNextPage;
-
-                if (pagination.hasPrevPage) {
-                    prevPageBtn.onclick = function () {
-                        loadContracts(pagination.currentPage - 1, pagination.limit);
-                    };
-                }
-
-                if (pagination.hasNextPage) {
-                    nextPageBtn.onclick = function () {
-                        loadContracts(pagination.currentPage + 1, pagination.limit);
-                    };
-                }
-
-                // Recarregar ícones Lucide após atualizar DOM
-                if (typeof lucide !== 'undefined') {
-                    lucide.createIcons();
-                }
-            }
-
-            // Listener para mudança de limite (itens por página)
-            document.getElementById('items-select').addEventListener('change', function () {
-                loadContracts(1, this.value);
+            contracts.forEach((contract, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                <td>${contract.tiposContrato ?? 'N/A'}</td>
+                <td>${contract.tipoProcedimento ?? 'N/A'}</td>
+                <td>${contract.entidadesAdjudicantes?.[0]?.nome ?? contract.entidadesAdjudicantes?.[0] ?? 'N/A'}</td>
+                <td>${contract.entidadesAdjudicatarias?.[0]?.nome ?? contract.entidadesAdjudicatarias?.[0] ?? 'N/A'}</td>
+                <td>${contract.precoContratual ?? 'N/A'}</td>
+                <td>${contract.dataPublicacao ? new Date(contract.dataPublicacao).toLocaleDateString('pt-PT') : 'N/A'}</td>
+                <td>
+                    <button class="details-button" aria-label="Ver detalhes" data-contract-id="${index}">
+                        <i class="fas fa-plus-circle"></i>
+                    </button>
+                </td>
+            `;
+                tbody.appendChild(row);
             });
+        }
 
-            // Listener inicial para botões de página gerados pelo EJS (antes de usar AJAX)
-            document.querySelectorAll('.page-number').forEach(button => {
-                button.addEventListener('click', function () {
-                    const page = parseInt(this.dataset.page, 10);
-                    const limit = parseInt(document.getElementById('items-select').value, 10);
-                    loadContracts(page, limit);
-                });
+        function updatePagination({ currentPage, totalPages, limit, startIndex, endIndex, totalContracts, hasPrevPage, hasNextPage }) {
+            showingEntries.textContent = `Mostrando ${startIndex}-${endIndex} de ${totalContracts} registros`;
+            itemsSelect.value = limit;
+            pageNumbers.innerHTML = '';
 
-                // Inicializar ícones Lucide
-                if (typeof lucide !== 'undefined') {
-                    lucide.createIcons();
-                }
+            const createPageButton = (page) => {
+                const btn = document.createElement('button');
+                btn.className = `page-number ${page === currentPage ? 'active' : ''}`;
+                btn.dataset.page = page;
+                btn.textContent = page;
+                btn.onclick = () => loadContracts(page, limit);
+                return btn;
+            };
+
+            const startPage = Math.max(1, currentPage - 2);
+            const endPage = Math.min(totalPages, currentPage + 2);
+
+            for (let i = startPage; i <= endPage; i++) {
+                pageNumbers.appendChild(createPageButton(i));
+            }
+
+            prevPageBtn.disabled = !hasPrevPage;
+            nextPageBtn.disabled = !hasNextPage;
+
+            if (hasPrevPage) prevPageBtn.onclick = () => loadContracts(currentPage - 1, limit);
+            if (hasNextPage) nextPageBtn.onclick = () => loadContracts(currentPage + 1, limit);
+
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+        }
+
+        // Torna as funções globais
+        window.updateTable = updateTable;
+        window.updatePagination = updatePagination;
+
+        // Event listeners
+        itemsSelect.addEventListener('change', () => loadContracts(1, itemsSelect.value));
+
+        document.querySelectorAll('.page-number').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const page = parseInt(btn.dataset.page, 10);
+                loadContracts(page, itemsSelect.value);
             });
         });
-        </script>
-</body>
+
+        if (typeof lucide !== 'undefined') lucide.createIcons();
+    });
+</script>
