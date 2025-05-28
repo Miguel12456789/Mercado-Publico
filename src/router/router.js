@@ -1,9 +1,12 @@
 const express = require('express');
 const router = express.Router();
+const emailController = require('../controller/emailController');
 const navegationController = require('./navegationController');
 const contractsController = require('../controller/contractsController');
 
 router.get("/", navegationController.home);
+
+router.post('/api/send-email', emailController.sendEmail);
 
 router.get("/base_gov", contractsController.contractsGet);
 

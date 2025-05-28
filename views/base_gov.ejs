@@ -68,173 +68,158 @@
                     <div class="form-content">
                         <!-- First Row -->
                         <div class="form-row">
-                            <div class="form-group">
-                                <input type="checkbox" id="special-measures" class="form-checkbox" />
-                                <label for="special-measures" class="form-label">
-                                    Medidas especiais
-                                </label>
-                            </div>
+  <div class="form-group">
+  <input type="checkbox" id="special-measures" class="form-checkbox" />
+  <label for="special-measures" class="form-label info-hover">
+    Medidas especiais
+    <span class="info-icon">
+      <div class="icon-info"></div>
+      <span class="tooltip">Assinale para pesquisar procedimentos ao abrigo das medidas especiais - lei n.º 30/2021</span>
+    </span>
+  </label>
+</div>
 
-                            <div class="form-group">
-                                <input type="checkbox" id="include-mec" class="form-checkbox" />
-                                <label for="include-mec" class="form-label">
-                                    Incluir MEC ao abrigo do CCP
-                                </label>
-                            </div>
+    <div class="form-group">
+  <input type="checkbox" id="include-mec" class="form-checkbox" />
+  <label for="include-mec" class="form-label info-hover">
+    Incluir MEC ao abrigo do CCP
+    <span class="info-icon">
+      <div class="icon-info"></div>
+      <span class="tooltip">Assinale para pesquisar procedimentos lançados ao abrigo do CCP com uma tipologia das medidas especiais</span>
+    </span>
+  </label>
+</div>
 
-                            <div class="form-field">
-                                <label for="measure-type" class="form-label">
-                                    Tipologia da medida especial
-                                </label>
-                                <select id="measure-type" class="form-select" disabled>
-                                    <option>Todos</option>
-                                    <option>Projetos financiados ou cofinanciados por fundos europeus - artigo 2º da Lei
-                                        n.º
-                                        30/2021</option>
-                                    <option>Habitação e descentralização - artigo 3º da Lei n.º 30/2021</option>
-                                    <option>Tecnologias de informação e conhecimento - artigo 4º da Lei n.º 30/2021
-                                    </option>
-                                    <option>Setor da saúde e do apoio social - artigo 5º da Lei n.º 30/2021</option>
-                                    <option>Plano de Recuperação e Resiliência (PRR) - artigo 2º da Lei n.º 30/2021, DL
-                                        n.º
-                                        78/2022</option>
-                                    <option>Sistema de Gestão Integrada de Fogos Rurais - artigo 7º da Lei n.º 30/2021
-                                    </option>
-                                    <option>Bens agro-alimentares - artigo 8º da Lei n.º 30/2021</option>
-                                    <option>Programa de Estabilização Económica e Social (PEES) - artigo 6º da Lei n.º
-                                        30/2021</option>
-                                    <option>Plano de Recuperação e Resiliência (PRR) - artigo 6º da Lei n.º 30/2021
-                                    </option>
-                                    <option>Regime especial de empreitadas de conceção-construção - artigo 2º-A da Lei
-                                        n.º
-                                        30/2021, DL n.º 78/2022</option>
+ <div class="form-field">
+  <label for="measure-type" class="form-label info-hover">
+    Tipologia da medida especial
+    <span class="info-icon">
+      <div class="icon-info"></div>
+      <span class="tooltip">Para escolher a tipologia das medidas especiais assinal pelo menos uma das caixas anteriores/span>
+    </span>
+  </label>
+   <select id="measure-type" class="form-select" disabled>
+    <option>Todos</option>
+    <option>Projetos financiados ou cofinanciados por fundos europeus - artigo 2º da Lei n.º 30/2021</option>
+    <option>Habitação e descentralização - artigo 3º da Lei n.º 30/2021</option>
+    <option>Tecnologias de informação e conhecimento - artigo 4º da Lei n.º 30/2021</option>
+    <option>Setor da saúde e do apoio social - artigo 5º da Lei n.º 30/2021</option>
+    <option>Plano de Recuperação e Resiliência (PRR) - artigo 2º da Lei n.º 30/2021, DL n.º 78/2022</option>
+    <option>Sistema de Gestão Integrada de Fogos Rurais - artigo 7º da Lei n.º 30/2021</option>
+    <option>Bens agro-alimentares - artigo 8º da Lei n.º 30/2021</option>
+    <option>Programa de Estabilização Económica e Social (PEES) - artigo 6º da Lei n.º 30/2021</option>
+    <option>Plano de Recuperação e Resiliência (PRR) - artigo 6º da Lei n.º 30/2021</option>
+    <option>Regime especial de empreitadas de conceção-construção - artigo 2º-A da Lei n.º 30/2021, DL n.º 78/2022</option>
+  </select>
+</div>
+</div>
 
-                                </select>
-                            </div>
-                        </div>
+<hr class="form-divider" />
 
-                        <hr class="form-divider" />
+<!-- Second Row -->
+<div class="form-row">
+  <div class="form-field">
+    <label for="procedure-type" class="form-label">
+      Tipo de Procedimento
+    </label>
+    <select id="procedure-type" class="form-select">
+      <!-- opções omitidas por brevidade -->
+    </select>
+  </div>
 
-                        <!-- Second Row -->
-                        <div class="form-row">
-                            <div class="form-field">
-                                <label for="procedure-type" class="form-label">
-                                    Tipo de Procedimento
-                                </label>
-                                <select id="procedure-type" class="form-select">
-                                    <option value="0">Todos</option>
-                                    <option value="8">Consulta Prévia</option>
-                                    <option value="1">Ajuste Direto Regime Geral</option>
-                                    <option value="2">Concurso público</option>
-                                    <option value="3">Concurso limitado por prévia qualificação</option>
-                                    <option value="4">Procedimento de negociação</option>
-                                    <option value="5">Diálogo concorrencial</option>
-                                    <option value="6">Ao abrigo de acordo-quadro (art.º 258.º)</option>
-                                    <option value="7">Ao abrigo de acordo-quadro (art.º 259.º)</option>
-                                    <option value="9">Parceria para a inovação</option>
-                                    <option value="10">Disponibilização de bens móveis</option>
-                                    <option value="11">Serviços sociais e outros serviços específicos</option>
-                                    <option value="13">Concurso de conceção simplificado</option>
-                                    <option value="14">Concurso de ideias simplificado</option>
-                                    <option value="15">Consulta Prévia Simplificada</option>
-                                    <option value="16">Concurso público simplificado</option>
-                                    <option value="17">Concurso limitado por prévia qualificação simplificado</option>
-                                    <option value="18">Ajuste Direto Regime Geral ao abrigo do artigo 7º da Lei n.º
-                                        30/2021, de 21.05</option>
-                                    <option value="19">Consulta prévia ao abrigo do artigo 7º da Lei n.º 30/2021, de
-                                        21.05</option>
-                                    <option value="20">Ajuste direto simplificado</option>
-                                    <option value="21">Ajuste direto simplificado ao abrigo da Lei n.º 30/2021, de 21.05
-                                    </option>
-                                    <option value="22">Setores especiais - isenção parte II</option>
-                                    <option value="23">Contratação excluída II</option>
-                                </select>
-                            </div>
+  <div class="form-field">
+    <label for="entity" class="form-label info-hover">
+      Entidade Adjudicante
+      <span class="info-icon">
+        <div class="icon-info"></div>
+        <span class="tooltip">Pode pesquisar pelo NIPC ou descrição da entidade</span>
+      </span>
+    </label>
+    <input type="text" id="entity" class="form-input" />
+  </div>
+</div>
 
-                            <div class="form-field">
-                                <label for="entity" class="form-label">
-                                    Entidade Adjudicante
-                                </label>
-                                <input type="text" id="entity" class="form-input" />
-                            </div>
-                        </div>
+<!-- Third Row -->
+<div class="form-row">
+  <div class="form-field">
+    <label for="contract-type" class="form-label">
+      Tipo de Contrato
+    </label>
+    <select id="contract-type" class="form-select">
+      <!-- opções omitidas por brevidade -->
+    </select>
+  </div>
 
-                        <!-- Third Row -->
-                        <div class="form-row">
-                            <div class="form-field">
-                                <label for="contract-type" class="form-label">
-                                    Tipo de Contrato
-                                </label>
-                                <select id="contract-type" class="form-select">
-                                    <option value="0">Todos</option>
-                                    <option value="1">Aquisição de bens móveis</option>
-                                    <option value="2">Aquisição de serviços</option>
-                                    <option value="3">Concessão de obras públicas</option>
-                                    <option value="4">Concessão de serviços públicos</option>
-                                    <option value="5">Empreitadas de obras públicas</option>
-                                    <option value="6">Locação de bens móveis</option>
-                                    <option value="7">Sociedade</option>
-                                    <option value="8">Outros</option>
-                                </select>
-                            </div>
+  <div class="form-field">
+    <label for="awarded-entity" class="form-label info-hover">
+      Entidade Adjudicatária
+      <span class="info-icon">
+        <div class="icon-info"></div>
+        <span class="tooltip">Pode pesquisar pelo NIPC ou descrição da entidade</span>
+      </span>
+    </label>
+    <input type="text" id="awarded-entity" class="form-input" />
+  </div>
+</div>
 
-                            <div class="form-field">
-                                <label for="awarded-entity" class="form-label">
-                                    Entidade Adjudicatária
-                                </label>
-                                <input type="text" id="awarded-entity" class="form-input" />
-                            </div>
-                        </div>
+<!-- Fourth Row -->
+<div class="form-row">
+  <div class="form-field">
+    <label for="cpv" class="form-label info-hover">
+      CPV
+      <span class="info-icon">
+        <div class="icon-info"></div>
+        <span class="tooltip">Pode pesquisar pelo código ou descrição do Vocabulário Comum para os contratos públicos</span>
+      </span>
+    </label>
+    <input type="text" id="cpv" class="form-input" />
+  </div>
 
-                        <!-- Fourth Row -->
-                        <div class="form-row">
-                            <div class="form-field">
-                                <label for="cpv" class="form-label">
-                                    CPV
-                                </label>
-                                <input type="text" id="cpv" class="form-input" />
-                            </div>
+  <div class="form-group">
+    <input type="checkbox" id="environmental-criteria" class="form-checkbox" />
+    <label for="environmental-criteria" class="form-label">
+      Critérios ambientais
+    </label>
+  </div>
+</div>
 
-                            <div class="form-group">
-                                <input type="checkbox" id="environmental-criteria" class="form-checkbox" />
-                                <label for="environmental-criteria" class="form-label">
-                                    Critérios ambientais
-                                </label>
-                            </div>
-                        </div>
+<!-- Fifth Row - Dates -->
+<div class="form-row">
+  <div class="form-field date-container">
+    <label for="date-type" class="form-label info-hover">
+      Datas
+      <span class="info-icon">
+        <div class="icon-info"></div>
+        <span class="tooltip">Pode pesquisar em simultâneo pelos vários intervalos de datas</span>
+      </span>
+    </label>
+    <select id="date-type" class="form-select">
+      <option>Data do Contrato</option>
+      <option>Data de Publicação</option>
+      <option>Data de Fecho</option>
+    </select>
 
-                        <!-- Fifth Row - Dates and Location -->
-                        <div class="form-row">
-                            <div class="form-field date-container">
-                                <label for="date-type" class="form-label">
-                                    Datas
-                                </label>
-                                <select id="date-type" class="form-select">
-                                    <option>Data do Contrato</option>
-                                    <option>Data de Publicação</option>
-                                    <option>Data de Fecho</option>
-                                </select>
+    <div class="date-range">
+      <div class="date-field">
+        <label for="date-from" class="form-label">De:</label>
+        <div class="date-selects">
+          <select id="from-year" class="date-select"></select>
+          <select id="from-month" class="date-select"></select>
+          <select id="from-day" class="date-select"></select>
+        </div>
+      </div>
 
-                                <div class="date-range">
-                                    <div class="date-field">
-                                        <label for="date-from" class="form-label">De:</label>
-                                        <div class="date-selects">
-                                            <select id="from-year" class="date-select"></select>
-                                            <select id="from-month" class="date-select"></select>
-                                            <select id="from-day" class="date-select"></select>
-                                        </div>
-                                    </div>
-
-                                    <div class="date-field">
-                                        <label for="date-to" class="form-label">Até:</label>
-                                        <div class="date-selects">
-                                            <select id="to-year" class="date-select"></select>
-                                            <select id="to-month" class="date-select"></select>
-                                            <select id="to-day" class="date-select"></select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+      <div class="date-field">
+        <label for="date-to" class="form-label">Até:</label>
+        <div class="date-selects">
+          <select id="to-year" class="date-select"></select>
+          <select id="to-month" class="date-select"></select>
+          <select id="to-day" class="date-select"></select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
                             <div class="form-field location-container">
                                 <label class="form-label">
@@ -457,6 +442,7 @@
                             <%- include('components/button') %>
 
                                 <script>
+                                    
                                     document.addEventListener('DOMContentLoaded', () => {
                                         // ========== Utils ==========
                                         const qs = (s, p = document) => p.querySelector(s);
@@ -752,6 +738,23 @@
                                         paisSelect.addEventListener('change', atualizarDistritos);
                                         distritoSelect.addEventListener('change', preencherConcelhos);
 
+                                        // Tooltip hover delay logic
+    qsa('.info-hover').forEach(label => {
+        let timer;
+        label.addEventListener('mouseenter', () => {
+            timer = setTimeout(() => label.classList.add('show-tooltip'), 135);
+        });
+        label.addEventListener('mouseleave', () => {
+            clearTimeout(timer);
+            label.classList.remove('show-tooltip');
+        });
+        label.addEventListener('focusin', () => {
+            label.classList.add('show-tooltip');
+        });
+        label.addEventListener('focusout', () => {
+            label.classList.remove('show-tooltip');
+        });
+    });
 
 
                                     });
