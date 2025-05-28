@@ -48,50 +48,38 @@
             </div>
         </div>
     </div>
-    </div>
+    <<<<<<< HEAD </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Função para carregar dados via AJAX
-            function loadContracts(page, limit) {
-                const url = new URL(window.location);
-                url.searchParams.set('page', page);
-                url.searchParams.set('limit', limit);
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Função para carregar dados via AJAX
+                function loadContracts(page, limit) {
+                    const url = new URL(window.location);
+                    url.searchParams.set('page', page);
+                    url.searchParams.set('limit', limit);
 
-                fetch(url.toString(), {
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        updateTable(data.contracts);
-                        updatePagination(data.pagination);
+                    fetch(url.toString(), {
+                        headers: {
+                            'Accept': 'application/json'
+                        }
                     })
-                    .catch(error => console.error('Error:', error));
-            }
+                        .then(response => response.json())
+                        .then(data => {
+                            updateTable(data.contracts);
+                            updatePagination(data.pagination);
+                        })
+                        .catch(error => console.error('Error:', error));
+                }
 
-            // Função para atualizar a tabela
-            function updateTable(contracts) {
-                const tbody = document.querySelector('.results-table tbody');
-                tbody.innerHTML = '';
+                // Função para atualizar a tabela
+                function updateTable(contracts) {
+                    const tbody = document.querySelector('.results-table tbody');
+                    tbody.innerHTML = '';
 
-                if (contracts.length > 0) {
-                    contracts.forEach((contract, index) => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                        <td>${contract.tiposContrato || 'N/A'}</td>
-                        <td>${contract.tipoProcedimento || 'N/A'}</td>
-                        <td>${contract.entidadesAdjudicantes?.[0]?.nome || contract.entidadesAdjudicantes?.[0] || 'N/A'}</td>
-                        <td>${contract.entidadesAdjudicatarias?.[0]?.nome || contract.entidadesAdjudicatarias?.[0] || 'N/A'}</td>
-                        <td>${contract.precoContratual || 'N/A'}</td>
-                        <td>${contract.dataPublicacao ? new Date(contract.dataPublicacao).toLocaleDateString('pt-PT') : 'N/A'}</td>
-                        <td>
-                            <button class="details-button" aria-label="Ver detalhes" data-contract-id="${index}">
-                                <i class="fas fa-plus-circle"></i>
-                            </button>
-                        </td>
-                    `;
+                    if (contracts.length > 0) {
+                        contracts.forEach((contract, index) => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
                         tbody.appendChild(row);
                     });
                 } else {
@@ -104,7 +92,7 @@
             // Função para atualizar a paginação
             function updatePagination(pagination) {
                 document.getElementById('showing-entries').textContent =
-                    `Mostrando ${pagination.startIndex}-${pagination.endIndex} de ${pagination.totalContracts} registros`;
+                    `Mostrando ${ pagination.startIndex } -${ pagination.endIndex } de ${ pagination.totalContracts } registros`;
 
                 document.getElementById('items-select').value = pagination.limit;
 
@@ -116,7 +104,7 @@
 
                 for (let i = startPage; i <= endPage; i++) {
                     const button = document.createElement('button');
-                    button.className = `page-number ${i === pagination.currentPage ? 'active' : ''}`;
+                    button.className = `page - number ${ i === pagination.currentPage ? 'active' : '' }`;
                     button.dataset.page = i;
                     button.textContent = i;
                     button.addEventListener('click', function () {
@@ -168,5 +156,5 @@
                 }
             });
         });
-    </script>
+        </script>
 </body>
