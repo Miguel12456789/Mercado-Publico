@@ -12,14 +12,8 @@ const contractSchema = new mongoose.Schema({
     fundamentacaoAjusteDireto: { type: String, required: true },
     regime: { type: String, required: true },
     criteriosMateriais: { type: String, required: true },
-    entidadesAdjudicantes: [{
-        nome: { type: String, required: true },
-        nif: { type: String }
-    }],
-    entidadesAdjudicatarias: [{
-        nome: { type: String, required: true },
-        nif: { type: String }
-    }],
+    entidadesAdjudicantes: { type: String, required: true },
+    entidadesAdjudicatarias: { type: String, required: true },
     objetoContrato: { type: String, required: true },
     procedimentoCentralizado: { type: String, required: true },
     cpvs: { type: String, required: true },
@@ -27,11 +21,11 @@ const contractSchema = new mongoose.Schema({
     precoContratual: { type: Number, required: true },
     prazoExecucao: { type: String, required: true },
     localExecucao: { type: String, required: true },
-    entidadesConcorrentes: [{}],
+    entidadesConcorrentes: { type: String, required: true },
     anuncio: { type: String, required: true },
     pecasProcedimento: { type: String, required: true },
     modificacoesContratuais: { type: String, required: true },
-    documentos: [{}],
+    documentos: { type: String, required: true },
     observacoes: { type: String, required: true },
     criteriosAmbientais: { type: String, required: true },
     justificacaoNaoReducaoEscrito: { type: String, required: true },
