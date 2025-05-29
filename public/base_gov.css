@@ -34,12 +34,11 @@ body {
 
 .container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1300px;
   margin-left: auto;
   margin-right: auto;
   padding-left: 2rem;
   padding-right: 2rem;
-  margin-top: 1rem;
 }
 
 /* Header */
@@ -440,12 +439,14 @@ main {
 
 .info-box p:first-child {
   font-weight: bold;
-  text-align: center; /* Centraliza o primeiro parágrafo */
+  text-align: center;
+  /* Centraliza o primeiro parágrafo */
   margin-bottom: 8px;
 }
 
 .info-box p:last-child {
-  text-align: left; /* Alinha o segundo parágrafo à esquerda */
+  text-align: center;
+  /* Alinha o segundo parágrafo à esquerda */
 }
 
 .info-box p {
@@ -607,35 +608,38 @@ main {
 }
 
 .phone-input-container {
-    display: flex;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
 .country-code {
-    background-color: #f3f4f6;
-    border: 1px solid #e5e7eb;
-    border-right: none;
-    border-radius: 0.375rem 0 0 0.375rem;
-    padding: 0.75rem;
-    font-size: 0.9rem;
-    color: #4b5563;
-    font-weight: 500;
+  background-color: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-right: none;
+  border-radius: 0.375rem 0 0 0.375rem;
+  padding: 0.75rem;
+  font-size: 0.9rem;
+  color: #4b5563;
+  font-weight: 500;
 }
 
 .phone-input {
-    border-radius: 0 0.375rem 0.375rem 0;
-    flex: 1;
+  border-radius: 0 0.375rem 0.375rem 0;
+  flex: 1;
 }
 
 .name-fields {
   display: flex;
-  gap: 1rem; /* Espaço entre Nome e Sobrenome */
+  gap: 1rem;
+  /* Espaço entre Nome e Sobrenome */
 }
 
 .name-fields .overlay-form-group {
-  flex: 1; /* Faz os campos terem o mesmo tamanho */
-  margin-bottom: 1.25rem; /* Preserva o espaçamento inferior */
+  flex: 1;
+  /* Faz os campos terem o mesmo tamanho */
+  margin-bottom: 1.25rem;
+  /* Preserva o espaçamento inferior */
 }
 
 /* CAPTCHA */
@@ -675,13 +679,11 @@ main {
   left: 0;
   width: 100%;
   height: 100%;
-  background: repeating-linear-gradient(
-    45deg,
-    transparent,
-    transparent 5px,
-    rgba(0, 0, 0, 0.05) 5px,
-    rgba(0, 0, 0, 0.05) 10px
-  );
+  background: repeating-linear-gradient(45deg,
+      transparent,
+      transparent 5px,
+      rgba(0, 0, 0, 0.05) 5px,
+      rgba(0, 0, 0, 0.05) 10px);
   z-index: -1;
 }
 
@@ -717,8 +719,10 @@ main {
 }
 
 .verification-icon i {
-  font-size: 20rem; /* Aumente o tamanho conforme necessário */
-  color: #3c6c2a; /* Cor opcional */
+  font-size: 20rem;
+  /* Aumente o tamanho conforme necessário */
+  color: #3c6c2a;
+  /* Cor opcional */
 }
 
 .verification-container h3 {
@@ -818,6 +822,69 @@ main {
   background-color: #4d8836;
 }
 
+/* Tooltip styles */
+.tooltip-container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.info-icon {
+  width: 16px;
+  height: 16px;
+  color: #6b7280;
+  transition: color 0.2s ease;
+}
+
+.info-icon:hover {
+  color: #3c6c2a;
+}
+
+.tooltip {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  background-color: #1f2937;
+  color: white;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  width: 250px;
+  line-height: 1.4;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  z-index: 1000;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+  /* Impede que o tooltip interfira com outros elementos */
+}
+
+.tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 20px;
+  border: 5px solid transparent;
+  border-top-color: #1f2937;
+}
+
+/* Tooltip aparece apenas quando hover no ícone ou no label */
+.info-icon:hover+.tooltip,
+.form-label:hover+.info-icon+.tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Para manter o tooltip visível quando o mouse está sobre ele */
+.tooltip:hover {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
 /* Responsive styles */
 @media (max-width: 768px) {
   .search-row {
@@ -857,6 +924,21 @@ main {
   .format-options {
     flex-direction: column;
     gap: 0.5rem;
+  }
+
+  .tooltip {
+    position: fixed;
+    bottom: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 280px;
+    text-align: center;
+  }
+
+  .tooltip::after {
+    display: none;
   }
 }
 

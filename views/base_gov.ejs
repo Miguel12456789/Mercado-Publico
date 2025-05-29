@@ -51,16 +51,11 @@
                             </div>
                             <div class="dropdown-item" data-value="Bens móveis">Bens móveis</div>
                             <div class="dropdown-item" data-value="Não Celebrações de contrato">Não Celebrações de
-                                contrato
-                            </div>
+                                contrato</div>
                             <div class="dropdown-item" data-value="Impugnação">Impugnações</div>
                         </div>
                     </div>
                     <input type="text" placeholder="Pesquisar pelo objeto do Contrato" class="search-input" />
-                    <!-- <button type="submit" id="search-contracts-button" class="search-button">
-                        <i data-lucide="search" class="icon-small"></i>
-                        <span>Pesquisar</span>
-                    </button> -->
                 </div>
 
                 <!-- Advanced Search Form -->
@@ -70,34 +65,56 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <input type="checkbox" id="special-measures" class="form-checkbox" />
-                                <label for="special-measures" class="form-label">
-                                    Medidas especiais
-                                </label>
+                                <div class="tooltip-container">
+                                    <label for="special-measures" class="form-label">
+                                        Medidas especiais
+                                    </label>
+                                    <i data-lucide="info" class="info-icon"></i>
+                                    <div class="tooltip">
+                                        Medidas especiais aplicáveis aos contratos públicos de acordo com a Lei n.º
+                                        30/2021, de 21 de maio.
+                                        Inclui medidas para projetos financiados por fundos europeus, habitação,
+                                        tecnologias de informação,
+                                        saúde e outros setores específicos.
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="form-group">
                                 <input type="checkbox" id="include-mec" class="form-checkbox" />
-                                <label for="include-mec" class="form-label">
-                                    Incluir MEC ao abrigo do CCP
-                                </label>
+                                <div class="tooltip-container">
+                                    <label for="include-mec" class="form-label">
+                                        Incluir MEC ao abrigo do CCP
+                                    </label>
+                                    <i data-lucide="info" class="info-icon"></i>
+                                    <div class="tooltip">
+                                        Assinale para pesquisar procedimentos lançados ao abrigo do CCP com uma
+                                        tipologia das medidas especiais
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="form-field">
-                                <label for="measure-type" class="form-label">
-                                    Tipologia da medida especial
-                                </label>
+                                <div class="tooltip-container">
+                                    <label for="measure-type" class="form-label">
+                                        Tipologia da medida especial
+                                    </label>
+                                    <i data-lucide="info" class="info-icon"></i>
+                                    <div class="tooltip">
+                                        Para escolher a tipologia das medidas especiais assinale pelo menos uma das
+                                        caixas anteriores
+                                    </div>
+                                </div>
                                 <select id="measure-type" class="form-select" disabled>
                                     <option>Todos</option>
                                     <option>Projetos financiados ou cofinanciados por fundos europeus - artigo 2º da Lei
-                                        n.º
-                                        30/2021</option>
+                                        n.º 30/2021</option>
                                     <option>Habitação e descentralização - artigo 3º da Lei n.º 30/2021</option>
                                     <option>Tecnologias de informação e conhecimento - artigo 4º da Lei n.º 30/2021
                                     </option>
                                     <option>Setor da saúde e do apoio social - artigo 5º da Lei n.º 30/2021</option>
                                     <option>Plano de Recuperação e Resiliência (PRR) - artigo 2º da Lei n.º 30/2021, DL
-                                        n.º
-                                        78/2022</option>
+                                        n.º 78/2022</option>
                                     <option>Sistema de Gestão Integrada de Fogos Rurais - artigo 7º da Lei n.º 30/2021
                                     </option>
                                     <option>Bens agro-alimentares - artigo 8º da Lei n.º 30/2021</option>
@@ -106,9 +123,7 @@
                                     <option>Plano de Recuperação e Resiliência (PRR) - artigo 6º da Lei n.º 30/2021
                                     </option>
                                     <option>Regime especial de empreitadas de conceção-construção - artigo 2º-A da Lei
-                                        n.º
-                                        30/2021, DL n.º 78/2022</option>
-
+                                        n.º 30/2021, DL n.º 78/2022</option>
                                 </select>
                             </div>
                         </div>
@@ -152,9 +167,15 @@
                             </div>
 
                             <div class="form-field">
-                                <label for="entity" class="form-label">
-                                    Entidade Adjudicante
-                                </label>
+                                <div class="tooltip-container">
+                                    <label for="entity" class="form-label">
+                                        Entidade Adjudicante
+                                    </label>
+                                    <i data-lucide="info" class="info-icon"></i>
+                                    <div class="tooltip">
+                                        Pode pesquisar pelo NIPC ou descrição da entidade
+                                    </div>
+                                </div>
                                 <input type="text" id="entity" class="form-input" />
                             </div>
                         </div>
@@ -179,9 +200,15 @@
                             </div>
 
                             <div class="form-field">
-                                <label for="awarded-entity" class="form-label">
-                                    Entidade Adjudicatária
-                                </label>
+                                <div class="tooltip-container">
+                                    <label for="awarded-entity" class="form-label">
+                                        Entidade Adjudicatária
+                                    </label>
+                                    <i data-lucide="info" class="info-icon"></i>
+                                    <div class="tooltip">
+                                        Pode pesquisar pelo NIPC ou descrição da entidade
+                                    </div>
+                                </div>
                                 <input type="text" id="awarded-entity" class="form-input" />
                             </div>
                         </div>
@@ -189,9 +216,16 @@
                         <!-- Fourth Row -->
                         <div class="form-row">
                             <div class="form-field">
-                                <label for="cpv" class="form-label">
-                                    CPV
-                                </label>
+                                <div class="tooltip-container">
+                                    <label for="cpv" class="form-label">
+                                        CPV
+                                    </label>
+                                    <i data-lucide="info" class="info-icon"></i>
+                                    <div class="tooltip">
+                                        Pode pesquisar pelo código ou descrição do Vocabulário Comum para os Contratos
+                                        Públicos"
+                                    </div>
+                                </div>
                                 <input type="text" id="cpv" class="form-input" />
                             </div>
 
@@ -206,9 +240,15 @@
                         <!-- Fifth Row - Dates and Location -->
                         <div class="form-row">
                             <div class="form-field date-container">
-                                <label for="date-type" class="form-label">
-                                    Datas
-                                </label>
+                                <div class="tooltip-container">
+                                    <label for="date-type" class="form-label">
+                                        Datas
+                                    </label>
+                                    <i data-lucide="info" class="info-icon"></i>
+                                    <div class="tooltip">
+                                        Pode pesquisar em simultâneo pelos vários intervalos de datas
+                                    </div>
+                                </div>
                                 <select id="date-type" class="form-select">
                                     <option>Data do Contrato</option>
                                     <option>Data de Publicação</option>
@@ -370,10 +410,9 @@
                                 <option value="18">Actividades artísticas, de espectáculos, desportivas e
                                     recreativas
                                 </option>
-                                <option value="19">Outras actividades de serviços</option>
-                                <option value="20">Actividades das famílias empregadoras de pessoal doméstico e
+                                <option value="19">Actividades das famílias empregadoras de pessoal doméstico e
                                     actividades de produção das famílias para uso próprio</option>
-                                <option value="21">Actividades dos organismos internacionais e outras instituições
+                                <option value="20">Actividades dos organismos internacionais e outras instituições
                                     extra-territoriais</option>
                             </select>
                         </div>
