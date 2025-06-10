@@ -379,17 +379,6 @@
             </div>
         </div>
   <script>
-    // index.js
-const sendEmail = require('mailer.js').sendEmail;
-
-(async () => {
-  try {
-    await sendEmail();
-    console.log("Email enviado com sucesso!");
-  } catch (error) {
-    console.error("Erro ao enviar email:", error);
-  }
-})();
 
 document.addEventListener('DOMContentLoaded', function () {
   const form = document.getElementById('downloadForm');

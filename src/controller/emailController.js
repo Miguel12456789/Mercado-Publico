@@ -8,10 +8,10 @@ exports.sendEmail = async (req, res) => {
 
   // Configure o transporter do nodemailer (ajuste para o seu serviço de email)
   const transporter = nodemailer.createTransport({
-    service: 'gmail', // ou outro serviço SMTP
+    service: 'gmail',
     auth: {
       user: 'testeemailsender1@gmail.com',
-      pass: 'testeemail1' // Use variáveis de ambiente para segurança
+      pass: 'chmg sxij adrx fvin' // Troque aqui pela senha de app gerada
     }
   });
 
@@ -24,10 +24,10 @@ exports.sendEmail = async (req, res) => {
 
   try {
     await transporter.sendMail(mailOptions);
-    // Salve o código na sessão para posterior verificação
     if (req.session) req.session.verificationCode = code;
     res.json({ success: true });
   } catch (error) {
+    console.error("Erro ao enviar email:", error); // <-- Aqui mostra o erro no terminal
     res.json({ success: false, message: error.message });
   }
 };
