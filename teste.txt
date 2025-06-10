@@ -1,1 +1,231 @@
-data-contract-id="4"
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhe Contrato - Helpdesk</title>
+    <link rel="stylesheet" href="detalhes.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body>
+    <!-- Container principal que fica oculto inicialmente -->
+    <div id="main-container" class="container" style="display: none;">
+        <!-- Breadcrumb Navigation -->
+        <div class="breadcrumb">
+            <a href="/base_gov">Início</a> / Detalhes
+        </div>
+
+        <!-- Last Update -->
+        <div class="last-update">
+            Última atualização: <span id="data-atualizacao"></span>
+        </div>
+
+        <main class="content-container">
+            <!-- Detalhes do Contrato -->
+            <div id="contract-details-container">
+                <!-- Detalhes do Contrato -->
+                <div class="contract-details" id="details-4">
+                    <div class="page-header">
+                        <div class="title-section">
+                            <h1 class="main-title">DETALHES</h1>
+                            <h2 class="subtitle">Contrato</h2>
+                        </div>
+                        <!-- <div class="action-buttons">
+                            <button id="emailButton" class="email-button"
+                                aria-label="Enviar detalhe do contrato por email">
+                                <i data-lucide="mail" class="email-icon"></i>
+                                ENVIAR POR EMAIL
+                            </button>
+                        </div> -->
+                    </div>
+
+                    <section class="detail-section">
+                        <h3 class="section-title">Informação detalhada</h3>
+
+                        <div class="info-card">
+                            <div class="info-table-container">
+                                <table class="info-table">
+                                    <tbody>
+                                        <tr>
+                                            <th>Data da publicação</th>
+                                            <td>...</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Tipos de contrato</th>
+                                            <td>...</td>
+                                        </tr>
+                                        <tr>
+                                            <th>N° do acordo quadro</th>
+                                            <td>...</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Descrição do acordo quadro</th>
+                                            <td>...</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Tipologia da medida especial</th>
+                                            <td>...</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Tipo de procedimento</th>
+                                            <td>...</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Descrição</th>
+                                            <td>...</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Fundamentação</th>
+                                            <td>...</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Fundamentação para recurso ao ajuste direto (se aplicável)</th>
+                                            <td>...</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Objeto do contrato</th>
+                                            <td>..</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Regime</th>
+                                            <td>..</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Critérios materiais</th>
+                                            <td>..</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Entidades adjudicantes</th>
+                                            <td>..</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Entidades adjudicatárias</th>
+                                            <td>..</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Objeto do contrato</th>
+                                            <td>..</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Procedimento centralizado</th>
+                                            <td>..</td>
+                                        </tr>
+                                        <tr>
+                                            <th>CPVs</th>
+                                            <td>..</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Data do contrato</th>
+                                            <td>..</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Preço contratual</th>
+                                            <td class="price-value">...</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Prazo de execução</th>
+                                            <td>..</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Local de execução</th>
+                                            <td>..</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Entidades concorrentes</th>
+                                            <td>..</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Anúncio</th>
+                                            <td>..</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Peças do procedimento</th>
+                                            <td>..</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Modificações contratuais</th>
+                                            <td>..</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Documentos</th>
+                                            <td>..</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Observações</th>
+                                            <td>..</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Critérios ambientais</th>
+                                            <td>..</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Justificação para não redução a escrito do contrato</th>
+                                            <td>..</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Aviso</th>
+                                            <td>..</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Causa da extinção do contrato</th>
+                                            <td>..</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Data do fecho do contrato</th>
+                                            <td>..</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Preço total efetivo</th>
+                                            <td>..</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Causas das alterações ao prazo</th>
+                                            <td>..</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Causas das alterações ao preço</th>
+                                            <td>..</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="actions-footer">
+                            <button class="back-button close-details" data-contract-id="4">
+                                <i data-lucide="arrow-left" class="back-icon"></i>
+                                Voltar à pesquisa
+                            </button>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+
+        </main>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize Lucide icons
+            lucide.createIcons();
+        });
+
+        // =================== Data Atual =========================
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+
+            const spanData = document.getElementById('data-atualizacao');
+            if (!spanData) return;
+
+            const hoje = new Date();
+            const meses = ['jan.', 'fev.', 'mar.', 'abr.', 'mai.', 'jun.', 'jul.', 'ago.', 'set.', 'out.', 'nov.', 'dez.'];
+
+            spanData.textContent = `${hoje.getDate()} ${meses[hoje.getMonth()]} ${hoje.getFullYear()}`;
+        });
+    </script>
+</body>
+
+</html>

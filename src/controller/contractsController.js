@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const express = require('express');
-const { base_gov } = require('../model/model'); // Ajuste o caminho conforme necessário
+const { API_2020 } = require('../model/model'); // Ajuste o caminho conforme necessário
 
 // Modifique o contractsController:
 // contractsController.js
@@ -16,8 +16,8 @@ const contractsGet = async (req, res) => {
     const skip = (page - 1) * limit;
 
     const [contracts, totalContracts] = await Promise.all([
-      base_gov.find({}).skip(skip).limit(limit).lean(),
-      base_gov.countDocuments({})
+      API_2020.find({}).skip(skip).limit(limit).lean(),
+      API_2020.countDocuments({})
     ]);
 
     // Adicione um ID único para cada contrato
@@ -58,18 +58,5 @@ const contractsGet = async (req, res) => {
   }
 };
 
-const contractDetails = async (req, res) => {
-  try {
-    const contract = await base_gov.findById(req.params.id).lean();
-    if (!contract) {
-      return res.status(404).send('Contrato não encontrado');
-    }
-    res.render('components/detalhes', { contract });
-  } catch (error) {
-    console.error('Erro ao buscar detalhes do contrato:', error);
-    res.status(500).send('Erro no servidor');
-  }
-};
 
-
-module.exports = { contractsGet, contractDetails };
+module.exports = { contractsGet };

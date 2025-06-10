@@ -57,34 +57,27 @@
                                         <% contractsList.forEach((contract, index)=> { %>
                                             <tr>
                                                 <td>
-                                                    <%= contract.tiposContrato || 'N/A' %>
+                                                    <%= contract.tipoContrato || 'N/A' %>
                                                 </td>
                                                 <td>
-                                                    <%= contract.tipoProcedimento || 'N/A' %>
+                                                    <%= contract.tipoprocedimento || 'N/A' %>
                                                 </td>
 
                                                 <td>
-                                                    <%= contract.entidadesAdjudicantes &&
-                                                        contract.entidadesAdjudicantes.length> 0
-                                                        ? contract.entidadesAdjudicantes[0]
+                                                    <%= contract.adjudicante || 'N/A' %>
+                                                </td>
+
+                                                <td>
+                                                    <%= contract.adjudicatarios || 'N/A' %>
+                                                </td>
+
+                                                <td>
+                                                    <%= contract.precoContratual ? contract.precoContratual + ' €'
                                                         : 'N/A' %>
                                                 </td>
 
                                                 <td>
-                                                    <%= contract.entidadesAdjudicatarias &&
-                                                        contract.entidadesAdjudicatarias.length> 0
-                                                        ? contract.entidadesAdjudicatarias[0]
-                                                        : 'N/A' %>
-                                                </td>
-
-                                                <td>
-                                                    <%= contract.precoContratual || 'N/A' %>
-                                                </td>
-
-                                                <td>
-                                                    <%= contract.dataPublicacao ? new
-                                                        Date(contract.dataPublicacao).toLocaleDateString('pt-PT')
-                                                        : 'N/A' %>
+                                                    <%= contract.dataPublicacao || 'N/A' %>
                                                 </td>
 
                                                 <td>
@@ -108,10 +101,9 @@
                 </div>
 
 
-                <%- include('paginacao', { pagination: pagination }) %>
             </div>
 
-
+            
         </div>
 
         <script>
@@ -136,7 +128,10 @@
                     const meses = ['jan.', 'fev.', 'mar.', 'abr.', 'mai.', 'jun.', 'jul.', 'ago.', 'set.', 'out.', 'nov.', 'dez.'];
                     spanData.textContent = `${hoje.getDate()} ${meses[hoje.getMonth()]} ${hoje.getFullYear()}`;
                 }
-            });
+                
+            });      
+            
+            
         </script>
 </body>
 
