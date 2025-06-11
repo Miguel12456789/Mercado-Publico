@@ -780,8 +780,8 @@
                                                 .then(data => {
                                                     const resultsTable = document.querySelector('#results-table');
                                                     resultsTable.style.display = 'block';
-                                                    updateTable(data.contracts);
-                                                    updatePagination(data.pagination);
+                                                    // updateTable(data.contracts); ← remover esta linha
+                                                    // // updatePagination(data.pagination); // só se você tiver definido essa também
                                                     resultsTable.scrollIntoView({ behavior: 'smooth' });
                                                 })
                                                 .catch(err => console.error('Erro:', err));
@@ -790,8 +790,6 @@
                                         // Listeners de selects
                                         paisSelect.addEventListener('change', atualizarDistritos);
                                         distritoSelect.addEventListener('change', preencherConcelhos);
-
-
 
                                     });
 

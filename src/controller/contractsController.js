@@ -45,8 +45,8 @@ const contractsGet = async (req, res) => {
       return res.json({ contracts, pagination });
     }
 
-    return res.render('base_gov', { 
-      contracts, 
+    return res.render('base_gov', {
+      contracts,
       pagination,
       // Adicione esta linha para incluir a função de detalhes
       includeDetails: true
@@ -58,5 +58,19 @@ const contractsGet = async (req, res) => {
   }
 };
 
+const contractDetailsPartial = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const contract = await API_2020.findById(id).lean();
 
-module.exports = { contractsGet };
+    if (!contract) return res.status(404).send("Contrato não encontrado");
+
+    // Renderiza sem o layout principal
+    return res.render("components/detalhes", { contract, layout: false });
+  } catch (error) {
+    console.error("Erro ao buscar detalhes do contrato:", error);
+    return res.status(500).send("Erro no servidor");
+  }
+};
+
+module.exports = { contractsGet, contractDetailsPartial };

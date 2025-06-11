@@ -1,99 +1,93 @@
-<!DOCTYPE html>
-<html lang="pt">
+<link rel="stylesheet" href="detalhes.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap">
+<script src="https://unpkg.com/lucide@latest"></script>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detalhe Contrato - Helpdesk</title>
-    <link rel="stylesheet" href="detalhes.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap">
-    <script src="https://unpkg.com/lucide@latest"></script>
-</head>
 
-<body>
-    <!-- Container principal que fica oculto inicialmente -->
-    <div id="main-container" class="container" style="display: none;">
-        <!-- Breadcrumb Navigation -->
-        <div class="breadcrumb">
-            <a href="/base_gov">Início</a> / Detalhes
-        </div>
 
-        <!-- Last Update -->
-        <div class="last-update">
-            Última atualização: <span id="data-atualizacao"></span>
-        </div>
+<!-- Container principal que fica oculto inicialmente -->
+<div id="main-container" class="container" style="display: none;">
+    <!-- Breadcrumb Navigation -->
+    <div class="breadcrumb">
+        <a href="/base_gov">Início</a> / Detalhes
+    </div>
 
-        <main class="content-container">
+    <!-- Last Update -->
+    <div class="last-update">
+        Última atualização: <span id="data-atualizacao"></span>
+    </div>
+
+    <main class="content-container">
+        <!-- Detalhes do Contrato -->
+        <div id="contract-details-container">
+
             <!-- Detalhes do Contrato -->
-            <div id="contract-details-container">
-                
-                <!-- Detalhes do Contrato -->
-                <div class="contract-details">
-                    <div class="page-header">
-                        <div class="title-section">
-                            <h1 class="main-title">DETALHES</h1>
-                            <h2 class="subtitle">Contrato</h2>
-                        </div>
-                        <!-- <div class="action-buttons">
+            <div class="contract-details">
+                <div class="page-header">
+                    <div class="title-section">
+                        <h1 class="main-title">DETALHES</h1>
+                        <h2 class="subtitle">Contrato</h2>
+                    </div>
+                    <!-- <div class="action-buttons">
                             <button id="emailButton" class="email-button"
                                 aria-label="Enviar detalhe do contrato por email">
                                 <i data-lucide="mail" class="email-icon"></i>
                                 ENVIAR POR EMAIL
                             </button>
                         </div> -->
+                </div>
+
+                <section class="detail-section">
+                    <h3 class="section-title">Informação detalhada</h3>
+
+                    <div class="info-card">
+                        <div class="info-table-container">
+
+                            <table class="info-table">
+                                <tbody>
+                                    <tr>
+                                        <th>Data da publicação</th>
+
+                                        <td>
+                                            <%= typeof contract !=='undefined' ? (contract.localExecucao || 'N/A' )
+                                                : 'N/A' %>
+                                        </td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
-                    <section class="detail-section">
-                        <h3 class="section-title">Informação detalhada</h3>
-
-                        <div class="info-card">
-                            <div class="info-table-container">
-                                <table class="info-table">
-                                    <tbody>
-                                        <tr>
-                                            <th>Data da publicação</th>
-                                            <td>
-                                               ...
-                                            </td>
-                                        </tr>
-
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <div class="actions-footer">
-                            <button class="back-button close-details" data-contract-id="4">
-                                <i data-lucide="arrow-left" class="back-icon"></i>
-                                Voltar à pesquisa
-                            </button>
-                        </div>
-                    </section>
-                </div>
+                    <div class="actions-footer">
+                        <button class="back-button close-details" data-contract-id="4">
+                            <i data-lucide="arrow-left" class="back-icon"></i>
+                            Voltar à pesquisa
+                        </button>
+                    </div>
+                </section>
             </div>
+        </div>
 
 
-        </main>
-    </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Initialize Lucide icons
-            lucide.createIcons();
-        });
+    </main>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Initialize Lucide icons
+        lucide.createIcons();
+    });
 
-        // =================== Data Atual =========================
-        document.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
+    // =================== Data Atual =========================
+    document.addEventListener('DOMContentLoaded', () => {
+        lucide.createIcons();
 
-            const spanData = document.getElementById('data-atualizacao');
-            if (!spanData) return;
+        const spanData = document.getElementById('data-atualizacao');
+        if (!spanData) return;
 
-            const hoje = new Date();
-            const meses = ['jan.', 'fev.', 'mar.', 'abr.', 'mai.', 'jun.', 'jul.', 'ago.', 'set.', 'out.', 'nov.', 'dez.'];
+        const hoje = new Date();
+        const meses = ['jan.', 'fev.', 'mar.', 'abr.', 'mai.', 'jun.', 'jul.', 'ago.', 'set.', 'out.', 'nov.', 'dez.'];
 
-            spanData.textContent = `${hoje.getDate()} ${meses[hoje.getMonth()]} ${hoje.getFullYear()}`;
-        });
-    </script>
-</body>
-
-</html>
+        spanData.textContent = `${hoje.getDate()} ${meses[hoje.getMonth()]} ${hoje.getFullYear()}`;
+    });
+</script>

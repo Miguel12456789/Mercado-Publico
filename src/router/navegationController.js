@@ -14,4 +14,6 @@ const estatisticas_setor_privado = renderPage("estatisticas_setor_privado")
 const oportunidade_contratacao_publica = renderPage("oportunidade_contratacao_publica")
 const outros = renderPage("outros")
 
-module.exports = { home, API_2020, estatisticas_setor_publico, estatisticas_setor_privado, oportunidade_contratacao_publica, outros, tab_base };
+const detalhes = renderPage("detalhes")
+
+module.exports = { home, API_2020, estatisticas_setor_publico, estatisticas_setor_privado, oportunidade_contratacao_publica, outros, tab_base, detalhes };
