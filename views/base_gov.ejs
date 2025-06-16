@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="base_gov.css">
+    <link rel="stylesheet" href="/base_gov.css">
     <!-- Include Lucide icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <title>Helpdesk Público</title>
@@ -491,7 +491,6 @@
                     <p>Nenhum dado de contrato disponível no momento.</p>
                 </div>
                 <% } %>
-                    <%- include('components/detalhes') %>
                         <%- include('components/mail_receive') %>
                             <%- include('components/button') %>
 
@@ -575,41 +574,6 @@
                                             })
                                         );
 
-                                        // ========== Detalhes de contratos ==========
-                                        const contractDetails = qsa('.contract-details');
-                                        const toggleDetail = (id, show) => {
-                                            contractDetails.forEach(el => el.style.display = el.id === `details-${id}` && show ? 'block' : 'none');
-                                            const btn = qs(`.details-button[data-contract-id="${id}"]`);
-                                            const icon = btn?.querySelector('i');
-                                            qs('#main-container')?.style.setProperty('display', show ? 'block' : 'none');
-                                            icon?.classList.toggle('fa-plus-circle', !show);
-                                            icon?.classList.toggle('fa-minus-circle', show);
-                                            (show ? qs('#main-container') : qs('.results-table'))?.scrollIntoView({ behavior: 'smooth' });
-                                        };
-
-                                        qsa('.details-button').forEach(btn => {
-                                            const id = btn.dataset.contractId;
-                                            ['click', 'keydown'].forEach(evt => {
-                                                btn.addEventListener(evt, e => {
-                                                    if (evt === 'click' || ['Enter', ' '].includes(e.key)) {
-                                                        e.preventDefault?.();
-                                                        toggleDetail(id, true);
-                                                    }
-                                                });
-                                            });
-                                        });
-
-                                        qsa('.close-details').forEach(btn => {
-                                            const id = btn.dataset.contractId;
-                                            ['click', 'keydown'].forEach(evt => {
-                                                btn.addEventListener(evt, e => {
-                                                    if (evt === 'click' || ['Enter', ' '].includes(e.key)) {
-                                                        e.preventDefault?.();
-                                                        toggleDetail(id, false);
-                                                    }
-                                                });
-                                            });
-                                        });
 
                                         // ========== Dropdown ==========
                                         const dropdownBtn = qs('#dropdown-button');

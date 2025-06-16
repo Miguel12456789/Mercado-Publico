@@ -250,7 +250,6 @@ body {
 
 /* Contract Details */
 .contract-details {
-    display: none; /* Inicialmente oculto */
     animation: fadeIn 0.3s ease-out;
 }
 
