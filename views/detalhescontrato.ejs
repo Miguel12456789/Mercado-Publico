@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; }
+        .contract-container { max-width: 900px; margin: 0 auto; }
+        .contract-section { margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .contract-section h2 { margin-top: 0; color: #333; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .contract-field { margin-bottom: 10px; }
+        .contract-field strong { display: inline-block; width: 200px; }
+    </style>
+</head>
+<body>
+    <div class="contract-container">
+
+        
+        <h1>Detalhes do Contrato <%= contract.idcontrato %></h1>
+        
+        <div class="contract-section">
+            <h2>Informações Básicas</h2>
+            <div class="contract-field"><strong>Número Anúncio:</strong> <%= contract.nAnuncio %></div>
+            <div class="contract-field"><strong>Tipo Anúncio:</strong> <%= contract.TipoAnuncio %></div>
+            <div class="contract-field"><strong>Tipo Contrato:</strong> <%= contract.tipoContrato %></div>
+            <div class="contract-field"><strong>Procedimento:</strong> <%= contract.tipoprocedimento %></div>
+        </div>
+        
+        <div class="contract-section">
+            <h2>Objeto do Contrato</h2>
+            <div class="contract-field"><strong>Objeto:</strong> <%= contract.objectoContrato %></div>
+            <div class="contract-field"><strong>Descrição:</strong> <%= contract.descContrato %></div>
+            <div class="contract-field"><strong>CPV:</strong> <%= contract.cpv %></div>
+        </div>
+        
+        <div class="contract-section">
+            <h2>Partes Envolvidas</h2>
+            <div class="contract-field"><strong>Adjudicante:</strong> <%= contract.adjudicante %></div>
+            <div class="contract-field"><strong>Adjudicatários:</strong> <%= contract.adjudicatarios %></div>
+        </div>
+        
+        <div class="contract-section">
+            <h2>Valores e Prazos</h2>
+            <div class="contract-field"><strong>Preço Contratual:</strong> <%= contract.precoContratual %></div>
+            <div class="contract-field"><strong>Preço Total Efetivo:</strong> <%= contract.PrecoTotalEfetivo %></div>
+            <div class="contract-field"><strong>Prazo Execução:</strong> <%= contract.prazoExecucao %> dias</div>
+        </div>
+        
+        <div class="contract-section">
+            <h2>Datas Relevantes</h2>
+            <div class="contract-field"><strong>Data Publicação:</strong> <%= contract.dataPublicacao %></div>
+            <div class="contract-field"><strong>Data Celebração:</strong> <%= contract.dataCelebracaoContrato %></div>
+            <div class="contract-field"><strong>Data Fecho:</strong> <%= contract.dataFechoContrato %></div>
+        </div>
+        
+        <a href="javascript:history.back()" class="back-button">Voltar</a>
+    </div>
+</body>
+</html>

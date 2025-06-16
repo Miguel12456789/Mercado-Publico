@@ -73,4 +73,34 @@ const contractDetailsPartial = async (req, res) => {
   }
 };
 
-module.exports = { contractsGet, contractDetailsPartial };
+const contractDetail = async (req, res) => {
+  try {
+    const id = req.params.id;
+    
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).render('error', {
+        message: "ID do contrato inválido"
+      });
+    }
+
+    const contract = await API_2020.findById(id).lean();
+
+    if (!contract) {
+      return res.status(404).render('error', {
+        message: "Contrato não encontrado"
+      });
+    }
+    return res.render("detalhescontrato", { 
+      title: `Detalhes do Contrato ${contract.idcontrato}`,
+      contract 
+    });
+
+  } catch (error) {
+    console.error("Erro ao buscar detalhes do contrato:", error);
+    return res.status(500).render('error', {
+      message: "Erro no servidor ao buscar detalhes do contrato"
+    });
+  }
+};
+
+module.exports = { contractsGet, contractDetailsPartial, contractDetail };

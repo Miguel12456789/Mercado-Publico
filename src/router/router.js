@@ -13,5 +13,6 @@ router.get("/estatisticas_setor_publico", navegationController.estatisticas_seto
 router.get("/estatisticas_setor_privado", navegationController.estatisticas_setor_privado);
 router.get("/oportunidade_contratacao_publica", navegationController.oportunidade_contratacao_publica);
 router.get("/outros", navegationController.outros);
+router.get("/detalhescontrato/:id", contractsController.contractDetail);
 
 module.exports = router;

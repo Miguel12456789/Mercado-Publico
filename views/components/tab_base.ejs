@@ -42,12 +42,13 @@
                         <table class="results-table">
                             <thead>
                                 <tr>
+                                    
                                     <th>Objeto do contrato</th>
                                     <th>Tipo de procedimento</th>
                                     <th>Adjudicante</th>
                                     <th>Adjudicatário</th>
                                     <th>Preço contratual</i></th>
-                                    <th>Data de publicação</th>
+                                    <th>Data de publicação</th> 
                                     <th></th>
                                 </tr>
                             </thead>
@@ -56,6 +57,7 @@
                                     <% if (contractsList.length> 0) { %>
                                         <% contractsList.forEach((contract, index)=> { %>
                                             <tr>
+                                                
                                                 <td>
                                                     <%= contract.tipoContrato || 'N/A' %>
                                                 </td>
@@ -80,12 +82,11 @@
                                                     <%= contract.dataPublicacao || 'N/A' %>
                                                 </td>
 
-                                                <td>
-                                                    <button type="button" class="details-button"
-                                                        data-contract-id="<%= contract._id %>">
-                                                        <i class="fas fa-plus-circle"></i>
-                                                    </button>
-                                                </td>
+                                                    <td>
+                                                        <a href="/detalhescontrato/<%= contract._id %>" class="details-button">
+                                                            <i class="fas fa-plus-circle"></i>
+                                                        </a>
+                                                    </td>
                                             </tr>
                                             <% }); %>
                                                 <% } else { %>
