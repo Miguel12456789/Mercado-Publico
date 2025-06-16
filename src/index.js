@@ -13,6 +13,9 @@ app.set('views', path.join(__dirname, '../views')); // Garante o caminho correto
 app.use(express.static("public")); // Serve static files from the public folder
 app.use(express.static("src")); // Serve static files from the src folder
 
+// ADICIONE ESTA LINHA:
+app.use(express.json());
+
 // Usa o roteador
 app.use('/', router);
 

@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 
 exports.sendEmail = async (req, res) => {
-  const { email, nome } = req.body;
+  const { email, nome, sobrenome } = req.body;
 
   // Gere um código de verificação de 5 dígitos
   const code = Math.floor(10000 + Math.random() * 90000);
@@ -19,7 +19,7 @@ exports.sendEmail = async (req, res) => {
     from: 'testeemailsender1@gmail.com',
     to: email,
     subject: 'Código de Verificação',
-    text: `Olá${nome ? ' ' + nome : ''},\n\nO seu código de verificação é: ${code}\n\nObrigado!`
+    text: `Olá${nome ? ' ' + nome : ''}${sobrenome ? ' ' + sobrenome : ''},\n\nO seu código de verificação é: ${code}\n\nObrigado!`
   };
 
   try {
