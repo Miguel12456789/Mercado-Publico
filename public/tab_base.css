@@ -259,6 +259,7 @@ h3 {
     box-shadow: var(--shadow-sm);
     position: relative;
     overflow: hidden;
+    text-decoration: none;
 }
 
 .details-button:hover {

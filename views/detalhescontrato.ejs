@@ -14,219 +14,219 @@
 
 <body>
 
-        <div class="container"">
+    <div class="container"">
     <!-- Breadcrumb Navigation -->
     <div class=" breadcrumb">
-            <a href="/base_gov">Início</a> / Detalhes
-        </div>
+        <a href="/base_gov">Início</a> / Detalhes
+    </div>
 
-        <!-- Last Update -->
-        <div class="last-update">
-            Última atualização: <span id="data-atualizacao"></span>
-        </div>
-        <h1>Detalhes do Contrato <%= contract.idcontrato %>
-        </h1>
+    <!-- Last Update -->
+    <div class="last-update">
+        Última atualização: <span id="data-atualizacao"></span>
+    </div>
+    <h1>Detalhes do Contrato <%= contract.idcontrato %>
+    </h1>
 
 
-        <main class="content-container">
+    <main class="content-container">
 
-            <div class="contract-details">
-                <div class="page-header">
-                    <div class="title-section">
-                        <h1 class="main-title">DETALHES</h1>
-                        <h2 class="subtitle">Contrato</h2>
-                    </div>
-                    <!-- <div class="action-buttons">
+        <div class="contract-details">
+            <div class="page-header">
+                <div class="title-section">
+                    <h1 class="main-title">DETALHES</h1>
+                    <h2 class="subtitle">Contrato</h2>
+                </div>
+                <!-- <div class="action-buttons">
                             <button id="emailButton" class="email-button"
                                 aria-label="Enviar detalhe do contrato por email">
                                 <i data-lucide="mail" class="email-icon"></i>
                                 ENVIAR POR EMAIL
                             </button>
                         </div> -->
+            </div>
+            <section class="detail-section">
+
+                <h3 class="section-title">Informação detalhada</h3>
+
+                <div class="info-card">
+
+                    <div class="info-table-container">
+
+                        <table class="info-table">
+                            <tbody>
+                                <tr>
+                                    <th>Data da publicação</th>
+                                    <td>
+                                        <%= contract.nAnuncio || 'N/A' %>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <th>Tipos de contrato</th>
+                                    <td>
+                                        <%= contract.tipoContrato || 'N/A' %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Nº do acordo quadro</th>
+                                    <td>
+                                        <%= contract.numAcordoQuadro || 'N/A' %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Descrição do acordo quadro</th>
+                                    <td>
+                                        <%= contract.DescrAcordoQuadro || 'N/A' %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Tipo de procedimento</th>
+                                    <td>
+                                        <%= contract.tipoprocedimento || 'N/A' %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Descrição</th>
+                                    <td>
+                                        <%= contract.descContrato || 'N/A' %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Fundamentação</th>
+                                    <td>
+                                        <%= contract.fundamentacao || 'N/A' %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Fundamentação para recurso ao ajuste direto (se aplicável)</th>
+                                    <td>
+                                        <%= contract.fundamentAjusteDireto || 'N/A' %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Regime</th>
+                                    <td>
+                                        <%= contract.regime || 'N/A' %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Critérios materiais</th>
+                                    <td>
+                                        <%= contract.CritMateriais || 'N/A' %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Entidades adjudicantes</th>
+                                    <td>
+                                        <%= contract.adjudicante || 'N/A' %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Entidades adjudicatárias</th>
+                                    <td>
+                                        <%= contract.adjudicatarios || 'N/A' %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Objeto do contrato</th>
+                                    <td>
+                                        <%= contract.objectoContrato || 'N/A' %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Procedimento centralizado</th>
+                                    <td>
+                                        <%= contract.ProcedimentoCentralizado || 'N/A' %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>CPVs</th>
+                                    <td>
+                                        <%= contract.cpv || 'N/A' %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Data do contrato</th>
+                                    <td>
+                                        <%= contract.dataPublicacao || 'N/A' %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Preço contratual</th>
+                                    <td class="price-value">
+                                        <%= contract.precoContratual || 'N/A' %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Prazo de execução</th>
+                                    <td>
+                                        <%= contract.prazoExecucao || 'N/A' %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Local de execução</th>
+                                    <td>
+                                        <%= contract.localExecucao || 'N/A' %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Entidades concorrentes</th>
+                                    <td>
+                                        <%= contract.concorrentes || 'N/A' %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Anúncio</th>
+                                    <td>
+                                        <%= contract.TipoAnuncio || 'N/A' %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Observações</th>
+                                    <td>
+                                        <%= contract.Observacoes || 'N/A' %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Justificação para não redução a escrito do contrato</th>
+                                    <td>
+                                        <%= contract.justifNReducEscrContrato || 'N/A' %>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                <section class="detail-section">
+                <div class="actions-footer">
+                    <a href="javascript:history.back()" class="back-button close-details">
+                        <i data-lucide="arrow-left" class="back-icon"></i>
+                        Voltar à pesquisa
+                    </a>
+                </div>
+            </section>
+    </main>
 
-                    <h3 class="section-title">Informação detalhada</h3>
+    </div>
 
-                    <div class="info-card">
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize Lucide icons
+            lucide.createIcons();
+        });
 
-                        <div class="info-table-container">
+        // =================== Data Atual =========================
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
 
-                            <table class="info-table">
-                                <tbody>
-                                    <tr>
-                                        <th>Data da publicação</th>
-                                        <td>
-                                            <%= contract.nAnuncio || 'N/A' %>
-                                        </td>
+            const spanData = document.getElementById('data-atualizacao');
+            if (!spanData) return;
 
-                                    </tr>
-                                    <tr>
-                                        <th>Tipos de contrato</th>
-                                        <td>
-                                            <%= contract.tipoContrato || 'N/A' %>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Nº do acordo quadro</th>
-                                        <td>
-                                            <%= contract.numAcordoQuadro || 'N/A' %>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Descrição do acordo quadro</th>
-                                        <td>
-                                            <%= contract.DescrAcordoQuadro || 'N/A' %>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Tipo de procedimento</th>
-                                        <td>
-                                            <%= contract.tipoprocedimento || 'N/A' %>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Descrição</th>
-                                        <td>
-                                            <%= contract.descContrato || 'N/A' %>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Fundamentação</th>
-                                        <td>
-                                            <%= contract.fundamentacao || 'N/A' %>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Fundamentação para recurso ao ajuste direto (se aplicável)</th>
-                                        <td>
-                                            <%= contract.fundamentAjusteDireto || 'N/A' %>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Regime</th>
-                                        <td>
-                                            <%= contract.regime || 'N/A' %>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Critérios materiais</th>
-                                        <td>
-                                            <%= contract.CritMateriais || 'N/A' %>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Entidades adjudicantes</th>
-                                        <td>
-                                            <%= contract.adjudicante || 'N/A' %>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Entidades adjudicatárias</th>
-                                        <td>
-                                            <%= contract.adjudicatarios || 'N/A' %>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Objeto do contrato</th>
-                                        <td>
-                                            <%= contract.objectoContrato || 'N/A' %>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Procedimento centralizado</th>
-                                        <td>
-                                            <%= contract.ProcedimentoCentralizado || 'N/A' %>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>CPVs</th>
-                                        <td>
-                                            <%= contract.cpv || 'N/A' %>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Data do contrato</th>
-                                        <td>
-                                            <%= contract.dataPublicacao || 'N/A' %>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Preço contratual</th>
-                                        <td class="price-value">
-                                            <%= contract.precoContratual || 'N/A' %>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Prazo de execução</th>
-                                        <td>
-                                            <%= contract.prazoExecucao || 'N/A' %>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Local de execução</th>
-                                        <td>
-                                            <%= contract.localExecucao || 'N/A' %>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Entidades concorrentes</th>
-                                        <td>
-                                            <%= contract.concorrentes || 'N/A' %>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Anúncio</th>
-                                        <td>
-                                            <%= contract.TipoAnuncio || 'N/A' %>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Observações</th>
-                                        <td>
-                                            <%= contract.Observacoes || 'N/A' %>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>Justificação para não redução a escrito do contrato</th>
-                                        <td>
-                                            <%= contract.justifNReducEscrContrato || 'N/A' %>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="actions-footer">
-                        <a href="javascript:history.back()" class="back-button close-details">
-                            <i data-lucide="arrow-left" class="back-icon"></i>
-                            Voltar à pesquisa
-                        </a>
-                    </div>
-                </section>
-        </main>
+            const hoje = new Date();
+            const meses = ['jan.', 'fev.', 'mar.', 'abr.', 'mai.', 'jun.', 'jul.', 'ago.', 'set.', 'out.', 'nov.', 'dez.'];
 
-        </div>
-
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                // Initialize Lucide icons
-                lucide.createIcons();
-            });
-
-            // =================== Data Atual =========================
-            document.addEventListener('DOMContentLoaded', () => {
-                lucide.createIcons();
-
-                const spanData = document.getElementById('data-atualizacao');
-                if (!spanData) return;
-
-                const hoje = new Date();
-                const meses = ['jan.', 'fev.', 'mar.', 'abr.', 'mai.', 'jun.', 'jul.', 'ago.', 'set.', 'out.', 'nov.', 'dez.'];
-
-                spanData.textContent = `${hoje.getDate()} ${meses[hoje.getMonth()]} ${hoje.getFullYear()}`;
-            });
-        </script>
+            spanData.textContent = `${hoje.getDate()} ${meses[hoje.getMonth()]} ${hoje.getFullYear()}`;
+        });
+    </script>
 </body>
 
 </html>

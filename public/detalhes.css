@@ -1,4 +1,6 @@
-/* Base Styles */
+/* ===== Google Font Import - Poppins ===== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
 :root {
     --primary-color: #3c6c2a;
     --secondary-color: #f8f9fa;
@@ -6,8 +8,8 @@
     --light-text: #6c757d;
     --border-color: #e9ecef;
     --hover-color: #f1f3f5;
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
-    --shadow-md: 0 4px 6px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
     --transition-speed: 0.2s;
 }
 
@@ -27,12 +29,14 @@ body {
 }
 
 .container {
-  width: 100%;
-  max-width: 1300px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 2rem;
-  padding-right: 2rem;
+    width: 100%;
+    max-width: 1300px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
 }
 
 /* Content Container */
@@ -65,7 +69,7 @@ body {
     color: var(--text-color);
     font-size: 24px;
     margin-bottom: 5px;
-    font-weight: 400; 
+    font-weight: 400;
 }
 
 .subtitle {
@@ -255,8 +259,15 @@ body {
 
 /* Animation for page load */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .content-container {
@@ -265,8 +276,15 @@ body {
 
 /* Staggered animations for table rows */
 @keyframes slideIn {
-    from { opacity: 0; transform: translateX(-10px); }
-    to { opacity: 1; transform: translateX(0); }
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .info-table tr {
@@ -274,19 +292,57 @@ body {
     animation: slideIn 0.2s ease-out forwards;
 }
 
-.info-table tr:nth-child(1) { animation-delay: 0.1s; }
-.info-table tr:nth-child(2) { animation-delay: 0.15s; }
-.info-table tr:nth-child(3) { animation-delay: 0.2s; }
-.info-table tr:nth-child(4) { animation-delay: 0.25s; }
-.info-table tr:nth-child(5) { animation-delay: 0.3s; }
-.info-table tr:nth-child(6) { animation-delay: 0.35s; }
-.info-table tr:nth-child(7) { animation-delay: 0.4s; }
-.info-table tr:nth-child(8) { animation-delay: 0.45s; }
-.info-table tr:nth-child(9) { animation-delay: 0.5s; }
-.info-table tr:nth-child(10) { animation-delay: 0.55s; }
-.info-table tr:nth-child(11) { animation-delay: 0.6s; }
-.info-table tr:nth-child(12) { animation-delay: 0.65s; }
-.info-table tr:nth-child(13) { animation-delay: 0.7s; }
+.info-table tr:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.info-table tr:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+.info-table tr:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+.info-table tr:nth-child(4) {
+    animation-delay: 0.25s;
+}
+
+.info-table tr:nth-child(5) {
+    animation-delay: 0.3s;
+}
+
+.info-table tr:nth-child(6) {
+    animation-delay: 0.35s;
+}
+
+.info-table tr:nth-child(7) {
+    animation-delay: 0.4s;
+}
+
+.info-table tr:nth-child(8) {
+    animation-delay: 0.45s;
+}
+
+.info-table tr:nth-child(9) {
+    animation-delay: 0.5s;
+}
+
+.info-table tr:nth-child(10) {
+    animation-delay: 0.55s;
+}
+
+.info-table tr:nth-child(11) {
+    animation-delay: 0.6s;
+}
+
+.info-table tr:nth-child(12) {
+    animation-delay: 0.65s;
+}
+
+.info-table tr:nth-child(13) {
+    animation-delay: 0.7s;
+}
 
 /* Responsive Styles */
 @media (max-width: 768px) {
@@ -294,30 +350,31 @@ body {
         flex-direction: column;
         gap: 15px;
     }
-    
+
     .action-buttons {
         align-self: flex-start;
     }
-    
+
     .info-table th {
         width: 40%;
     }
-    
+
     .content-container {
         padding: 20px;
     }
 }
 
 @media (max-width: 480px) {
+
     .info-table th,
     .info-table td {
         padding: 12px 15px;
     }
-    
+
     .info-table th {
         width: 50%;
     }
-    
+
     .content-container {
         padding: 15px;
     }
