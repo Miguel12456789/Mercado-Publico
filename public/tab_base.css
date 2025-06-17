@@ -506,6 +506,23 @@ h3 {
     animation: fadeIn 0.3s ease-out;
 }
 
+/* Estilo para texto truncado com ellipsis */
+.text-truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px; /* Ajuste este valor conforme necessário */
+}
+
+/* Para células da tabela */
+.table-cell-truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 250px; /* Ajuste conforme necessário */
+    display: inline-block;
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
     .main-content {

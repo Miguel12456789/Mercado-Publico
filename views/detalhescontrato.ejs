@@ -57,9 +57,8 @@
                                 <tr>
                                     <th>Data da publicação</th>
                                     <td>
-                                        <%= contract.nAnuncio || 'N/A' %>
+                                        <%= contract.dataPublicacao_datetime || 'N/A' %>
                                     </td>
-
                                 </tr>
                                 <tr>
                                     <th>Tipos de contrato</th>
@@ -83,6 +82,12 @@
                                     <th>Tipo de procedimento</th>
                                     <td>
                                         <%= contract.tipoprocedimento || 'N/A' %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>ID de tipo de procedimento</th>
+                                    <td>
+                                        <%= contract.idprocedimento || 'N/A' %>
                                     </td>
                                 </tr>
                                 <tr>
@@ -146,15 +151,39 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th>Data do contrato</th>
-                                    <td>
-                                        <%= contract.dataPublicacao || 'N/A' %>
-                                    </td>
-                                </tr>
-                                <tr>
                                     <th>Preço contratual</th>
                                     <td class="price-value">
                                         <%= contract.precoContratual + ' €' || 'N/A' %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Preço Base de Procedimento</th>
+                                    <td>
+                                        <%= contract.precoBaseProcedimento || 'N/A' %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Preço Total Efetivo</th>
+                                    <td>
+                                        <%= contract.PrecoTotalEfetivo || 'N/A' %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Data de Celebração de Contrato</th>
+                                    <td>
+                                        <%= contract.dataCelebracaoContrato || 'N/A' %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Data de Desisão Adjudicação</th>
+                                    <td>
+                                        <%= contract.dataDecisaoAdjudicacao || 'N/A' %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Data de Fecho de Contrato</th>
+                                    <td>
+                                        <%= contract.dataFechoContrato || 'N/A' %>
                                     </td>
                                 </tr>
                                 <tr>
@@ -191,6 +220,30 @@
                                     <th>Justificação para não redução a escrito do contrato</th>
                                     <td>
                                         <%= contract.justifNReducEscrContrato || 'N/A' %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Link de Peças Procedimento</th>
+                                    <td>
+                                        <%= contract.linkPecasProc || 'N/A' %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Contrato Ecológico</th>
+                                    <td>
+                                        <%= contract.ContratEcologico || 'N/A' %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Ano</th>
+                                    <td>
+                                        <%= contract.Ano || 'N/A' %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Número de Anúncio</th>
+                                    <td>
+                                        <%= contract.nAnuncio || 'N/A' %>
                                     </td>
                                 </tr>
                             </tbody>
