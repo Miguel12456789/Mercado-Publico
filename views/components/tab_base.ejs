@@ -2,122 +2,138 @@
 <html lang="pt">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Helpdesk Público</title>
-  <link rel="stylesheet" href="tab_base.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helpdesk Público</title>
+    <link rel="stylesheet" href="tab_base.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
-  <div id="results-table" style="display: none;">
-    <div class="container">
+    <div id="results-table" style="display: none;">
+        <div class="container">
+            <!-- Breadcrumb Navigation -->
+            <div class="breadcrumb">
+                <a href="/base_gov">Início</a> / Pesquisa
+            </div>
 
-      <!-- Breadcrumb Navigation -->
-      <div class="breadcrumb">
-        <a href="/base_gov">Início</a> / Pesquisa
-      </div>
+            <!-- Last Update -->
+            <div class="last-update">
+                Última atualização: <span id="data-atualizacao"></span>
+            </div>
 
-      <!-- Last Update -->
-      <div class="last-update">
-        Última atualização: <span id="data-atualizacao"></span>
-      </div>
+            <!-- Main Content -->
+            <div class="main-content">
+                <h1>PESQUISA</h1>
+                <h2>Contratos</h2>
 
-      <!-- Main Content -->
-      <div class="main-content">
-        <h1>PESQUISA</h1>
-        <h2>Contratos</h2>
+                <!-- Contador de Resultados -->
+                <div class="results-counter">
+                    <div id="count-display" class="count-display"
+                        data-total-contracts="<%= pagination.totalContracts || 0 %>">
+                        <span id="count-number">0</span> contratos encontrados
+                    </div>
+                </div>
 
-        <!-- Contador de Resultados -->
-        <div class="results-counter">
-          <div id="count-display" class="count-display"
-            data-total-contracts="<%= pagination.totalContracts || 0 %>">
-            <span id="count-number">0</span> contratos encontrados
-          </div>
+                <!-- Results Table -->
+                <div class="results-section">
+                    <h3 class="section-title">Informação detalhada</h3>
+                    <div class="table-container">
+                        <table class="results-table">
+                            <thead>
+                                <tr>
+
+                                    <th>Objeto do contrato</th>
+                                    <th>Tipo de procedimento</th>
+                                    <th>Adjudicante</th>
+                                    <th>Adjudicatário</th>
+                                    <th>Preço contratual</i></th>
+                                    <th>Data de publicação</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% const contractsList=typeof contracts !=='undefined' ? contracts : []; %>
+                                    <% if (contractsList.length> 0) { %>
+                                        <% contractsList.forEach((contract, index)=> { %>
+                                            <tr>
+
+                                                <td>
+                                                    <%= contract.tipoContrato || 'N/A' %>
+                                                </td>
+                                                <td>
+                                                    <%= contract.tipoprocedimento || 'N/A' %>
+                                                </td>
+
+                                                <td>
+                                                    <%= contract.adjudicante || 'N/A' %>
+                                                </td>
+
+                                                <td>
+                                                    <%= contract.adjudicatarios || 'N/A' %>
+                                                </td>
+
+                                                <td>
+                                                    <%= contract.precoContratual ? contract.precoContratual + ' €'
+                                                        : 'N/A' %>
+                                                </td>
+
+                                                <td>
+                                                    <%= contract.dataPublicacao || 'N/A' %>
+                                                </td>
+
+                                                <td>
+                                                    <a href="/detalhescontrato/<%= contract._id %>"
+                                                        class="details-button">
+                                                        <i class="fas fa-plus-circle"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <% }); %>
+                                                <% } else { %>
+                                                    <tr>
+                                                        <td colspan="7" class="no-results">Nenhum contrato encontrado.
+                                                            Tente outros critérios de pesquisa.</td>
+                                                    </tr>
+                                                    <% } %>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+                <%- include('pagination', { pagination: pagination }) %>
+            </div>
+
+
         </div>
 
-        <!-- Results Table -->
-        <div class="results-section">
-          <h3 class="section-title">Informação detalhada</h3>
-          <div class="table-container">
-            <table class="results-table">
-              <thead>
-                <tr>
-                  <th>Objeto do contrato</th>
-                  <th>Tipo de procedimento</th>
-                  <th>Adjudicante</th>
-                  <th>Adjudicatário</th>
-                  <th>Preço contratual</th>
-                  <th>Data de publicação</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <% const contractsList = typeof contracts !== 'undefined' ? contracts : []; %>
-                <% if (contractsList.length > 0) { %>
-                  <% contractsList.forEach((contract) => { %>
-                    <tr>
-                      <td class="table-cell-truncate"><%= contract.tipoContrato || 'N/A' %></td>
-                      <td class="table-cell-truncate"><%= contract.tipoprocedimento || 'N/A' %></td>
-                      <td class="table-cell-truncate"><%= contract.adjudicante || 'N/A' %></td>
-                      <td class="table-cell-truncate"><%= contract.adjudicatarios || 'N/A' %></td>
-                      <td class="table-cell-truncate"><%= contract.precoContratual ? contract.precoContratual + ' €' : 'N/A' %></td>
-                      <td class="table-cell-truncate"><%= contract.dataPublicacao || 'N/A' %></td>
-                      <td>
-                        <a href="/detalhescontrato/<%= contract._id %>" class="details-button">
-                          <i class="fas fa-plus-circle"></i>
-                        </a>
-                      </td>
-                    </tr>
-                  <% }); %>
-                <% } else { %>
-                  <tr>
-                    <td colspan="7" class="no-results">Nenhum contrato encontrado. Tente outros critérios de pesquisa.</td>
-                  </tr>
-                <% } %>
-              </tbody>
-            </table>
-          </div>
-        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // DOM elements
+                const countDisplay = document.getElementById('count-display');
+                const countNumber = document.getElementById('count-number');
 
-        <!-- Paginação -->
-        <%- include('pagination', { pagination: pagination }) %>
+                // Obter o total de contratos do atributo data
+                const contractCount = parseInt(countDisplay.dataset.totalContracts) || 0;
 
-      </div>
-    </div>
-  </div>
+                // Atualiza e mostra o contador corretamente (sem animação)
+                countNumber.textContent = contractCount;
+                countDisplay.classList.add('visible');
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Atualiza contador de contratos
-      const countDisplay = document.getElementById('count-display');
-      const countNumber = document.getElementById('count-number');
-      const contractCount = parseInt(countDisplay.dataset.totalContracts, 10) || 0;
-      countNumber.textContent = contractCount;
-      countDisplay.classList.add('visible');
+                // =================== Data Atual =========================
+                lucide.createIcons();
 
-      // Atualiza data atual
-      const spanData = document.getElementById('data-atualizacao');
-      if (spanData) {
-        const hoje = new Date();
-        const meses = ['jan.', 'fev.', 'mar.', 'abr.', 'mai.', 'jun.', 'jul.', 'ago.', 'set.', 'out.', 'nov.', 'dez.'];
-        spanData.textContent = `${hoje.getDate()} ${meses[hoje.getMonth()]} ${hoje.getFullYear()}`;
-      }
+                const spanData = document.getElementById('data-atualizacao');
+                if (spanData) {
+                    const hoje = new Date();
+                    const meses = ['jan.', 'fev.', 'mar.', 'abr.', 'mai.', 'jun.', 'jul.', 'ago.', 'set.', 'out.', 'nov.', 'dez.'];
+                    spanData.textContent = `${hoje.getDate()} ${meses[hoje.getMonth()]} ${hoje.getFullYear()}`;
+                }
 
-      // Trunca textos longos
-      document.querySelectorAll('.truncate-text').forEach(cell => {
-        const text = cell.textContent;
-        if (text.length > 50) {
-          cell.textContent = text.slice(0, 50) + '...';
-        }
-      });
+            });
 
-      // Inicializa ícones (Lucide)
-      if (typeof lucide !== 'undefined' && lucide.createIcons) {
-        lucide.createIcons();
-      }
-    });
-  </script>
+
+        </script>
 </body>
 
 </html>
