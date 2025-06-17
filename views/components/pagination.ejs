@@ -57,32 +57,42 @@
                 .catch(err => console.error('Erro ao carregar contratos:', err));
         }
 
+        function bindDetailButtons() {
+            document.querySelectorAll('.details-button').forEach(button => {
+                button.addEventListener('click', function () {
+                    const id = this.getAttribute('data-contract-id');
+                    if (id) {
+                        window.location.href = `/detalhescontrato/${id}`;
+                    }
+                });
+            });
+        }
+
         function updateTable(contracts) {
             const tbody = document.querySelector('.results-table tbody');
             tbody.innerHTML = '';
 
             if (contracts.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" class="no-results">Nenhum contrato encontrado. Tente outros critérios de pesquisa.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="7" class="no-results">Nenhum contrato encontrado.</td></tr>`;
                 return;
             }
 
             contracts.forEach((contract, index) => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                <td>${contract.tiposContrato ?? 'N/A'}</td>
-                <td>${contract.tipoProcedimento ?? 'N/A'}</td>
-                <td>${contract.entidadesAdjudicantes?.[0]?.nome ?? contract.entidadesAdjudicantes?.[0] ?? 'N/A'}</td>
-                <td>${contract.entidadesAdjudicatarias?.[0]?.nome ?? contract.entidadesAdjudicatarias?.[0] ?? 'N/A'}</td>
-                <td>${contract.precoContratual ?? 'N/A'}</td>
-                <td>${contract.dataPublicacao ? new Date(contract.dataPublicacao).toLocaleDateString('pt-PT') : 'N/A'}</td>
-                <td>
-                    <button class="details-button" aria-label="Ver detalhes" data-contract-id="${index}">
-                        <i class="fas fa-plus-circle"></i>
-                    </button>
-                </td>
-            `;
+            <td>${contract.tipoContrato ?? 'N/A'}</td>
+            <td>${contract.tipoprocedimento ?? 'N/A'}</td>
+            <td>${contract.adjudicante ?? 'N/A'}</td>
+            <td>${contract.adjudicatarios ?? 'N/A'}</td>
+            <td>${contract.precoContratual + ' €' ?? 'N/A'}</td>
+            <td>${contract.dataPublicacao ?? 'N/A'}</td>
+            <td><button class="details-button" aria-label="Ver detalhes" data-contract-id="${contract._id}">
+                <i class="fas fa-plus-circle"></i></button></td>
+        `;
                 tbody.appendChild(row);
             });
+
+            bindDetailButtons(); // <- chamada aqui
         }
 
         function updatePagination({ currentPage, totalPages, limit, startIndex, endIndex, totalContracts, hasPrevPage, hasNextPage }) {
@@ -104,6 +114,7 @@
 
             for (let i = startPage; i <= endPage; i++) {
                 pageNumbers.appendChild(createPageButton(i));
+                
             }
 
             prevPageBtn.disabled = !hasPrevPage;
@@ -113,6 +124,8 @@
             if (hasNextPage) nextPageBtn.onclick = () => loadContracts(currentPage + 1, limit);
 
             if (typeof lucide !== 'undefined') lucide.createIcons();
+
+            
         }
 
         // Torna as funções globais

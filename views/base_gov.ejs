@@ -744,8 +744,8 @@
                                                 .then(data => {
                                                     const resultsTable = document.querySelector('#results-table');
                                                     resultsTable.style.display = 'block';
-                                                    // updateTable(data.contracts); ← remover esta linha
-                                                    // // updatePagination(data.pagination); // só se você tiver definido essa também
+                                                    updateTable(data.contracts); 
+                                                    updatePagination(data.pagination); // só se você tiver definido essa também
                                                     resultsTable.scrollIntoView({ behavior: 'smooth' });
                                                 })
                                                 .catch(err => console.error('Erro:', err));
