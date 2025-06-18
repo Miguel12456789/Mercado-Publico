@@ -99,6 +99,17 @@ main {
   gap: 1rem;
 }
 
+.container,
+.search-container,
+.search-row {
+  overflow: visible !important;
+}
+
+main,
+.container {
+  overflow: visible !important;
+}
+
 /* Dropdown */
 .dropdown {
   position: relative;
@@ -128,7 +139,6 @@ main {
 
 .dropdown-text {
   white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
 }
 
@@ -150,8 +160,10 @@ main {
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   display: none;
   animation: fadeIn 0.2s ease;
-  z-index: 20;
+  z-index: 9999;
 }
+
+
 
 .dropdown.active .dropdown-menu {
   display: block;

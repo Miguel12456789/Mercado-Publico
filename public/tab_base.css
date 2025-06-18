@@ -187,6 +187,11 @@ h3 {
 }
 
 /* Estilos da Tabela */
+
+#results-table {
+  overflow: visible !important;
+}
+
 .results-table {
     width: 100%;
     border-collapse: separate;
@@ -504,6 +509,23 @@ h3 {
 
 .content-container {
     animation: fadeIn 0.3s ease-out;
+}
+
+/* Estilo para texto truncado com ellipsis */
+.text-truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px; /* Ajuste este valor conforme necessário */
+}
+
+/* Para células da tabela */
+.table-cell-truncate {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 250px; /* Ajuste conforme necessário */
+    display: inline-block;
 }
 
 /* Responsividade */

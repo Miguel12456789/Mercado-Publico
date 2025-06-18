@@ -6,26 +6,67 @@ const { API_2020 } = require('../model/model'); // Ajuste o caminho conforme nec
 // contractsController.js
 const contractsGet = async (req, res) => {
   try {
-    console.log('Recebidos query params:', req.query);
+    console.log('Query params recebidos:', req.query);
 
-    const rawPage = parseInt(req.query.page, 10);
-    const rawLimit = parseInt(req.query.limit, 10);
-
-    const page = Number.isInteger(rawPage) && rawPage > 0 ? rawPage : 1;
-    const limit = [25, 50, 100].includes(rawLimit) ? rawLimit : 25;
+    const page = Math.max(parseInt(req.query.page) || 1, 1);
+    const limit = [25, 50, 100].includes(parseInt(req.query.limit)) ? parseInt(req.query.limit) : 25;
     const skip = (page - 1) * limit;
 
+    // ========================
+    // FILTROS
+    // ========================
+    const filter = {};
+
+    if (req.query.search?.trim()) {
+      filter.objetoContrato = { $regex: req.query.search.trim(), $options: 'i' };
+    }
+
+    if (req.query['special-measures'] === 'on') {
+      filter.medidasEspeciais = true;
+    }
+
+    if (req.query['include-mec'] === 'on') {
+      filter.mec = true;
+    }
+
+    if (req.query['measure-type'] && req.query['measure-type'] !== 'Todos') {
+      filter.tipoMedidaEspecial = req.query['measure-type'];
+    }
+
+    if (req.query['tipoProcedimento'] && req.query['tipoProcedimento'] !== '0') {
+      filter.tipoprocedimento = req.query['tipoProcedimento'];
+    }
+
+    if (req.query['entidade']?.trim()) {
+      filter.adjudicante = { $regex: req.query['entidade'].trim(), $options: 'i' };
+    }
+
+    if (req.query['tipoContrato'] && req.query['tipoContrato'] !== '0') {
+      filter.tipoContrato = req.query['tipoContrato'];
+    }
+
+    if (req.query['adjudicatario']?.trim()) {
+      filter.adjudicatarios = { $regex: req.query['adjudicatario'].trim(), $options: 'i' };
+    }
+
+    if (req.query['cpv']?.trim()) {
+      filter.cpv = { $regex: req.query['cpv'].trim(), $options: 'i' };
+    }
+
+    if (req.query['environmental-criteria'] === 'on') {
+      filter.criteriosAmbientais = true;
+    }
+
+    // ========================
+    // CONSULTA COM FILTRO
+    // ========================
     const [contracts, totalContracts] = await Promise.all([
-      API_2020.find({}).skip(skip).limit(limit).lean(),
-      API_2020.countDocuments({})
+      API_2020.find(filter).skip(skip).limit(limit).lean(),
+      API_2020.countDocuments(filter)
     ]);
 
-    // Adicione um ID único para cada contrato
-    contracts.forEach((contract, index) => {
-      contract.uniqueId = skip + index + 1;
-    });
-
     const totalPages = Math.ceil(totalContracts / limit);
+
     const pagination = {
       currentPage: page,
       totalPages,
@@ -37,8 +78,6 @@ const contractsGet = async (req, res) => {
       endIndex: Math.min(skip + limit, totalContracts)
     };
 
-    console.log(`Página ${page}: ${contracts.length} contratos de ${totalContracts} total`);
-
     const isAjax = req.xhr || req.headers.accept?.includes('json');
 
     if (isAjax) {
@@ -48,7 +87,6 @@ const contractsGet = async (req, res) => {
     return res.render('base_gov', {
       contracts,
       pagination,
-      // Adicione esta linha para incluir a função de detalhes
       includeDetails: true
     });
 
@@ -62,7 +100,7 @@ const contractsGet = async (req, res) => {
 const contractDetail = async (req, res) => {
   try {
     const id = req.params.id;
-    
+
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).render('error', {
         message: "ID do contrato inválido"
@@ -76,9 +114,9 @@ const contractDetail = async (req, res) => {
         message: "Contrato não encontrado"
       });
     }
-    return res.render("detalhescontrato", { 
+    return res.render("detalhescontrato", {
       title: `Detalhes do Contrato ${contract.idcontrato}`,
-      contract 
+      contract
     });
 
   } catch (error) {
@@ -88,5 +126,8 @@ const contractDetail = async (req, res) => {
     });
   }
 };
+
+
+
 
 module.exports = { contractsGet, contractDetail };
