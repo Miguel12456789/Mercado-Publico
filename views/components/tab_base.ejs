@@ -10,130 +10,121 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   </head>
 
-    <div id="results-table" style="display: none;">
+  <div id="results-table" style="display: none;">
 
-      <div class=" container">
+    <div class="container">
 
-        <!-- Breadcrumb Navigation -->
-        <div class="breadcrumb">
-          <a href="/base_gov">Início</a> / Pesquisa
-        </div>
+      <!-- Breadcrumb Navigation -->
+      <div class="breadcrumb">
+        <a href="/base_gov">Início</a> / Pesquisa
+      </div>
 
-        <!-- Last Update -->
-        <div class="last-update">
-          Última atualização: <span id="data-atualizacao"></span>
-        </div>
+      <!-- Last Update -->
+      <div class="last-update">
+        Última atualização: <span id="data-atualizacao"></span>
+      </div>
 
-        <!-- Main Content -->
-        <div class="main-content">
-          <h1>PESQUISA</h1>
-          <h2>Contratos</h2>
+      <!-- Main Content -->
+      <div class="main-content">
+        <h1>PESQUISA</h1>
+        <h2>Contratos</h2>
 
-          <!-- Contador de Resultados -->
-          <div class="results-counter">
-            <div id="count-display" class="count-display" data-total-contracts="<%= pagination.totalContracts %>">
-              <span id="count-number">0</span> contratos encontrados
-            </div>
+        <!-- Contador de Resultados -->
+        <div class="results-counter">
+          <div id="count-display" class="count-display" data-total-contracts="<%= pagination.totalContracts %>">
+            <span id="count-number">0</span> contratos encontrados
           </div>
-
-          <!-- Results Table -->
-          <div class="results-section">
-            <h3 class="section-title">Informação detalhada</h3>
-            <div class="table-container">
-              <table class="results-table">
-                <thead>
-                  <tr>
-                    <th>Objeto do contrato</th>
-                    <th>Tipo de procedimento</th>
-                    <th>Adjudicante</th>
-                    <th>Adjudicatário</th>
-                    <th>Preço contratual</th>
-                    <th>Data de publicação</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <% const contractsList=typeof contracts !=='undefined' ? contracts : []; %>
-                    <% if (contractsList.length> 0) { %>
-                      <% contractsList.forEach((contract)=> { %>
-                        <tr>
-                          <td data-label="Objeto do contrato" class="table-cell-truncate">
-                            <%= contract.tipoContrato || 'N/A' %>
-                          </td>
-                          <td data-label="Tipo de procedimento" class="table-cell-truncate">
-                            <%= contract.tipoprocedimento || 'N/A' %>
-                          </td>
-                          <td data-label="Adjudicante">
-                            <div class="table-cell-truncate">
-                              <%= (contract.adjudicante || 'N/A' ).replace(/^\d+\s*-\s*/, '' ) %>
-                            </div>
-                          </td>
-                          <td data-label="Adjudicatário">
-                            <div class="table-cell-truncate">
-                              <%= (contract.adjudicatarios || 'N/A' ).replace(/^\d+\s*-\s*/, '' ) %>
-                            </div>
-                          </td>
-                          <td data-label="Preço contratual">
-                            <%= formatPrice(contract.precoContratual) %>
-                          </td>
-                          <td data-label="Publicação" class="table-cell-truncate">
-                            <%= contract.dataPublicacao || 'N/A' %>
-                          </td>
-                          <td data-label="Ver detalhe">
-                            <a href="/detalhescontrato/<%= contract._id %>" class="details-button">
-                              <i class="fas fa-plus-circle"></i>
-                            </a>
-                          </td>
-
-                        </tr>
-
-                        <% }); %>
-                          <% } else { %>
-                            <tr>
-                              <td colspan="7" class="no-results">Nenhum contrato encontrado. Tente outros critérios de
-                                pesquisa.</td>
-                            </tr>
-                            <% } %>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- Paginação -->
-          <%- include('pagination', { pagination: pagination }) %>
-
         </div>
+
+        <!-- Results Table -->
+        <div class="results-section">
+          <h3 class="section-title">Informação detalhada</h3>
+          <div class="table-container">
+            <table class="results-table">
+              <thead>
+                <tr>
+                  <th>Objeto do contrato</th>
+                  <th>Tipo de procedimento</th>
+                  <th>Adjudicante</th>
+                  <th>Adjudicatário</th>
+                  <th>Preço contratual</th>
+                  <th>Data de publicação</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <% const contractsList=typeof contracts !=='undefined' ? contracts : []; %>
+                  <% if (contractsList.length> 0) { %>
+                    <% contractsList.forEach((contract)=> { %>
+                      <tr>
+                        <td data-label="Objeto do contrato" class="table-cell-truncate">
+                          <%= contract.tipoContrato || 'N/A' %>
+                        </td>
+                        <td data-label="Tipo de procedimento" class="table-cell-truncate">
+                          <%= contract.tipoprocedimento || 'N/A' %>
+                        </td>
+                        <td data-label="Adjudicante" class="table-cell-truncate">
+                          <%= (contract.adjudicante || 'N/A' ).replace(/^\d+\s*-\s*/, '' ) %>
+                        </td>
+                        <td data-label="Adjudicatário" class="table-cell-truncate">
+                          <%= (contract.adjudicatarios || 'N/A' ).replace(/^\d+\s*-\s*/, '' ) %>
+                        </td>
+                        <td data-label="Preço contratual" class="table-cell-truncate">
+                          <%= formatPrice(contract.precoContratual) %>
+                        </td>
+                        <td data-label="Publicação" class="table-cell-truncate">
+                          <%= contract.dataPublicacao || 'N/A' %>
+                        </td>
+                        <td data-label="Ver detalhe">
+                          <a href="/detalhescontrato/<%= contract._id %>" class="details-button">
+                            <i class="fas fa-plus-circle"></i>
+                          </a>
+                        </td>
+                      </tr>
+
+                      <% }); %>
+                        <% } else { %>
+                          <tr>
+                            <td colspan="7" class="no-results">Nenhum contrato encontrado. Tente outros critérios de
+                              pesquisa.</td>
+                          </tr>
+                          <% } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Paginação -->
+        <%- include('pagination', { pagination: pagination }) %>
+
       </div>
     </div>
+  </div>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        // Atualiza contador de contratos
-        const countDisplay = document.getElementById('count-display');
-        const countNumber = document.getElementById('count-number');
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Atualiza contador de contratos
+      const countDisplay = document.getElementById('count-display');
+      const countNumber = document.getElementById('count-number');
 
-        if (countDisplay && countNumber) {
-          const contractCount = parseInt(countDisplay.dataset.totalContracts, 10) || 0;
-          countNumber.textContent = contractCount;
-          countDisplay.classList.add('visible');
-        }
+      if (countDisplay && countNumber) {
+        const contractCount = parseInt(countDisplay.dataset.totalContracts, 10) || 0;
+        countNumber.textContent = contractCount;
+        countDisplay.classList.add('visible');
+      }
 
-        // Atualiza data atual
-        const spanData = document.getElementById('data-atualizacao');
-        if (spanData) {
-          const hoje = new Date();
-          const meses = ['jan.', 'fev.', 'mar.', 'abr.', 'mai.', 'jun.', 'jul.', 'ago.', 'set.', 'out.', 'nov.', 'dez.'];
-          spanData.textContent = `${hoje.getDate()} ${meses[hoje.getMonth()]} ${hoje.getFullYear()}`;
-        }
+      // Atualiza data atual
+      const spanData = document.getElementById('data-atualizacao');
+      if (spanData) {
+        const hoje = new Date();
+        const meses = ['jan.', 'fev.', 'mar.', 'abr.', 'mai.', 'jun.', 'jul.', 'ago.', 'set.', 'out.', 'nov.', 'dez.'];
+        spanData.textContent = `${hoje.getDate()} ${meses[hoje.getMonth()]} ${hoje.getFullYear()}`;
+      }
 
+      // Inicializa ícones (Lucide)
+      if (typeof lucide !== 'undefined' && lucide.createIcons) {
+        lucide.createIcons();
+      }
 
-
-        // Inicializa ícones (Lucide)
-        if (typeof lucide !== 'undefined' && lucide.createIcons) {
-          lucide.createIcons();
-        }
-
-
-
-      });
-    </script>
+    });
+  </script>

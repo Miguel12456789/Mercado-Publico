@@ -99,6 +99,7 @@
                 });
         };
 
+        // 🔸 FUNÇÃO UPDATETABLE CORRIGIDA COM DATA-LABELS
         const updateTable = (contracts) => {
             const tbody = document.querySelector('.results-table tbody');
             tbody.innerHTML = '';
@@ -110,14 +111,17 @@
 
             const rowsHtml = contracts.map(contract => `
                 <tr>
-                    <td>${contract.tipoContrato ?? 'N/A'}</td>
-                    <td>${contract.tipoprocedimento ?? 'N/A'}</td>
-                    <td>${(contract.adjudicante ?? 'N/A').replace(/^\d+\s*-\s*/, '')}</td>
-                    <td>${(contract.adjudicatarios ?? 'N/A').replace(/^\d+\s*-\s*/, '')}</td>
-                    <td>${contract.precoContratual ? formatPrice(contract.precoContratual) : 'N/A'}</td>
-                    <td>${contract.dataPublicacao ?? 'N/A'}</td>
-                    <td><button class="details-button" aria-label="Ver detalhes" data-contract-id="${contract._id}">
-                        <i class="fas fa-plus-circle"></i></button></td>
+                    <td data-label="Objeto do contrato" class="table-cell-truncate">${contract.tipoContrato ?? 'N/A'}</td>
+                    <td data-label="Tipo de procedimento" class="table-cell-truncate">${contract.tipoprocedimento ?? 'N/A'}</td>
+                    <td data-label="Adjudicante" class="table-cell-truncate">${(contract.adjudicante ?? 'N/A').replace(/^\d+\s*-\s*/, '')}</td>
+                    <td data-label="Adjudicatário" class="table-cell-truncate">${(contract.adjudicatarios ?? 'N/A').replace(/^\d+\s*-\s*/, '')}</td>
+                    <td data-label="Preço contratual" class="table-cell-truncate">${contract.precoContratual ? formatPrice(contract.precoContratual) : 'N/A'}</td>
+                    <td data-label="Publicação" class="table-cell-truncate">${contract.dataPublicacao ?? 'N/A'}</td>
+                    <td data-label="Ver detalhe">
+                        <a href="/detalhescontrato/${contract._id}" class="details-button">
+                            <i class="fas fa-plus-circle"></i>
+                        </a>
+                    </td>
                 </tr>
             `).join('');
 
@@ -162,9 +166,10 @@
 
         const bindDetailButtons = () => {
             document.querySelectorAll('.details-button').forEach(button => {
-                button.addEventListener('click', () => {
-                    const id = button.getAttribute('data-contract-id');
-                    if (id) window.location.href = `/detalhescontrato/${id}`;
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const href = button.getAttribute('href');
+                    if (href) window.location.href = href;
                 });
             });
         };

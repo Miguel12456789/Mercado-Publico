@@ -56,7 +56,6 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
-
 }
 
 body {
@@ -67,12 +66,12 @@ body {
 }
 
 .container {
-  width: 100%;
-  max-width: 1300px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 2rem;
-  padding-right: 2rem;
+    width: 100%;
+    max-width: 1300px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
 }
 
 /* Navegação */
@@ -187,9 +186,8 @@ h3 {
 }
 
 /* Estilos da Tabela */
-
 #results-table {
-  overflow: visible !important;
+    overflow-x: auto;
 }
 
 .results-table {
@@ -197,6 +195,7 @@ h3 {
     border-collapse: separate;
     border-spacing: 0;
     font-size: var(--text-sm);
+    table-layout: auto;
 }
 
 .results-table thead {
@@ -224,13 +223,20 @@ h3 {
     border-top-right-radius: var(--radius-md);
 }
 
+/* CÉLULAS DA TABELA - SEM TRUNCAGEM */
 .results-table td {
     padding: var(--gap-md);
     color: var(--text);
     line-height: var(--line-normal);
     border-bottom: none;
     transition: all var(--trans-fast);
-    vertical-align: middle;
+    vertical-align: top;
+    white-space: normal !important;
+    word-wrap: break-word !important;
+    word-break: break-word !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+    max-width: none !important;
 }
 
 .results-table tbody tr {
@@ -341,7 +347,6 @@ h3 {
         opacity: 0;
         transform: translateY(10px);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
@@ -353,7 +358,6 @@ h3 {
         opacity: 0;
         transform: translateX(-10px);
     }
-
     to {
         opacity: 1;
         transform: translateX(0);
@@ -366,219 +370,203 @@ h3 {
 }
 
 /* Atrasos escalonados para linhas */
-.results-table tr:nth-child(1) {
-    animation-delay: .05s;
-}
+.results-table tr:nth-child(1) { animation-delay: .05s; }
+.results-table tr:nth-child(2) { animation-delay: .1s; }
+.results-table tr:nth-child(3) { animation-delay: .15s; }
+.results-table tr:nth-child(4) { animation-delay: .2s; }
+.results-table tr:nth-child(5) { animation-delay: .25s; }
 
-.results-table tr:nth-child(2) {
-    animation-delay: .1s;
-}
-
-.results-table tr:nth-child(3) {
-    animation-delay: .15s;
-}
-
-.results-table tr:nth-child(4) {
-    animation-delay: .2s;
-}
-
-.results-table tr:nth-child(5) {
-    animation-delay: .25s;
-}
-
-
-/* Pagination Styles */
-.pagination-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 1.5rem;
-    gap: 1rem;
-}
-
-.pagination-info {
-    font-size: 0.875rem;
-    color: var(--light-text);
-}
-
-.pagination-controls {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-}
-
-.items-per-page {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.875rem;
-}
-
-.items-select {
-    padding: 0.375rem 0.75rem;
-    border: 1px solid var(--border-color);
-    border-radius: 0.25rem;
-    background-color: white;
-    font-size: 0.875rem;
-    color: var(--text-color);
-    cursor: pointer;
-    transition: border-color 0.2s;
-}
-
-.items-select:hover,
-.items-select:focus {
-    border-color: var(--primary-color);
-    outline: none;
-}
-
-.page-navigation {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.page-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 2rem;
-    height: 2rem;
-    border: 1px solid var(--border-color);
-    border-radius: 0.25rem;
-    background-color: white;
-    color: var(--text-color);
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.page-button:hover:not(:disabled) {
-    background-color: var(--hover-color);
-    border-color: var(--primary-color);
-}
-
-.page-button:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-.page-numbers {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-}
-
-.page-number {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 2rem;
-    height: 2rem;
-    border: 1px solid var(--border-color);
-    border-radius: 0.25rem;
-    background-color: white;
-    font-size: 0.875rem;
-    color: var(--text-color);
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.page-number:hover {
-    background-color: var(--hover-color);
-    border-color: var(--primary-color);
-}
-
-.page-number.active {
-    background-color: var(--primary-color);
-    color: white;
-    border-color: var(--primary-color);
-}
-
-/* Animation for page load */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.content-container {
-    animation: fadeIn 0.3s ease-out;
-}
-
-/* Estilo para texto truncado com ellipsis */
+/* FORÇAR REMOÇÃO DE TRUNCAGEM */
+.table-cell-truncate,
 .text-truncate {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 200px; /* Ajuste este valor conforme necessário */
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+    max-width: none !important;
+    word-wrap: break-word !important;
+    word-break: break-word !important;
 }
 
-/* Para células da tabela */
-.table-cell-truncate {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 250px; /* Ajuste conforme necessário */
-    display: inline-block;
-}
-/* Linha de rótulos visível apenas no mobile */
-.mobile-labels-only {
-  display: none;
-}
-
-/* Adicione ao final do seu tab_base.css */
+/* RESPONSIVE DESIGN - MOBILE */
 @media (max-width: 768px) {
-  .table-container {
-    overflow: visible;
-  }
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
 
-  .results-table thead {
-    display: none;
-  }
+    .main-content {
+        padding: var(--gap-md);
+    }
 
-  .results-table,
-  .results-table tbody,
-  .results-table tr,
-  .results-table td {
-    display: block;
-    width: 100%;
-  }
+    /* Esconder cabeçalho da tabela */
+    .results-table thead {
+        display: none;
+    }
 
-  .results-table tr {
-    margin-bottom: 1rem;
-    border-bottom: 2px solid #eee;
-  }
+    /* Transformar tabela em cards */
+    .results-table,
+    .results-table tbody,
+    .results-table tr,
+    .results-table td {
+        display: block;
+        width: 100%;
+    }
 
-  .results-table td {
-    position: relative;
-    padding-left: 50%;
-    min-height: 2.5em;
-    border: none;
-    border-bottom: 1px solid #eee;
-  }
+    .results-table tr {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        margin-bottom: var(--gap-md);
+        padding: var(--gap-md);
+        box-shadow: var(--shadow-sm);
+        transition: all var(--trans-normal);
+        transform: none;
+    }
 
-  .results-table td::before {
-    content: attr(data-label);
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 48%;
-    padding-left: 1em;
-    font-weight: bold;
-    color: #555;
-    white-space: pre-wrap;
-    text-align: left;
-    display: block;
-  }
+    .results-table tr:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+    }
+
+    .results-table td {
+        position: relative;
+        padding: var(--gap-sm) 0;
+        border: none;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: flex-start;
+        min-height: auto;
+    }
+
+    .results-table td:last-child {
+        border-bottom: none;
+        justify-content: center;
+        padding-top: var(--gap-md);
+    }
+
+    /* Labels específicos para cada campo */
+    .results-table td[data-label="Objeto do contrato"]::before {
+        content: "Objeto do contrato";
+        font-weight: var(--weight-semi);
+        color: var(--text-light);
+        width: 40%;
+        flex-shrink: 0;
+        padding-right: var(--gap-sm);
+        font-size: var(--text-sm);
+        line-height: var(--line-normal);
+    }
+
+    .results-table td[data-label="Tipo de procedimento"]::before {
+        content: "Tipo de procedimento";
+        font-weight: var(--weight-semi);
+        color: var(--text-light);
+        width: 40%;
+        flex-shrink: 0;
+        padding-right: var(--gap-sm);
+        font-size: var(--text-sm);
+        line-height: var(--line-normal);
+    }
+
+    .results-table td[data-label="Adjudicante"]::before {
+        content: "Adjudicante";
+        font-weight: var(--weight-semi);
+        color: var(--text-light);
+        width: 40%;
+        flex-shrink: 0;
+        padding-right: var(--gap-sm);
+        font-size: var(--text-sm);
+        line-height: var(--line-normal);
+    }
+
+    .results-table td[data-label="Adjudicatário"]::before {
+        content: "Adjudicatário";
+        font-weight: var(--weight-semi);
+        color: var(--text-light);
+        width: 40%;
+        flex-shrink: 0;
+        padding-right: var(--gap-sm);
+        font-size: var(--text-sm);
+        line-height: var(--line-normal);
+    }
+
+    .results-table td[data-label="Preço contratual"]::before {
+        content: "Preço contratual";
+        font-weight: var(--weight-semi);
+        color: var(--text-light);
+        width: 40%;
+        flex-shrink: 0;
+        padding-right: var(--gap-sm);
+        font-size: var(--text-sm);
+        line-height: var(--line-normal);
+    }
+
+    .results-table td[data-label="Publicação"]::before {
+        content: "Publicação";
+        font-weight: var(--weight-semi);
+        color: var(--text-light);
+        width: 40%;
+        flex-shrink: 0;
+        padding-right: var(--gap-sm);
+        font-size: var(--text-sm);
+        line-height: var(--line-normal);
+    }
+
+    /* Valores dos campos */
+    .results-table td {
+        font-size: var(--text-sm);
+        line-height: var(--line-normal);
+        word-break: break-word;
+        white-space: normal;
+    }
+
+    /* Remover truncate no mobile */
+    .table-cell-truncate {
+        white-space: normal;
+        overflow: visible;
+        text-overflow: unset;
+        max-width: none;
+        display: block;
+        flex: 1;
+    }
+
+    /* Botão de detalhes no mobile */
+    .results-table td[data-label="Ver detalhe"]::before {
+        display: none;
+    }
+
+    .details-button {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+    }
+
+    /* Caso especial para linha sem resultados */
+    .no-results {
+        text-align: center;
+        padding: var(--gap-xl);
+        color: var(--text-light);
+        font-style: italic;
+    }
+
+    .no-results::before {
+        display: none;
+    }
 }
 
+/* Ajustes para telas muito pequenas */
+@media (max-width: 480px) {
+    .results-table td[data-label]::before {
+        width: 45%;
+        font-size: var(--text-xs);
+    }
 
+    .results-table td {
+        font-size: var(--text-xs);
+    }
 
-
-
+    .details-button {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+    }
+}

@@ -1,9 +1,51 @@
 :root {
     --primary-color: #3c6c2a;
+    --primary: #3c6c2a;
+    --primary-light: #4d8836;
+    --primary-dark: #2a4d1e;
     --text-color: #333;
+    --text: #333;
     --light-text: #6b7280;
+    --text-light: #6c757d;
     --border-color: #e5e7eb;
+    --border: #e9ecef;
     --hover-color: #f3f4f6;
+    --hover: #f1f3f5;
+    --card: #fff;
+    --bg: #f5f5f5;
+    --secondary: #f8f9fa;
+    
+    /* Espaçamento */
+    --gap-xs: .25rem;
+    --gap-sm: .5rem;
+    --gap-md: 1rem;
+    --gap-lg: 1.5rem;
+    --gap-xl: 2rem;
+
+    /* Tipografia */
+    --text-xs: .75rem;
+    --text-sm: .875rem;
+    --text-md: 1rem;
+    --text-lg: 1.25rem;
+    --text-xl: 1.5rem;
+    --weight-normal: 400;
+    --weight-medium: 500;
+    --weight-semi: 600;
+    --weight-bold: 700;
+    --line-tight: 1.25;
+    --line-normal: 1.5;
+
+    /* Bordas e Sombras */
+    --radius-sm: .25rem;
+    --radius-md: .5rem;
+    --radius-lg: .75rem;
+    --radius-full: 9999px;
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, .05);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, .05), 0 1px 3px rgba(0, 0, 0, .1);
+
+    /* Transições */
+    --trans-fast: 150ms ease;
+    --trans-normal: 250ms ease;
 }
 
 * {
@@ -13,9 +55,11 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'Poppins', sans-serif;
     color: var(--text-color);
-    padding: 1rem;
+    background: var(--bg);
+    line-height: var(--line-normal);
+    font-size: var(--text-md);
 }
 
 .pagination-container {
@@ -23,52 +67,66 @@ body {
     flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    margin-top: 1.5rem;
-    gap: 1rem;
+    margin-top: var(--gap-lg);
+    gap: var(--gap-md);
     width: 100%;
+    background: var(--card);
+    padding: var(--gap-md);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow var(--trans-normal);
+}
+
+.pagination-container:hover {
+    box-shadow: var(--shadow-md);
 }
 
 .pagination-info {
-    font-size: 0.875rem;
+    font-size: var(--text-sm);
     color: var(--light-text);
+    font-weight: var(--weight-medium);
 }
 
 .pagination-controls {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: var(--gap-lg);
     flex-wrap: wrap;
 }
 
 .items-per-page {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    font-size: 0.875rem;
+    gap: var(--gap-sm);
+    font-size: var(--text-sm);
+    font-weight: var(--weight-medium);
 }
 
 .items-select {
-    padding: 0.375rem 0.75rem;
+    padding: var(--gap-sm) var(--gap-md);
     border: 1px solid var(--border-color);
-    border-radius: 0.25rem;
-    background-color: white;
-    font-size: 0.875rem;
+    border-radius: var(--radius-md);
+    background-color: var(--card);
+    font-size: var(--text-sm);
     color: var(--text-color);
     cursor: pointer;
-    transition: border-color 0.2s;
-    min-height: 2.5rem; /* Ensure touch-friendly size */
+    transition: all var(--trans-fast);
+    min-height: 2.5rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: var(--weight-medium);
 }
 
 .items-select:hover,
 .items-select:focus {
     border-color: var(--primary-color);
     outline: none;
+    box-shadow: 0 0 0 3px rgba(60, 108, 42, .25);
 }
 
 .page-navigation {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: var(--gap-sm);
 }
 
 .page-button {
@@ -76,18 +134,21 @@ body {
     align-items: center;
     justify-content: center;
     width: 2.5rem;
-    height: 2.5rem; /* Increased for better touch targets */
+    height: 2.5rem;
     border: 1px solid var(--border-color);
-    border-radius: 0.25rem;
-    background-color: white;
+    border-radius: var(--radius-md);
+    background-color: var(--card);
     color: var(--text-color);
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all var(--trans-fast);
+    font-family: 'Poppins', sans-serif;
+    font-weight: var(--weight-medium);
 }
 
 .page-button:hover:not(:disabled) {
     background-color: var(--hover-color);
     border-color: var(--primary-color);
+    transform: translateY(-1px);
 }
 
 .page-button:disabled {
@@ -95,10 +156,15 @@ body {
     cursor: not-allowed;
 }
 
+.page-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(60, 108, 42, .25);
+}
+
 .page-numbers {
     display: flex;
     align-items: center;
-    gap: 0.25rem;
+    gap: var(--gap-xs);
     flex-wrap: wrap;
 }
 
@@ -107,25 +173,39 @@ body {
     align-items: center;
     justify-content: center;
     width: 2.5rem;
-    height: 2.5rem; /* Increased for better touch targets */
+    height: 2.5rem;
     border: 1px solid var(--border-color);
-    border-radius: 0.25rem;
-    background-color: white;
-    font-size: 0.875rem;
+    border-radius: var(--radius-md);
+    background-color: var(--card);
+    font-size: var(--text-sm);
     color: var(--text-color);
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all var(--trans-fast);
+    font-family: 'Poppins', sans-serif;
+    font-weight: var(--weight-medium);
 }
 
 .page-number:hover {
     background-color: var(--hover-color);
     border-color: var(--primary-color);
+    transform: translateY(-1px);
+}
+
+.page-number:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(60, 108, 42, .25);
 }
 
 .page-number.active {
     background-color: var(--primary-color);
     color: white;
     border-color: var(--primary-color);
+    font-weight: var(--weight-semi);
+}
+
+.page-number.active:hover {
+    background-color: var(--primary-light);
+    transform: translateY(-1px);
 }
 
 .page-icon {
@@ -133,46 +213,124 @@ body {
     height: 1rem;
 }
 
-/* Media queries for responsive design */
+/* Animação para carregamento */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.pagination-container {
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* RESPONSIVE DESIGN APENAS PARA PAGINAÇÃO */
 @media (max-width: 768px) {
     .pagination-container {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch;
+        gap: var(--gap-md);
+        margin-top: var(--gap-md);
+        padding: var(--gap-sm);
     }
-    
+
+    .pagination-info {
+        text-align: center;
+        order: 3;
+        margin-top: var(--gap-sm);
+        font-size: var(--text-xs);
+    }
+
     .pagination-controls {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--gap-md);
         width: 100%;
+    }
+
+    .items-per-page {
         justify-content: space-between;
+        width: 100%;
+        order: 1;
+        font-size: var(--text-xs);
+    }
+
+    .page-navigation {
+        justify-content: center;
+        width: 100%;
+        order: 2;
+        gap: var(--gap-xs);
+    }
+
+    /* Ajustar tamanhos dos botões para touch */
+    .page-button,
+    .page-number {
+        width: 3rem;
+        height: 3rem;
+        font-size: var(--text-md);
+    }
+
+    .items-select {
+        min-height: 3rem;
+        font-size: var(--text-md);
+        padding: var(--gap-sm) var(--gap-md);
     }
 }
 
 @media (max-width: 576px) {
+    .pagination-container {
+        padding: var(--gap-xs);
+        margin-top: var(--gap-sm);
+    }
+
     .pagination-controls {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1rem;
-        width: 100%;
+        gap: var(--gap-sm);
     }
     
     .items-per-page {
-        width: 100%;
-        justify-content: space-between;
+        font-size: var(--text-xs);
     }
     
     .page-navigation {
-        width: 100%;
-        justify-content: center;
+        gap: 2px;
     }
     
-    /* Hide some page numbers on very small screens */
+    /* Esconder alguns números de página em telas muito pequenas */
     .page-numbers .page-number:nth-child(n+4):not(.active) {
         display: none;
     }
+
+    .page-button,
+    .page-number {
+        width: 2.75rem;
+        height: 2.75rem;
+        font-size: var(--text-sm);
+    }
 }
 
-/* For very small screens */
+/* Para telas muito pequenas */
 @media (max-width: 360px) {
     .page-numbers .page-number:nth-child(n+3):not(.active) {
         display: none;
+    }
+
+    .page-button,
+    .page-number {
+        width: 2.5rem;
+        height: 2.5rem;
+        font-size: var(--text-xs);
+    }
+
+    .items-select {
+        font-size: var(--text-sm);
+    }
+
+    .pagination-info {
+        font-size: var(--text-xs);
     }
 }
