@@ -61,31 +61,35 @@
                     <% if (contractsList.length> 0) { %>
                       <% contractsList.forEach((contract)=> { %>
                         <tr>
-  <td data-label="Objeto do contrato" class="table-cell-truncate">
-    <%= contract.tipoContrato || 'N/A' %>
-  </td>
-  <td data-label="Tipo de procedimento" class="table-cell-truncate">
-    <%= contract.tipoprocedimento || 'N/A' %>
-  </td>
-  <td data-label="Adjudicante">
-    <div class="table-cell-truncate"><%= (contract.adjudicante || 'N/A').replace(/^\d+\s*-\s*/, '') %></div>
-  </td>
-  <td data-label="Adjudicatário">
-    <div class="table-cell-truncate"><%= (contract.adjudicatarios || 'N/A').replace(/^\d+\s*-\s*/, '') %></div>
-  </td>
-  <td data-label="Preço contratual">
-    <%= formatPrice(contract.precoContratual) %>
-  </td>
-  <td data-label="Publicação" class="table-cell-truncate">
-    <%= contract.dataPublicacao || 'N/A' %>
-  </td>
-  <td data-label="Ver detalhe">
-    <a href="/detalhescontrato/<%= contract._id %>" class="details-button">
-      <i class="fas fa-plus-circle"></i>
-    </a>
-  </td>
-  
-</tr>
+                          <td data-label="Objeto do contrato" class="table-cell-truncate">
+                            <%= contract.tipoContrato || 'N/A' %>
+                          </td>
+                          <td data-label="Tipo de procedimento" class="table-cell-truncate">
+                            <%= contract.tipoprocedimento || 'N/A' %>
+                          </td>
+                          <td data-label="Adjudicante">
+                            <div class="table-cell-truncate">
+                              <%= (contract.adjudicante || 'N/A' ).replace(/^\d+\s*-\s*/, '' ) %>
+                            </div>
+                          </td>
+                          <td data-label="Adjudicatário">
+                            <div class="table-cell-truncate">
+                              <%= (contract.adjudicatarios || 'N/A' ).replace(/^\d+\s*-\s*/, '' ) %>
+                            </div>
+                          </td>
+                          <td data-label="Preço contratual">
+                            <%= formatPrice(contract.precoContratual) %>
+                          </td>
+                          <td data-label="Publicação" class="table-cell-truncate">
+                            <%= contract.dataPublicacao || 'N/A' %>
+                          </td>
+                          <td data-label="Ver detalhe">
+                            <a href="/detalhescontrato/<%= contract._id %>" class="details-button">
+                              <i class="fas fa-plus-circle"></i>
+                            </a>
+                          </td>
+
+                        </tr>
 
                         <% }); %>
                           <% } else { %>

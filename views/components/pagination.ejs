@@ -66,6 +66,7 @@
 
         // 🔸 Carrega contratos com filtros ativos
         const loadContracts = (page = 1, limit = itemsSelect.value) => {
+            window.loadContracts = loadContracts;
             const url = new URL('/base_gov', window.location.origin);
             url.searchParams.set('page', page);
             url.searchParams.set('limit', limit);
