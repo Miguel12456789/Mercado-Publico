@@ -136,13 +136,13 @@
                                         <tr>
                                             <th>Entidades adjudicantes</th>
                                             <td>
-                                                <%= contract.adjudicante || 'N/A' %>
+                                                <%= (contract.adjudicante || 'N/A' ).replace(/^\d+\s*-\s*/, '' ) %>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>Entidades adjudicatárias</th>
                                             <td>
-                                                <%= contract.adjudicatarios || 'N/A' %>
+                                                <%= (contract.adjudicatarios || 'N/A' ).replace(/^\d+\s*-\s*/, '' ) %>
                                             </td>
                                         </tr>
                                         <tr>
@@ -216,7 +216,7 @@
                                         <tr>
                                             <th>Entidades concorrentes</th>
                                             <td>
-                                                <%= contract.concorrentes || 'N/A' %>
+                                                <%= (contract.concorrentes || 'N/A' ).replace(/^\d+\s*-\s*/, '' ) %>
                                             </td>
                                         </tr>
                                         <tr>
@@ -240,7 +240,14 @@
                                         <tr>
                                             <th>Link de Peças Procedimento</th>
                                             <td>
-                                                <%= contract.linkPecasProc || 'N/A' %>
+                                                <% if (contract.linkPecasProc) { %>
+                                                    <a href="<%= contract.linkPecasProc %>" target="_blank"
+                                                        rel="noopener noreferrer">
+                                                        <%= contract.linkPecasProc %>
+                                                    </a>
+                                                    <% } else { %>
+                                                        N/A
+                                                        <% } %>
                                             </td>
                                         </tr>
                                         <tr>

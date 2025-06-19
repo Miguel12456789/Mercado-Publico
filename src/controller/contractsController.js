@@ -33,17 +33,60 @@ const contractsGet = async (req, res) => {
       filter.tipoMedidaEspecial = req.query['measure-type'];
     }
 
+    const procedimentoMap = {
+      1: "Ajuste Direto Regime Geral",
+      2: "Concurso público",
+      3: "Concurso limitado por prévia qualificação",
+      4: "Procedimento de negociação",
+      5: "Diálogo concorrencial",
+      6: "Ao abrigo de acordo-quadro (art.º 258.º)",
+      7: "Ao abrigo de acordo-quadro (art.º 259.º)",
+      8: "Consulta Prévia",
+      9: "Parceria para a inovação",
+      10: "Disponibilização de bens móveis",
+      11: "Serviços sociais e outros serviços específicos",
+      13: "Concurso de conceção simplificado",
+      14: "Concurso de ideias simplificado",
+      15: "Consulta Prévia Simplificada",
+      16: "Concurso público simplificado",
+      17: "Concurso limitado por prévia qualificação simplificado",
+      18: "Ajuste Direto Regime Geral ao abrigo do artigo 7º da Lei n.º 30/2021, de 21.05",
+      19: "Consulta prévia ao abrigo do artigo 7º da Lei n.º 30/2021, de 21.05",
+      20: "Ajuste direto simplificado",
+      21: "Ajuste direto simplificado ao abrigo da Lei n.º 30/2021, de 21.05",
+      22: "Setores especiais - isenção parte II",
+      23: "Contratação excluída II",
+    };
+
     if (req.query['tipoProcedimento'] && req.query['tipoProcedimento'] !== '0') {
-      filter.tipoprocedimento = req.query['tipoProcedimento'];
+      const procedimentoStr = procedimentoMap[parseInt(req.query['tipoProcedimento'])];
+      if (procedimentoStr) {
+        filter.tipoprocedimento = procedimentoStr;
+      }
     }
 
     if (req.query['entidade']?.trim()) {
       filter.adjudicante = { $regex: req.query['entidade'].trim(), $options: 'i' };
     }
 
+    const tipoContratoMap = {
+      1: "Aquisição de bens móveis",
+      2: "Aquisição de serviços",
+      3: "Concessão de obras públicas",
+      4: "Concessão de serviços públicos",
+      5: "Empreitadas de obras públicas",
+      6: "Locação de bens móveis",
+      7: "Sociedade",
+      8: "Outros"
+    };
+
     if (req.query['tipoContrato'] && req.query['tipoContrato'] !== '0') {
-      filter.tipoContrato = req.query['tipoContrato'];
+      const tipoContratoStr = tipoContratoMap[parseInt(req.query['tipoContrato'])];
+      if (tipoContratoStr) {
+        filter.tipoContrato = tipoContratoStr;
+      }
     }
+
 
     if (req.query['adjudicatario']?.trim()) {
       filter.adjudicatarios = { $regex: req.query['adjudicatario'].trim(), $options: 'i' };
@@ -54,8 +97,12 @@ const contractsGet = async (req, res) => {
     }
 
     if (req.query['environmental-criteria'] === 'on') {
-      filter.criteriosAmbientais = true;
+      filter.ContratEcologico = "Sim";
+    } else {
+      filter.ContratEcologico = "NÃ£o";
     }
+
+    
 
     // ========================
     // CONSULTA COM FILTRO

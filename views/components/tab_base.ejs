@@ -1,5 +1,6 @@
-<% function formatPrice(price) { if (typeof price !=='number' ) return 'N/A' ; return price.toLocaleString('pt-PT', {
-  minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €' ; } %>
+<% function formatPrice(price) { const numericPrice=Number(String(price).trim()); if (isNaN(numericPrice)) return 'N/A'
+  ; const parts=numericPrice.toFixed(2).split('.'); parts[0]=parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.' ); return
+  `${parts[0]},${parts[1]} €`; } %>
 
   <!DOCTYPE html>
   <html lang="pt">
@@ -14,7 +15,8 @@
 
   <body>
     <div id="results-table" style="display: none;">
-      <div class="container">
+
+      <div class=" container">
 
         <!-- Breadcrumb Navigation -->
         <div class="breadcrumb">
@@ -65,14 +67,20 @@
                           <td class="table-cell-truncate">
                             <%= contract.tipoprocedimento || 'N/A' %>
                           </td>
-                          <td class="table-cell-truncate">
-                            <%= contract.adjudicante || 'N/A' %>
-                          </td>
-                          <td class="table-cell-truncate">
-                            <%= contract.adjudicatarios || 'N/A' %>
+                          <td>
+                            <div class="table-cell-truncate"
+                              title="<%= (contract.adjudicante || 'N/A').replace(/^\d+\s*-\s*/, '') %>">
+                              <%= (contract.adjudicante || 'N/A' ).replace(/^\d+\s*-\s*/, '' ) %>
+                            </div>
                           </td>
                           <td>
-                            <%= contract.precoContratual ? formatPrice(contract.precoContratual) : 'N/A' %>
+                            <div class="table-cell-truncate"
+                              title="<%= (contract.adjudicatarios || 'N/A').replace(/^\d+\s*-\s*/, '') %>">
+                              <%= (contract.adjudicatarios || 'N/A' ).replace(/^\d+\s*-\s*/, '' ) %>
+                            </div>
+                          </td>
+                          <td>
+                            <%= formatPrice(contract.precoContratual) %>
                           </td>
                           <td class="table-cell-truncate">
                             <%= contract.dataPublicacao || 'N/A' %>
@@ -122,20 +130,14 @@
           spanData.textContent = `${hoje.getDate()} ${meses[hoje.getMonth()]} ${hoje.getFullYear()}`;
         }
 
-        // Trunca textos longos
-        document.querySelectorAll('.truncate-text').forEach(cell => {
-          const text = cell.textContent;
-          if (text.length > 50) {
-            cell.textContent = text.slice(0, 50) + '...';
-          }
-        });
+
 
         // Inicializa ícones (Lucide)
         if (typeof lucide !== 'undefined' && lucide.createIcons) {
           lucide.createIcons();
         }
 
-  
+
 
       });
     </script>

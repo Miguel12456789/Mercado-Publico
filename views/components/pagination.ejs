@@ -39,6 +39,15 @@
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
+
+        function formatPrice(price) {
+            const numericPrice = Number(String(price).trim());
+            if (isNaN(numericPrice)) return 'N/A';
+            const parts = numericPrice.toFixed(2).split('.');
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            return `${parts[0]},${parts[1]} €`;
+        }
+
         const itemsSelect = document.getElementById('items-select');
         const pageNumbers = document.getElementById('page-numbers');
         const prevPageBtn = document.getElementById('prev-page');
@@ -58,14 +67,14 @@
             <tr>
                 <td>${contract.tipoContrato ?? 'N/A'}</td>
                 <td>${contract.tipoprocedimento ?? 'N/A'}</td>
-                <td>${contract.adjudicante ?? 'N/A'}</td>
-                <td>${contract.adjudicatarios ?? 'N/A'}</td>
-                <td>${contract.precoContratual ? contract.precoContratual + ' €' : 'N/A'}</td>
+                <td>${(contract.adjudicante ?? 'N/A').replace(/^\d+\s*-\s*/, '')}</td>
+                <td>${(contract.adjudicatarios ?? 'N/A').replace(/^\d+\s*-\s*/, '')}</td>
+                <td>${contract.precoContratual ? formatPrice(contract.precoContratual) : 'N/A'}</td>
                 <td>${contract.dataPublicacao ?? 'N/A'}</td>
                 <td><button class="details-button" aria-label="Ver detalhes" data-contract-id="${contract._id}">
                     <i class="fas fa-plus-circle"></i></button></td>
             </tr>
-        `).join('');
+            `).join('');
 
             tbody.innerHTML = rowsHtml;
             bindDetailButtons();
@@ -133,100 +142,4 @@
         // Carregar a primeira página ao iniciar
         loadContracts();
     });
-    document.addEventListener('DOMContentLoaded', () => {
-        const itemsSelect = document.getElementById('items-select');
-        const pageNumbers = document.getElementById('page-numbers');
-        const prevPageBtn = document.getElementById('prev-page');
-        const nextPageBtn = document.getElementById('next-page');
-        const showingEntries = document.getElementById('showing-entries');
-
-        const updateTable = (contracts) => {
-            const tbody = document.querySelector('.results-table tbody');
-            tbody.innerHTML = '';
-
-            if (!contracts.length) {
-                tbody.innerHTML = `<tr><td colspan="7" class="no-results">Nenhum contrato encontrado.</td></tr>`;
-                return;
-            }
-
-            const rowsHtml = contracts.map(contract => `
-            <tr>
-                <td>${contract.tipoContrato ?? 'N/A'}</td>
-                <td>${contract.tipoprocedimento ?? 'N/A'}</td>
-                <td>${contract.adjudicante ?? 'N/A'}</td>
-                <td>${contract.adjudicatarios ?? 'N/A'}</td>
-                <td>${contract.precoContratual ? contract.precoContratual + ' €' : 'N/A'}</td>
-                <td>${contract.dataPublicacao ?? 'N/A'}</td>
-                <td><button class="details-button" aria-label="Ver detalhes" data-contract-id="${contract._id}">
-                    <i class="fas fa-plus-circle"></i></button></td>
-            </tr>
-        `).join('');
-
-            tbody.innerHTML = rowsHtml;
-            bindDetailButtons();
-        };
-
-        const updatePagination = ({ currentPage, totalPages, limit, startIndex, endIndex, totalContracts, hasPrevPage, hasNextPage }) => {
-            showingEntries.textContent = `Mostrando ${startIndex}-${endIndex} de ${totalContracts} registros`;
-            itemsSelect.value = limit;
-            pageNumbers.innerHTML = '';
-
-            const createPageButton = (page) => {
-                const btn = document.createElement('button');
-                btn.className = `page-number ${page === currentPage ? 'active' : ''}`;
-                btn.dataset.page = page;
-                btn.textContent = page;
-                btn.addEventListener('click', () => loadContracts(page, limit));
-                return btn;
-            };
-
-            for (let i = Math.max(1, currentPage - 2); i <= Math.min(totalPages, currentPage + 2); i++) {
-                pageNumbers.appendChild(createPageButton(i));
-            }
-
-            prevPageBtn.disabled = !hasPrevPage;
-            nextPageBtn.disabled = !hasNextPage;
-
-            prevPageBtn.onclick = hasPrevPage ? () => loadContracts(currentPage - 1, limit) : null;
-            nextPageBtn.onclick = hasNextPage ? () => loadContracts(currentPage + 1, limit) : null;
-
-            if (typeof lucide !== 'undefined') lucide.createIcons();
-        };
-
-        const loadContracts = (page = 1, limit = itemsSelect.value) => {
-            const url = new URL(window.location);
-            url.searchParams.set('page', page);
-            url.searchParams.set('limit', limit);
-
-            fetch(url, { headers: { 'Accept': 'application/json' } })
-                .then(res => res.json())
-                .then(({ contracts, pagination }) => {
-                    updateTable(contracts);
-                    updatePagination(pagination);
-                })
-                .catch(err => console.error('Erro ao carregar contratos:', err));
-        };
-
-        const bindDetailButtons = () => {
-            document.querySelectorAll('.details-button').forEach(button => {
-                button.addEventListener('click', () => {
-                    const id = button.getAttribute('data-contract-id');
-                    if (id) window.location.href = `/detalhescontrato/${id}`;
-                });
-            });
-        };
-
-        // Expor globalmente caso necessário
-        window.updateTable = updateTable;
-        window.updatePagination = updatePagination;
-
-        // Eventos iniciais
-        itemsSelect.addEventListener('change', () => loadContracts(1, itemsSelect.value));
-
-        if (typeof lucide !== 'undefined') lucide.createIcons();
-
-        // Carregar a primeira página ao iniciar
-        loadContracts();
-    });
-
 </script>

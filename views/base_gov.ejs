@@ -232,12 +232,15 @@
                             </div>
 
                             <div class="form-group">
-                                <input type="checkbox" name="environmental-criteria" id="environmental-criteria"
-                                    class="form-checkbox" />
+                                <input type="hidden" name="environmental-criteria" value="off" />
+                                <input type="checkbox" id="environmental-criteria" name="environmental-criteria"
+                                    class="form-checkbox" value="on" />
+
                                 <label for="environmental-criteria" class="form-label">
                                     Critérios ambientais
                                 </label>
                             </div>
+
                         </div>
 
                         <!-- Fifth Row - Dates and Location -->
@@ -290,7 +293,7 @@
                                 </select>
                                 </select>
                                 <select id="distrito-select" class="form-select location-select" disabled>
-                                    <option value="">Todos</option>
+                                    <option value="">Todos os distrito</option>
                                     <option value="aveiro">Aveiro</option>
                                     <option value="beja">Beja</option>
                                     <option value="braga">Braga</option>
@@ -311,7 +314,7 @@
                                     <option value="viseu">Viseu</option>
                                 </select>
                                 <select id="concelho-select" class="form-select location-select" disabled>
-                                    <option value="">Selecione um concelho</option>
+                                    <option value="">Todos os concelhos</option>
                                     <!-- Será preenchido dinamicamente com JavaScript -->
                                 </select>
                             </div>
@@ -546,10 +549,9 @@
                                         yearSelect.addEventListener('change', updateDays);
                                         monthSelect.addEventListener('change', updateDays);
 
-                                        // Inicializar com valores padrão
-                                        yearSelect.value = currentYear;
-                                        monthSelect.value = 1;
-                                        updateDays();
+                                        yearSelect.selectedIndex = 0;
+                                        monthSelect.selectedIndex = 0;
+                                        daySelect.selectedIndex = 0;
                                     }
 
                                     populateDateSelectors('from-year', 'from-month', 'from-day');
@@ -723,13 +725,13 @@
                                         const isPortugal = paisSelect.value === "portugal";
                                         setDisabled(distritoSelect, !isPortugal);
                                         setDisabled(concelhoSelect, true);
-                                        concelhoSelect.innerHTML = '<option value="">Selecione um concelho</option>';
+                                        concelhoSelect.innerHTML = '<option value="">Todos os distritos</option>';
                                     };
 
                                     // Preenche os concelhos com base no distrito selecionado
                                     const preencherConcelhos = () => {
                                         const concelhos = distritosConcelhos[distritoSelect.value] || [];
-                                        concelhoSelect.innerHTML = '<option value="">Selecione um concelho</option>';
+                                        concelhoSelect.innerHTML = '<option value="">Todos os concelhos</option>';
                                         setDisabled(concelhoSelect, concelhos.length === 0);
 
                                         concelhos.forEach(nome => {
@@ -765,10 +767,18 @@
                                                 const resultsTable = document.querySelector('#results-table');
                                                 resultsTable.style.display = 'block';
                                                 updateTable(data.contracts);
-                                                updatePagination(data.pagination); // só se você tiver definido essa também
+                                                updatePagination(data.pagination);
                                                 resultsTable.scrollIntoView({ behavior: 'smooth' });
+
+                                                const countDisplay = document.getElementById('count-display');
+                                                const countNumber = document.getElementById('count-number');
+
+                                                if (countDisplay && countNumber) {
+                                                    const total = data.pagination.totalContracts;
+                                                    countNumber.textContent = total;
+                                                    countDisplay.innerHTML = `<span id="count-number">${total}</span> contrato${total !== 1 ? 's' : ''} encontrado${total !== 1 ? 's' : ''}`;
+                                                }
                                             })
-                                            .catch(err => console.error('Erro:', err));
                                     });
 
                                     // Listeners de selects
