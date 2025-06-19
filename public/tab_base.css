@@ -534,25 +534,35 @@ h3 {
 
 /* Adicione ao final do seu tab_base.css */
 @media (max-width: 768px) {
+  .table-container {
+    overflow: visible;
+  }
+
   .results-table thead {
     display: none;
   }
-  .results-table, .results-table tbody, .results-table tr, .results-table td {
+
+  .results-table,
+  .results-table tbody,
+  .results-table tr,
+  .results-table td {
     display: block;
     width: 100%;
   }
+
   .results-table tr {
     margin-bottom: 1rem;
     border-bottom: 2px solid #eee;
   }
+
   .results-table td {
     position: relative;
     padding-left: 50%;
     min-height: 2.5em;
-    box-sizing: border-box;
     border: none;
     border-bottom: 1px solid #eee;
   }
+
   .results-table td::before {
     content: attr(data-label);
     position: absolute;
@@ -567,6 +577,7 @@ h3 {
     display: block;
   }
 }
+
 
 
 
