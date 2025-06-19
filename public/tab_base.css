@@ -527,32 +527,47 @@ h3 {
     max-width: 250px; /* Ajuste conforme necessário */
     display: inline-block;
 }
+/* Linha de rótulos visível apenas no mobile */
+.mobile-labels-only {
+  display: none;
+}
 
-/* Responsividade */
+/* Adicione ao final do seu tab_base.css */
 @media (max-width: 768px) {
-    .main-content {
-        padding: var(--gap-md);
-    }
-
-    .results-table td {
-        padding: var(--gap-sm);
-    }
-
-    .results-table th {
-        padding: var(--gap-sm);
-    }
+  .results-table thead {
+    display: none;
+  }
+  .results-table, .results-table tbody, .results-table tr, .results-table td {
+    display: block;
+    width: 100%;
+  }
+  .results-table tr {
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #eee;
+  }
+  .results-table td {
+    position: relative;
+    padding-left: 50%;
+    min-height: 2.5em;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 1px solid #eee;
+  }
+  .results-table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 48%;
+    padding-left: 1em;
+    font-weight: bold;
+    color: #555;
+    white-space: pre-wrap;
+    text-align: left;
+    display: block;
+  }
 }
 
-@media (max-width: 480px) {
-    .container {
-        padding: var(--gap-sm);
-    }
 
-    .main-content {
-        padding: var(--gap-sm);
-    }
 
-    .count-display {
-        padding: var(--gap-xs) var(--gap-sm);
-    }
-}
+
