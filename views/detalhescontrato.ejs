@@ -92,14 +92,20 @@
                                         <tr>
                                             <th>Tipo de procedimento</th>
                                             <td>
-                                                <%= (contract.ProcedimentoCentralizado || 'N/A' ).replace('Ã£', 'ã'
-                                                    ).replace('Ã', 'á' ) %>
+                                                 <%= contract.tipoprocedimento || 'N/A' %>
                                             </td>
                                         </tr>
                                         <tr>
                                             <th>ID de tipo de procedimento</th>
                                             <td>
                                                 <%= contract.idprocedimento || 'N/A' %>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Procedimento centralizado</th>
+                                            <td>
+                                                <%= (contract.ProcedimentoCentralizado || 'N/A' ).replace('Ã£', 'ã'
+                                                    ).replace('Ã', 'á' ) %>
                                             </td>
                                         </tr>
                                         <tr>
@@ -235,6 +241,12 @@
                                             <th>Justificação para não redução a escrito do contrato</th>
                                             <td>
                                                 <%= contract.justifNReducEscrContrato || 'N/A' %>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Tipo de Fim de Contrato</th>
+                                            <td>
+                                                <%= contract.tipoFimContrato || 'N/A' %>
                                             </td>
                                         </tr>
                                         <tr>
