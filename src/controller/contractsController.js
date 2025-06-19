@@ -107,6 +107,9 @@ const contractsGet = async (req, res) => {
     // ========================
     // CONSULTA COM FILTRO
     // ========================
+
+    console.log('Filtros aplicados:', filter);
+
     const [contracts, totalContracts] = await Promise.all([
       API_2020.find(filter).skip(skip).limit(limit).lean(),
       API_2020.countDocuments(filter)
