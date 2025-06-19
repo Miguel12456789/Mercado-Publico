@@ -502,6 +502,8 @@
 
                             <script>
                                 document.addEventListener('DOMContentLoaded', () => {
+
+
                                     // ========== Utils ==========
                                     const qs = (s, p = document) => p.querySelector(s);
                                     const qsa = (s, p = document) => [...p.querySelectorAll(s)];
@@ -747,6 +749,8 @@
                                         resultsTable.scrollIntoView({ behavior: 'smooth' });
                                     });
 
+                                    let currentFilters = {}; // fora do escopo da função
+
                                     // Envio do formulário com AJAX
                                     document.querySelector('form[action="/base_gov"]').addEventListener('submit', e => {
                                         e.preventDefault();
@@ -754,6 +758,14 @@
                                         const form = e.currentTarget;
                                         const formData = new FormData(form);
                                         const limit = document.getElementById('items-select')?.value || 25;
+
+                                        // Armazena os filtros aplicados
+                                        currentFilters = {};
+                                        formData.forEach((value, key) => {
+                                            currentFilters[key] = value;
+                                        });
+
+                                        loadContracts(1, limit); // Sempre começa da página 1 ao filtrar
 
                                         const url = new URL('/base_gov', window.location.origin);
                                         url.searchParams.set('limit', limit);
@@ -771,13 +783,12 @@
                                                 resultsTable.scrollIntoView({ behavior: 'smooth' });
 
                                                 const countDisplay = document.getElementById('count-display');
-                                                const countNumber = document.getElementById('count-number');
+                                                countNumber.textContent = totalContracts;
 
-                                                if (countDisplay && countNumber) {
-                                                    const total = data.pagination.totalContracts;
-                                                    countNumber.textContent = total;
-                                                    countDisplay.innerHTML = `<span id="count-number">${total}</span> contrato${total !== 1 ? 's' : ''} encontrado${total !== 1 ? 's' : ''}`;
-                                                }
+                                                const plural = totalContracts !== 1 ? 's' : '';
+                                                countDisplay.innerHTML = `
+                                                <span id="count-number">${totalContracts}</span> contrato${plural} encontrado${plural}
+                                                `;
                                             })
                                     });
 

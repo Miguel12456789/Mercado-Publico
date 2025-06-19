@@ -39,20 +39,49 @@
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-
-        function formatPrice(price) {
-            const numericPrice = Number(String(price).trim());
-            if (isNaN(numericPrice)) return 'N/A';
-            const parts = numericPrice.toFixed(2).split('.');
-            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-            return `${parts[0]},${parts[1]} €`;
-        }
-
         const itemsSelect = document.getElementById('items-select');
         const pageNumbers = document.getElementById('page-numbers');
         const prevPageBtn = document.getElementById('prev-page');
         const nextPageBtn = document.getElementById('next-page');
         const showingEntries = document.getElementById('showing-entries');
+
+        // 🔸 Guarda filtros atuais
+        let currentFilters = {};
+
+        // 🔸 Submit do formulário
+        document.querySelector('form[action="/base_gov"]').addEventListener('submit', e => {
+            e.preventDefault();
+
+            const form = e.currentTarget;
+            const formData = new FormData(form);
+            const limit = itemsSelect.value;
+
+            currentFilters = {};
+            formData.forEach((value, key) => {
+                currentFilters[key] = value;
+            });
+
+            loadContracts(1, limit);
+        });
+
+        // 🔸 Carrega contratos com filtros ativos
+        const loadContracts = (page = 1, limit = itemsSelect.value) => {
+            const url = new URL('/base_gov', window.location.origin);
+            url.searchParams.set('page', page);
+            url.searchParams.set('limit', limit);
+
+            for (const [key, value] of Object.entries(currentFilters)) {
+                url.searchParams.set(key, value);
+            }
+
+            fetch(url, { headers: { 'Accept': 'application/json' } })
+                .then(res => res.json())
+                .then(({ contracts, pagination }) => {
+                    updateTable(contracts);
+                    updatePagination(pagination);
+                })
+                .catch(err => console.error('Erro ao carregar contratos:', err));
+        };
 
         const updateTable = (contracts) => {
             const tbody = document.querySelector('.results-table tbody');
@@ -64,16 +93,16 @@
             }
 
             const rowsHtml = contracts.map(contract => `
-            <tr>
-                <td>${contract.tipoContrato ?? 'N/A'}</td>
-                <td>${contract.tipoprocedimento ?? 'N/A'}</td>
-                <td>${(contract.adjudicante ?? 'N/A').replace(/^\d+\s*-\s*/, '')}</td>
-                <td>${(contract.adjudicatarios ?? 'N/A').replace(/^\d+\s*-\s*/, '')}</td>
-                <td>${contract.precoContratual ? formatPrice(contract.precoContratual) : 'N/A'}</td>
-                <td>${contract.dataPublicacao ?? 'N/A'}</td>
-                <td><button class="details-button" aria-label="Ver detalhes" data-contract-id="${contract._id}">
-                    <i class="fas fa-plus-circle"></i></button></td>
-            </tr>
+                <tr>
+                    <td>${contract.tipoContrato ?? 'N/A'}</td>
+                    <td>${contract.tipoprocedimento ?? 'N/A'}</td>
+                    <td>${(contract.adjudicante ?? 'N/A').replace(/^\d+\s*-\s*/, '')}</td>
+                    <td>${(contract.adjudicatarios ?? 'N/A').replace(/^\d+\s*-\s*/, '')}</td>
+                    <td>${contract.precoContratual ? formatPrice(contract.precoContratual) : 'N/A'}</td>
+                    <td>${contract.dataPublicacao ?? 'N/A'}</td>
+                    <td><button class="details-button" aria-label="Ver detalhes" data-contract-id="${contract._id}">
+                        <i class="fas fa-plus-circle"></i></button></td>
+                </tr>
             `).join('');
 
             tbody.innerHTML = rowsHtml;
@@ -107,18 +136,12 @@
             if (typeof lucide !== 'undefined') lucide.createIcons();
         };
 
-        const loadContracts = (page = 1, limit = itemsSelect.value) => {
-            const url = new URL(window.location);
-            url.searchParams.set('page', page);
-            url.searchParams.set('limit', limit);
-
-            fetch(url, { headers: { 'Accept': 'application/json' } })
-                .then(res => res.json())
-                .then(({ contracts, pagination }) => {
-                    updateTable(contracts);
-                    updatePagination(pagination);
-                })
-                .catch(err => console.error('Erro ao carregar contratos:', err));
+        const formatPrice = (price) => {
+            const numericPrice = Number(String(price).trim());
+            if (isNaN(numericPrice)) return 'N/A';
+            const parts = numericPrice.toFixed(2).split('.');
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+            return `${parts[0]},${parts[1]} €`;
         };
 
         const bindDetailButtons = () => {
@@ -130,16 +153,13 @@
             });
         };
 
-        // Expor globalmente caso necessário
-        window.updateTable = updateTable;
-        window.updatePagination = updatePagination;
+        // 🔸 Troca de itens por página
+        itemsSelect.addEventListener('change', () => {
+            loadContracts(1, itemsSelect.value);
+        });
 
-        // Eventos iniciais
-        itemsSelect.addEventListener('change', () => loadContracts(1, itemsSelect.value));
-
-        if (typeof lucide !== 'undefined') lucide.createIcons();
-
-        // Carregar a primeira página ao iniciar
-        loadContracts();
+        // 🔸 Inicializa (carrega tudo sem filtros se não houver formulário)
+        const searchForm = document.querySelector('form[action="/base_gov"]');
+        if (!searchForm) loadContracts();
     });
 </script>
