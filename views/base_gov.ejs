@@ -502,7 +502,7 @@
 
                             <script>
                                 document.addEventListener('DOMContentLoaded', () => {
-
+                                    console.log('DOM carregado');
 
                                     // ========== Utils ==========
                                     const qs = (s, p = document) => p.querySelector(s);
@@ -754,7 +754,7 @@
                                     // Envio do formulário com AJAX
                                     document.querySelector('form[action="/base_gov"]').addEventListener('submit', e => {
                                         e.preventDefault();
-
+                                        console.log('Script de formulário carregado!');
                                         const form = e.currentTarget;
                                         const formData = new FormData(form);
                                         const limit = document.getElementById('items-select')?.value || 25;
@@ -773,23 +773,6 @@
 
                                         formData.forEach((value, key) => url.searchParams.set(key, value));
 
-                                        fetch(url, { headers: { 'Accept': 'application/json' } })
-                                            .then(res => res.json())
-                                            .then(data => {
-                                                const resultsTable = document.querySelector('#results-table');
-                                                resultsTable.style.display = 'block';
-                                                updateTable(data.contracts);
-                                                updatePagination(data.pagination);
-                                                resultsTable.scrollIntoView({ behavior: 'smooth' });
-
-                                                const countDisplay = document.getElementById('count-display');
-                                                countNumber.textContent = totalContracts;
-
-                                                const plural = totalContracts !== 1 ? 's' : '';
-                                                countDisplay.innerHTML = `
-                                                <span id="count-number">${totalContracts}</span> contrato${plural} encontrado${plural}
-                                                `;
-                                            })
                                     });
 
                                     // Listeners de selects

@@ -77,11 +77,26 @@
 
             fetch(url, { headers: { 'Accept': 'application/json' } })
                 .then(res => res.json())
-                .then(({ contracts, pagination }) => {
-                    updateTable(contracts);
-                    updatePagination(pagination);
-                })
-                .catch(err => console.error('Erro ao carregar contratos:', err));
+                .then(data => {
+                    console.log('Dados recebidos da API:', data);
+                    console.log('Total de contratos filtrados:', data.pagination?.totalContracts);
+
+                    const resultsTable = document.querySelector('#results-table');
+                    resultsTable.style.display = 'block';
+                    updateTable(data.contracts);
+                    updatePagination(data.pagination);
+
+                    const countDisplay = document.getElementById('count-display');
+                    const countNumber = document.getElementById('count-number');
+                    const total = data.pagination.totalContracts;
+
+                    countNumber.textContent = total;
+
+                    const plural = total !== 1 ? 's' : '';
+                    countDisplay.innerHTML = `
+                                                <span id="count-number">${total}</span> contrato${plural} encontrado${plural}
+                                                `;
+                });
         };
 
         const updateTable = (contracts) => {
