@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 
-exports.sendEmail = async (req, res) => {
+const sendEmail = async (req, res) => {
   const { email, nome, sobrenome } = req.body;
 
   // Gere um código de verificação de 5 dígitos
@@ -31,3 +31,5 @@ exports.sendEmail = async (req, res) => {
     res.json({ success: false, message: error.message });
   }
 };
+
+module.exports = { sendEmail };  

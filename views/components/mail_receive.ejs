@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Notificação</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     /* Scoped notification styles to avoid conflicts */
     .custom-notif__container {
@@ -17,9 +18,11 @@
       width: calc(100% - 40px);
       max-width: 1140px;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      opacity: 0; /* Start hidden for animation */
+      opacity: 0;
+      /* Start hidden for animation */
       animation: custom-notif-fadeIn 0.5s ease forwards;
-      animation-delay: 0.5s; /* Small delay before showing */
+      animation-delay: 0.5s;
+      /* Small delay before showing */
     }
 
     .custom-notif__wrapper {
@@ -107,6 +110,18 @@
       outline-offset: 2px;
     }
 
+    .verification-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px auto;
+    }
+
+  
+
     /* Scoped animations to avoid conflicts */
     @keyframes custom-notif-fadeIn {
       from {
@@ -167,7 +182,8 @@
 
       .custom-notif__close {
         align-self: flex-end;
-        margin-top: -46px; /* Position the close button at the top right */
+        margin-top: -46px;
+        /* Position the close button at the top right */
       }
     }
 
@@ -220,194 +236,212 @@
         </div>
         <div class="custom-notif__text">
           Deseja fazer download desta informação?
-          <a class="custom-notif__link" id="openPopupBtn" >Clique aqui</a> e após inserir os seus dados iniciar-se-á o download.
+          <a class="custom-notif__link" id="openPopupBtn">Clique aqui</a> e após inserir os seus dados iniciar-se-á o
+          download.
         </div>
       </div>
-      <button class="custom-notif__close" onclick="document.getElementById('notificacao-container').style.display='none'">
+      <button class="custom-notif__close"
+        onclick="document.getElementById('notificacao-container').style.display='none'">
         &times;
       </button>
     </div>
   </div>
   <div class="overlay" id="overlay">
-            <div class="popup">
-                <button class="close-btn" id="closeBtn">&times;</button>
-                <h2 class="popup-title">Formulário de Download</h2>
+    <div class="popup">
+      <button class="close-btn" id="closeBtn">&times;</button>
+      <h2 class="popup-title">Formulário de Download</h2>
 
-                <div id="downloadStep1" class="download-step active">
-                    <form id="downloadForm">
-                        <!-- Nome -->
-                        <div class="name-fields">
-                            <!-- Nome -->
-                            <div class="overlay-form-group">
-                                <label for="nome" class="form-label">Nome*</label>
-                                <input type="text" id="nome" name="nome" class="form-input" required>
-                            </div>
-
-                            <!-- Sobrenome -->
-                            <div class="overlay-form-group">
-                                <label for="sobrenome" class="form-label">Sobrenome*</label>
-                                <input type="text" id="sobrenome" name="sobrenome" class="form-input" required>
-                            </div>
-                        </div>
-
-                        <!-- E-mail Profissional -->
-                        <div class="overlay-form-group">
-                            <label for="email" class="form-label">E-mail Profissional*</label>
-                            <input type="email" id="email" name="email" class="form-input" required>
-                        </div>
-
-                        <!-- Telefone Profissional -->
-                        <div class="overlay-form-group">
-                            <label for="telefone" class="form-label">Telefone Profissional</label>
-                            <div class="phone-input-container">
-                                <div class="country-code">+351</div>
-                                <input type="tel" id="telefone" name="telefone" class="form-input phone-input" required>
-                            </div>
-                        </div>
-
-                        <!-- Setor de Atividade Profissional (Setor Público/Privado) -->
-                        <div class="overlay-form-group">
-                            <label for="setor-principal" class="form-label">Setor de Atividade Profissional*</label>
-                            <select id="setor-principal" name="setor-principal" class="form-select" required>
-                                <option value="" disabled selected>Selecione um setor</option>
-                                <option value="01">01 - Setor Público </option>
-                                <option value="02">02 - Setor Privado</option>
-                            </select>
-                        </div>
-
-                        <!-- Setor de Atividade Profissional (Área de atividade) -->
-                        <div class="overlay-form-group">
-                            <label for="setor-atividade" class="form-label">Área de Atividade Profissional*</label>
-                            <select id="setor-atividade" name="setor-atividade" class="form-select" required>
-                                <option value="" disabled selected>Selecione um setor</option>
-                                <option value="1">Agricultura, produção animal, caça, floresta e pesca</option>
-                                <option value="2">Indústrias extractivas</option>
-                                <option value="3">Indústrias transformadoras</option>
-                                <option value="4">Electricidade, gás, vapor, água quente e fria e ar frio</option>
-                                <option value="5">Captação, tratamento e distribuição de água; saneamento, gestão de
-                                    resíduos e despoluição</option>
-                                <option value="6">Construção</option>
-                                <option value="7">Comércio por grosso e a retalho; reparação de veículos automóveis
-                                    e
-                                    motociclos</option>
-                                <option value="8">Transportes e armazenagem</option>
-                                <option value="9">Alojamento, restauração e similares</option>
-                                <option value="10">Actividades de informação e de comunicação</option>
-                                <option value="11">Actividades financeiras e de seguros</option>
-                                <option value="12">Actividades imobiliárias</option>
-                                <option value="13">Actividades de consultoria, científicas, técnicas e similares
-                                </option>
-                                <option value="14">Actividades administrativas e dos serviços de apoio</option>
-                                <option value="15">Administração Pública e Defesa; Segurança Social Obrigatória
-                                </option>
-                                <option value="16">Educação</option>
-                                <option value="17">Actividades de saúde humana e apoio social</option>
-                                <option value="18">Actividades artísticas, de espectáculos, desportivas e
-                                    recreativas
-                                </option>
-                                <option value="19">Outras actividades de serviços</option>
-                                <option value="20">Actividades das famílias empregadoras de pessoal doméstico e
-                                    actividades de produção das famílias para uso próprio</option>
-                                <option value="21">Actividades dos organismos internacionais e outras instituições
-                                    extra-territoriais</option>
-                            </select>
-                        </div>
-                        <!-- Formato de Download -->
-                        <div class="download-format-group">
-                            <label class="form-label">Em que formato pretende efetuar o download:*</label>
-                            <div class="format-options">
-                                <div class="format-option">
-                                    <input type="radio" id="formatCsv" name="formato" value="csv" class="format-radio"
-                                        required checked>
-                                    <label for="formatCsv">CSV</label>
-                                </div>
-                                <div class="format-option">
-                                    <input type="radio" id="formatXls" name="formato" value="xls" class="format-radio">
-                                    <label for="formatXls">XLS</label>
-                                </div>
-                                <div class="format-option">
-                                    <input type="radio" id="formatPdf" name="formato" value="pdf" class="format-radio">
-                                    <label for="formatPdf">PDF</label>
-                                </div>
-                            </div>
-                        </div>
-                        <button type="submit" class="submit-btn">Continuar</button>
-                    </form>
-                </div>
-
-                <!-- Etapa 2: Verificação por Email -->
-                <div id="downloadStep2" class="download-step">
-                    <div class="verification-container">
-                        <div class="verification-icon">
-                            <i data-lucide="mail"></i>
-                        </div>
-                        <h3>Verificação por Email</h3>
-                        <p>Enviamos um código de verificação de 5 dígitos para o seu email.</p>
-                        <p>Por favor, verifique sua caixa de entrada e insira o código abaixo:</p>
-
-                        <div class="verification-code-container">
-                            <input type="text" class="verification-input" maxlength="1" data-index="0">
-                            <input type="text" class="verification-input" maxlength="1" data-index="1">
-                            <input type="text" class="verification-input" maxlength="1" data-index="2">
-                            <input type="text" class="verification-input" maxlength="1" data-index="3">
-                            <input type="text" class="verification-input" maxlength="1" data-index="4">
-                        </div>
-
-                        <div class="verification-actions">
-                            <button id="verifyCodeBtn" class="submit-btn">Verificar</button>
-                            <button id="resendCodeBtn" class="resend-btn">Reenviar Código</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Etapa 3: Download Concluído -->
-                <div id="downloadStep3" class="download-step">
-                    <div class="success-container">
-                        <div class="success-icon">
-                            <i data-lucide="check-circle" class="icon-large"></i>
-                        </div>
-                        <h3>Download Pronto!</h3>
-                        <p>Seu download começará automaticamente em alguns segundos.</p>
-                        <p>Se o download não iniciar, clique no botão abaixo:</p>
-
-                        <a href="#" id="downloadLink" class="download-link">
-                            <i data-lucide="download" class="icon-small"></i>
-                            <span>Baixar Arquivo</span>
-                        </a>
-                    </div>
-                </div>
+      <div id="downloadStep1" class="download-step active">
+        <form id="downloadForm">
+          <!-- Nome -->
+          <div class="name-fields">
+            <!-- Nome -->
+            <div class="overlay-form-group">
+              <label for="nome" class="form-label">Nome*</label>
+              <input type="text" id="nome" name="nome" class="form-input" required>
             </div>
+
+            <!-- Sobrenome -->
+            <div class="overlay-form-group">
+              <label for="sobrenome" class="form-label">Sobrenome*</label>
+              <input type="text" id="sobrenome" name="sobrenome" class="form-input" required>
+            </div>
+          </div>
+
+          <!-- E-mail Profissional -->
+          <div class="overlay-form-group">
+            <label for="email" class="form-label">E-mail Profissional*</label>
+            <input type="email" id="email" name="email" class="form-input" required>
+          </div>
+
+          <!-- Telefone Profissional -->
+          <div class="overlay-form-group">
+            <label for="telefone" class="form-label">Telefone Profissional</label>
+            <div class="phone-input-container">
+              <div class="country-code">+351</div>
+              <input type="tel" id="telefone" name="telefone" class="form-input phone-input" required>
+            </div>
+          </div>
+
+          <!-- Setor de Atividade Profissional (Setor Público/Privado) -->
+          <div class="overlay-form-group">
+            <label for="setor-principal" class="form-label">Setor de Atividade Profissional*</label>
+            <select id="setor-principal" name="setor-principal" class="form-select" required>
+              <option value="" disabled selected>Selecione um setor</option>
+              <option value="01">01 - Setor Público </option>
+              <option value="02">02 - Setor Privado</option>
+            </select>
+          </div>
+
+          <!-- Setor de Atividade Profissional (Área de atividade) -->
+          <div class="overlay-form-group">
+            <label for="setor-atividade" class="form-label">Área de Atividade Profissional*</label>
+            <select id="setor-atividade" name="setor-atividade" class="form-select" required>
+              <option value="" disabled selected>Selecione um setor</option>
+              <option value="1">Agricultura, produção animal, caça, floresta e pesca</option>
+              <option value="2">Indústrias extractivas</option>
+              <option value="3">Indústrias transformadoras</option>
+              <option value="4">Electricidade, gás, vapor, água quente e fria e ar frio</option>
+              <option value="5">Captação, tratamento e distribuição de água; saneamento, gestão de
+                resíduos e despoluição</option>
+              <option value="6">Construção</option>
+              <option value="7">Comércio por grosso e a retalho; reparação de veículos automóveis
+                e
+                motociclos</option>
+              <option value="8">Transportes e armazenagem</option>
+              <option value="9">Alojamento, restauração e similares</option>
+              <option value="10">Actividades de informação e de comunicação</option>
+              <option value="11">Actividades financeiras e de seguros</option>
+              <option value="12">Actividades imobiliárias</option>
+              <option value="13">Actividades de consultoria, científicas, técnicas e similares
+              </option>
+              <option value="14">Actividades administrativas e dos serviços de apoio</option>
+              <option value="15">Administração Pública e Defesa; Segurança Social Obrigatória
+              </option>
+              <option value="16">Educação</option>
+              <option value="17">Actividades de saúde humana e apoio social</option>
+              <option value="18">Actividades artísticas, de espectáculos, desportivas e
+                recreativas
+              </option>
+              <option value="19">Outras actividades de serviços</option>
+              <option value="20">Actividades das famílias empregadoras de pessoal doméstico e
+                actividades de produção das famílias para uso próprio</option>
+              <option value="21">Actividades dos organismos internacionais e outras instituições
+                extra-territoriais</option>
+            </select>
+          </div>
+          <!-- Formato de Download -->
+          <div class="download-format-group">
+            <label class="form-label">Em que formato pretende efetuar o download:*</label>
+            <div class="format-options">
+              <div class="format-option">
+                <input type="radio" id="formatCsv" name="formato" value="csv" class="format-radio" required checked>
+                <label for="formatCsv">CSV</label>
+              </div>
+              <div class="format-option">
+                <input type="radio" id="formatXls" name="formato" value="xls" class="format-radio">
+                <label for="formatXls">XLS</label>
+              </div>
+              <div class="format-option">
+                <input type="radio" id="formatPdf" name="formato" value="pdf" class="format-radio">
+                <label for="formatPdf">PDF</label>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="submit-btn">Continuar</button>
+        </form>
+      </div>
+
+      <!-- Etapa 2: Verificação por Email -->
+      <div id="downloadStep2" class="download-step">
+        <div class="verification-container">
+          <div class="verification-icon">
+            <i data-lucide="mail"></i>
+          </div>
+          <h3>Verificação por Email</h3>
+          <p>Enviamos um código de verificação de 5 dígitos para o seu email.</p>
+          <p>Por favor, verifique sua caixa de entrada e insira o código abaixo:</p>
+
+          <div class="verification-code-container">
+            <input type="text" class="verification-input" maxlength="1" data-index="0">
+            <input type="text" class="verification-input" maxlength="1" data-index="1">
+            <input type="text" class="verification-input" maxlength="1" data-index="2">
+            <input type="text" class="verification-input" maxlength="1" data-index="3">
+            <input type="text" class="verification-input" maxlength="1" data-index="4">
+          </div>
+
+          <div class="verification-actions">
+            <button id="verifyCodeBtn" class="submit-btn">Verificar</button>
+            <button id="resendCodeBtn" class="resend-btn">Reenviar Código</button>
+          </div>
         </div>
+      </div>
+
+      <!-- Etapa 3: Download Concluído -->
+      <div id="downloadStep3" class="download-step">
+        <div class="success-container">
+          <div class="success-icon">
+            <i data-lucide="check-circle" class="icon-large"></i>
+          </div>
+          <h3>Download Pronto!</h3>
+          <p>Seu download começará automaticamente em alguns segundos.</p>
+          <p>Se o download não iniciar, clique no botão abaixo:</p>
+
+          <a href="#" id="downloadLink" class="download-link">
+            <i data-lucide="download" class="icon-small"></i>
+            <span>Baixar Arquivo</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
   <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const inputs = document.querySelectorAll(".verification-input");
 
-document.addEventListener('DOMContentLoaded', function () {
-  const form = document.getElementById('downloadForm');
-  form.addEventListener('submit', async function (e) {
-    e.preventDefault();
+      inputs.forEach((input, index) => {
+        input.addEventListener("input", (e) => {
+          const value = e.target.value;
 
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
+          // Se colaram múltiplos caracteres
+          if (value.length > 1) {
+            handlePaste(value);
+            return;
+          }
 
-    try {
-      const response = await fetch('/api/send-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+          // Avança se digitou algo
+          if (value && index < inputs.length - 1) {
+            inputs[index + 1].focus();
+          }
+        });
+
+        input.addEventListener("keydown", (e) => {
+          if (e.key === "Backspace" && !input.value && index > 0) {
+            inputs[index - 1].focus();
+          }
+        });
       });
 
-      const result = await response.json();
-      if (result.success) {
-        // Avança para o passo 2 (verificação)
-        document.getElementById('downloadStep1').classList.remove('active');
-        document.getElementById('downloadStep2').classList.add('active');
-      } else {
-        alert('Erro ao enviar email: ' + (result.message || 'Tente novamente.'));
+      // Colar o código inteiro
+      const container = document.querySelector(".verification-code-container");
+      container.addEventListener("paste", (e) => {
+        const paste = (e.clipboardData || window.clipboardData).getData("text");
+        handlePaste(paste);
+        e.preventDefault();
+      });
+
+      function handlePaste(paste) {
+        const chars = paste.replace(/\D/g, "").split("").slice(0, inputs.length);
+        inputs.forEach((input, i) => {
+          input.value = chars[i] || "";
+        });
+        const next = inputs[chars.length] || inputs[inputs.length - 1];
+        next.focus();
       }
-    } catch (error) {
-      alert('Erro ao enviar email: ' + error.message);
-    }
-  });
-});
-    </script>
+
+      lucide.createIcons();
+    });
+  </script>
 </body>
+
 </html>
