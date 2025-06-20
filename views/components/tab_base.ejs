@@ -96,7 +96,22 @@
 
         <!-- Paginação -->
         <%- include('pagination', { pagination: pagination }) %>
-
+<div class="custom-notif__container" id="notificacao-container">
+  <div class="custom-notif__wrapper">
+    <div class="custom-notif__content">
+      <div class="custom-notif__icon">
+        <i class="fas fa-envelope"></i>
+      </div>
+      <div class="custom-notif__text">
+        Deseja fazer download desta informação?
+        <a class="custom-notif__link" id="openPopupBtn">Clique aqui</a> e após inserir os seus dados iniciar-se-á o download.
+      </div>
+    </div>
+    <button class="custom-notif__close" onclick="document.getElementById('notificacao-container').style.display='none'">
+      &times;
+    </button>
+  </div>
+</div>
       </div>
     </div>
   </div>
