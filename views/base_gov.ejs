@@ -39,7 +39,8 @@
             <div class="search-container">
                 <div class="search-row">
                     <div class="dropdown" id="contracts-dropdown">
-                        <button id="dropdown-button" class="dropdown-select" aria-haspopup="true" aria-expanded="false">
+                        <button type="button" id="dropdown-button" class="dropdown-select" aria-haspopup="true"
+                            aria-expanded="false">
                             <span class="dropdown-text" id="selected-contract">Contrato</span>
                             <i data-lucide="chevron-down" class="dropdown-icon"></i>
                         </button>
@@ -266,7 +267,7 @@
                                         <label for="date-from" class="form-label">De:</label>
                                         <div class="date-selects">
                                             <select id="from-year" name="from-year" class="date-select"></select>
-                                            <select id="from-month" name="from-month"  class="date-select"></select>
+                                            <select id="from-month" name="from-month" class="date-select"></select>
                                             <select id="from-day" name="from-day" class="date-select"></select>
                                         </div>
                                     </div>
@@ -274,7 +275,7 @@
                                     <div class="date-field">
                                         <label for="date-to" class="form-label">Até:</label>
                                         <div class="date-selects">
-                                            <select id="to-year" name="to-year"  class="date-select"></select>
+                                            <select id="to-year" name="to-year" class="date-select"></select>
                                             <select id="to-month" name="to-month" class="date-select"></select>
                                             <select id="to-day" name="to-day" class="date-select"></select>
                                         </div>
@@ -755,26 +756,27 @@
 
                                     // Envio do formulário com AJAX
                                     document.querySelector('form[action="/base_gov"]').addEventListener('submit', e => {
+                                        const submitter = e.submitter;
+
+                                        // Só prossegue se foi o botão "Pesquisar"
+                                        if (!submitter || submitter.id !== 'search-contracts-button') {
+                                            e.preventDefault();
+                                            return;
+                                        }
+
                                         e.preventDefault();
-                                        console.log('Script de formulário carregado!');
+
+                                        console.log('Enviando pesquisa...');
                                         const form = e.currentTarget;
                                         const formData = new FormData(form);
                                         const limit = document.getElementById('items-select')?.value || 25;
 
-                                        // Armazena os filtros aplicados
                                         currentFilters = {};
                                         formData.forEach((value, key) => {
                                             currentFilters[key] = value;
                                         });
 
-                                        loadContracts(1, limit); // Sempre começa da página 1 ao filtrar
-
-                                        const url = new URL('/base_gov', window.location.origin);
-                                        url.searchParams.set('limit', limit);
-                                        url.searchParams.set('page', 1);
-
-                                        formData.forEach((value, key) => url.searchParams.set(key, value));
-
+                                        loadContracts(1, limit);
                                     });
 
                                     // Listeners de selects
