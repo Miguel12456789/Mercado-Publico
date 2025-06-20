@@ -255,28 +255,28 @@
                                         Pode pesquisar em simultâneo pelos vários intervalos de datas
                                     </div>
                                 </div>
-                                <select id="date-type" class="form-select">
-                                    <option>Data do Contrato</option>
-                                    <option>Data de Publicação</option>
-                                    <option>Data de Fecho</option>
+                                <select id="date-type" name="date-type" class="form-select">
+                                    <option value="0">Data de Publicação</option>
+                                    <option value="1">Data do Contrato</option>
+                                    <option value="2">Data de Fecho</option>
                                 </select>
 
                                 <div class="date-range">
                                     <div class="date-field">
                                         <label for="date-from" class="form-label">De:</label>
                                         <div class="date-selects">
-                                            <select id="from-year" class="date-select"></select>
-                                            <select id="from-month" class="date-select"></select>
-                                            <select id="from-day" class="date-select"></select>
+                                            <select id="from-year" name="from-year" class="date-select"></select>
+                                            <select id="from-month" name="from-month"  class="date-select"></select>
+                                            <select id="from-day" name="from-day" class="date-select"></select>
                                         </div>
                                     </div>
 
                                     <div class="date-field">
                                         <label for="date-to" class="form-label">Até:</label>
                                         <div class="date-selects">
-                                            <select id="to-year" class="date-select"></select>
-                                            <select id="to-month" class="date-select"></select>
-                                            <select id="to-day" class="date-select"></select>
+                                            <select id="to-year" name="to-year"  class="date-select"></select>
+                                            <select id="to-month" name="to-month" class="date-select"></select>
+                                            <select id="to-day" name="to-day" class="date-select"></select>
                                         </div>
                                     </div>
                                 </div>
@@ -286,13 +286,14 @@
                                 <label class="form-label">
                                     Local de Execução (País, Distrito, Concelho)
                                 </label>
-                                <select id="pais-select" class="form-select location-select">
+                                <select id="pais-select" name="pais" class="form-select location-select">
                                     <option>Todos</option>
                                     <option value="portugal">Portugal</option>
                                     <option value="espanha">Outro</option>
                                 </select>
                                 </select>
-                                <select id="distrito-select" class="form-select location-select" disabled>
+                                <select id="distrito-select" name="distrito" class="form-select location-select"
+                                    disabled>
                                     <option value="">Todos os distrito</option>
                                     <option value="aveiro">Aveiro</option>
                                     <option value="beja">Beja</option>
@@ -313,7 +314,8 @@
                                     <option value="vila_real">Vila Real</option>
                                     <option value="viseu">Viseu</option>
                                 </select>
-                                <select id="concelho-select" class="form-select location-select" disabled>
+                                <select id="concelho-select" name="concelho" class="form-select location-select"
+                                    disabled>
                                     <option value="">Todos os concelhos</option>
                                     <!-- Será preenchido dinamicamente com JavaScript -->
                                 </select>

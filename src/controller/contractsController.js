@@ -101,8 +101,79 @@ const contractsGet = async (req, res) => {
     } else {
       filter.ContratEcologico = "NÃ£o";
     }
+    if (req.query['pais'] && req.query['pais'].toLowerCase() !== 'todos') {
+      const pais = req.query['pais'].toLowerCase();
+      const distrito = req.query['distrito']?.replace(/_/g, ' ').toLowerCase();
+      const concelho = req.query['concelho']?.replace(/_/g, ' ').toLowerCase();
 
-    
+      let regexStr = pais;
+
+      if (pais === 'portugal') {
+        if (distrito) regexStr += `,\\s*${distrito}`;
+        if (concelho) regexStr += `,\\s*${concelho}`;
+      }
+
+      // Aplica filtro com regex (exato ou parcial, conforme os níveis escolhidos)
+      filter.localExecucao = { $regex: new RegExp(`^${regexStr}`, 'i') };
+    }
+
+
+    const {
+      'date-type': dateTypeValue,
+      'from-year': fy,
+      'from-month': fm,
+      'from-day': fd,
+      'to-year': ty,
+      'to-month': tm,
+      'to-day': td
+    } = req.query;
+
+    // Mapeia os valores do dropdown
+    const dateFieldMap = {
+      "0": "dataPublicacao_datetime",
+      "1": "dataContrato_datetime",       // se não existir, ignore
+      "2": "dataFechoContrato"
+    };
+
+    const field = dateFieldMap[dateTypeValue];
+
+    function buildDate(y, m, d, isEnd = false) {
+      if (!y) return null;
+
+      const year = parseInt(y);
+      const month = m ? parseInt(m) : (isEnd ? 12 : 1);
+      let day = d ? parseInt(d) : (isEnd ? new Date(year, month, 0).getDate() : 1);
+      
+      const safeMonth = String(month).padStart(2, '0');
+      const safeDay = String(day).padStart(2, '0');
+      const hour = isEnd ? '23:59:59' : '00:00:00';
+
+      const date = new Date(`${year}-${safeMonth}-${safeDay}T${hour}Z`);
+      return isNaN(date.getTime()) ? null : date;
+    }
+
+    if (field) {
+      const startDate = buildDate(fy, fm, fd, false);
+      const endDate = buildDate(ty, tm, td, true);
+
+      if (startDate || endDate) {
+        if (field === 'dataPublicacao_datetime') {
+          filter[field] = {};
+          if (startDate) filter[field].$gte = startDate;
+          if (endDate) filter[field].$lte = endDate;
+        } else if (field === 'dataFechoContrato') {
+          // Assumindo que dataFechoContrato é STRING (yyyy-mm-dd)
+          const range = {};
+          if (startDate) range.$gte = startDate.toISOString().split('T')[0];
+          if (endDate) range.$lte = endDate.toISOString().split('T')[0];
+          filter[field] = range;
+        }
+      }
+    }
+
+
+
+
 
     // ========================
     // CONSULTA COM FILTRO
