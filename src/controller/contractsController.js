@@ -18,7 +18,7 @@ const contractsGet = async (req, res) => {
     const filter = {};
 
     if (req.query.search?.trim()) {
-      filter.objetoContrato = { $regex: req.query.search.trim(), $options: 'i' };
+      filter.objectoContrato = { $regex: req.query.search.trim(), $options: 'i' };
     }
 
     if (req.query['special-measures'] === 'on') {
@@ -143,7 +143,7 @@ const contractsGet = async (req, res) => {
       const year = parseInt(y);
       const month = m ? parseInt(m) : (isEnd ? 12 : 1);
       let day = d ? parseInt(d) : (isEnd ? new Date(year, month, 0).getDate() : 1);
-      
+
       const safeMonth = String(month).padStart(2, '0');
       const safeDay = String(day).padStart(2, '0');
       const hour = isEnd ? '23:59:59' : '00:00:00';
