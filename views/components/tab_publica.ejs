@@ -1,6 +1,10 @@
+<!DOCTYPE html>
+<html lang="pt">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helpdesk Público</title>
     <link rel="stylesheet" href="tab_public.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -98,63 +102,66 @@
                     </div>
                 </div>
 
-
+                
                 <%- include('pagination') %>
-
-            </div>
 
         </div>
 
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                // Elementos do DOM
-                const countDisplay = document.getElementById('count-display');
-                const countNumber = document.getElementById('count-number');
 
-                // Obter o número de linhas na tabela (excluindo o cabeçalho)
-                const tableRows = document.querySelectorAll('.results-table tbody tr');
-                const contractCount = tableRows.length;
+    </div>
 
-                // Atualizar o número no contador
-                countNumber.textContent = contractCount;
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Elementos do DOM
+            const countDisplay = document.getElementById('count-display');
+            const countNumber = document.getElementById('count-number');
 
-                // Mostrar o contador automaticamente quando a página carregar
-                countDisplay.classList.add('visible');
+            // Obter o número de linhas na tabela (excluindo o cabeçalho)
+            const tableRows = document.querySelectorAll('.results-table tbody tr');
+            const contractCount = tableRows.length;
 
-                // Animar a contagem
-                animateCount(0, contractCount);
+            // Atualizar o número no contador
+            countNumber.textContent = contractCount;
 
-                // Função para animar a contagem
-                function animateCount(start, end) {
-                    // Resetar o contador para começar do zero
-                    countNumber.textContent = start;
+            // Mostrar o contador automaticamente quando a página carregar
+            countDisplay.classList.add('visible');
 
-                    // Se o contador já estiver visível, não precisamos animar novamente
-                    if (start === end) return;
+            // Animar a contagem
+            animateCount(0, contractCount);
 
-                    // Calcular a duração da animação baseada no número de contratos
-                    const duration = Math.min(1500, Math.max(500, end * 100));
-                    const increment = end > 100 ? 5 : 1;
-                    const steps = Math.ceil(end / increment);
-                    const stepDuration = duration / steps;
+            // Função para animar a contagem
+            function animateCount(start, end) {
+                // Resetar o contador para começar do zero
+                countNumber.textContent = start;
 
-                    let current = start;
+                // Se o contador já estiver visível, não precisamos animar novamente
+                if (start === end) return;
 
-                    // Função para incrementar o contador
-                    function step() {
-                        current += increment;
-                        if (current > end) current = end;
+                // Calcular a duração da animação baseada no número de contratos
+                const duration = Math.min(1500, Math.max(500, end * 100));
+                const increment = end > 100 ? 5 : 1;
+                const steps = Math.ceil(end / increment);
+                const stepDuration = duration / steps;
 
-                        countNumber.textContent = current;
+                let current = start;
 
-                        if (current < end) {
-                            setTimeout(step, stepDuration);
-                        }
+                // Função para incrementar o contador
+                function step() {
+                    current += increment;
+                    if (current > end) current = end;
+
+                    countNumber.textContent = current;
+
+                    if (current < end) {
+                        setTimeout(step, stepDuration);
                     }
-
-                    // Iniciar a animação
-                    setTimeout(step, stepDuration);
                 }
-            });
-        </script>
+
+                // Iniciar a animação
+                setTimeout(step, stepDuration);
+            }
+        });
+    </script>
 </body>
+
+</html>
