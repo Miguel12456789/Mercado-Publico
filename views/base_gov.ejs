@@ -454,9 +454,9 @@
                         <div class="verification-icon">
                             <i data-lucide="mail"></i>
                         </div>
-                        <h3>Verificação por email</h3>
-                        <p>Um código de verificação de 5 dígitos para o seu email.</p>
-                        <p>Por favor, verifique a sua caixa de entrada e insira o código abaixo:</p>
+                        <h3>Verificação por Email</h3>
+                        <p>Enviamos um código de verificação de 3 dígitos para o seu email.</p>
+                        <p>Por favor, verifique sua caixa de entrada e insira o código abaixo:</p>
 
                         <div class="verification-code-container">
                             <input type="text" class="verification-input" maxlength="1" data-index="0">
@@ -480,12 +480,12 @@
                             <i data-lucide="check-circle" class="icon-large"></i>
                         </div>
                         <h3>Download Pronto!</h3>
-                        <p>O seu download começará automaticamente em alguns segundos.</p>
+                        <p>Seu download começará automaticamente em alguns segundos.</p>
                         <p>Se o download não iniciar, clique no botão abaixo:</p>
 
                         <a href="#" id="downloadLink" class="download-link">
                             <i data-lucide="download" class="icon-small"></i>
-                            <span>Instalar Arquivo</span>
+                            <span>Baixar Arquivo</span>
                         </a>
                     </div>
                 </div>
@@ -500,6 +500,7 @@
                     <p>Nenhum dado de contrato disponível no momento.</p>
                 </div>
                 <% } %>
+                    <%- include('components/mail_receive') %>
                         <%- include('components/button') %>
 
                             <script>

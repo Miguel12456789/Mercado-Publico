@@ -11,162 +11,169 @@
 </head>
 
 <body>
-    <main class="container py-8">
-        <!-- Service Cards Section -->
-        <section class="services-section">
-            <!-- Top Row - 3 Cards -->
-            <div class="services-row top-row">
+    <!-- Inclui o ficheiro nav.ejs -->
+    <%- include('components/nav') %>
 
-                <!-- Card 1 - Base Gov -->
-                <div class="service-card">
-                    <div class="card-icon">
-                        <i data-lucide="library" class="icon-large"></i>
+        <main class="container py-8">
+            <!-- Service Cards Section -->
+            <section class="services-section">
+                <!-- Top Row - 3 Cards -->
+                <div class="services-row top-row">
+
+                    <!-- Card 1 - Base Gov -->
+                    <div class="service-card">
+                        <div class="card-icon">
+                            <i data-lucide="library" class="icon-large"></i>
+                        </div>
+                        <h2 class="card-title">Estatísticas Mercado Publico</h2>
+                        <p class="card-description">
+                            Consulte dados sobre contratos públicos e entidades envolvidas.
+                        </p>
+                        <a href="/base_gov" class="card-button">
+                            <span>Ver estatísticas Mercado Publico</span>
+                            <i data-lucide="arrow-right" class="icon-small"></i>
+                        </a>
                     </div>
-                    <h2 class="card-title">Estatísticas Mercado Publico</h2>
-                    <p class="card-description">
-                        Consulte dados sobre contratos públicos e entidades envolvidas.
-                    </p>
-                    <a href="/base_gov" class="card-button">
-                        <span>Ver estatísticas Mercado Publico</span>
-                        <i data-lucide="arrow-right" class="icon-small"></i>
-                    </a>
+
+                    <!-- Card 2 - Estatísticas Setor Público -->
+                    <div class="service-card">
+                        <div class="card-icon">
+                            <i data-lucide="bar-chart-3" class="icon-large"></i>
+                        </div>
+                        <h2 class="card-title">Estatísticas Setor Público</h2>
+                        <p class="card-description">
+                            Veja estatísticas sobre gastos e atividade da administração pública.
+                        </p>
+                        <a href="/estatisticas_setor_publico" class="card-button">
+                            <span>Ver as Estatísticas Setor Público</span>
+                            <i data-lucide="arrow-right" class="icon-small"></i>
+                        </a>
+                    </div>
+
+                    <!-- Card 3 - Estatísticas Estatísticas Setor privado -->
+                    <div class="service-card">
+                        <div class="card-icon">
+                            <i data-lucide="line-chart" class="icon-large"></i>
+                        </div>
+                        <h2 class="card-title">Estatísticas Setor privado</h2>
+                        <p class="card-description">
+                            Veja estatísticas sobre gastos e atividade da administração privada.
+                        </p>
+                        <a href="/estatisticas_setor_privado" class="card-button">
+                            <span>Ver as Estatísticas Setor Privado</span>
+                            <i data-lucide="arrow-right" class="icon-small"></i>
+                        </a>
+                    </div>
                 </div>
 
-                <!-- Card 2 - Estatísticas Setor Público -->
-                <div class="service-card">
-                    <div class="card-icon">
-                        <i data-lucide="bar-chart-3" class="icon-large"></i>
+                <!-- Bottom Row - 2 Cards -->
+                <div class="services-row bottom-row">
+
+                    <!-- Card 4 - Oportunidade Contratação Pública -->
+                    <div class="service-card">
+                        <div class="card-icon">
+                            <i data-lucide="file-search" class="icon-large"></i>
+                        </div>
+                        <h2 class="card-title">Oportunidades Contratação Pública</h2>
+                        <p class="card-description">
+                            Explore concursos públicos e oportunidades de contratação.
+                        </p>
+                        <a href="/oportunidade_contratacao_publica" class="card-button">
+                            <span>Consultar as Oportunidades Contratação Pública</span>
+                            <i data-lucide="arrow-right" class="icon-small"></i>
+                        </a>
                     </div>
-                    <h2 class="card-title">Estatísticas Setor Público</h2>
-                    <p class="card-description">
-                        Veja estatísticas sobre gastos e atividade da administração pública.
-                    </p>
-                    <a href="/estatisticas_setor_publico" class="card-button">
-                        <span>Ver as Estatísticas Setor Público</span>
-                        <i data-lucide="arrow-right" class="icon-small"></i>
-                    </a>
-                </div>
 
-                <!-- Card 3 - Estatísticas Estatísticas Setor privado -->
-                <div class="service-card">
-                    <div class="card-icon">
-                        <i data-lucide="line-chart" class="icon-large"></i>
+                    <!-- Card 5 - Outros -->
+                    <div class="service-card">
+                        <div class="card-icon">
+                            <i data-lucide="life-buoy" class="icon-large"></i>
+                        </div>
+                        <h2 class="card-title">Outros</h2>
+                        <p class="card-description">
+                            Obtenha apoio e informações complementares sobre os serviços.
+                        </p>
+                        <a href="/outros" class="card-button">
+                            <span>Outros</span>
+                            <i data-lucide="arrow-right" class="icon-small"></i>
+                        </a>
                     </div>
-                    <h2 class="card-title">Estatísticas Setor privado</h2>
-                    <p class="card-description">
-                        Veja estatísticas sobre gastos e atividade da administração privada.
-                    </p>
-                    <a href="/estatisticas_setor_privado" class="card-button">
-                        <span>Ver as Estatísticas Setor Privado</span>
-                        <i data-lucide="arrow-right" class="icon-small"></i>
-                    </a>
                 </div>
-            </div>
+            </section>
 
-            <!-- Bottom Row - 2 Cards -->
-            <div class="services-row bottom-row">
+        </main>
+        <%- include('components/footer') %>
 
-                <!-- Card 4 - Oportunidade Contratação Pública -->
-                <div class="service-card">
-                    <div class="card-icon">
-                        <i data-lucide="file-search" class="icon-large"></i>
-                    </div>
-                    <h2 class="card-title">Oportunidades Contratação Pública</h2>
-                    <p class="card-description">
-                        Explore concursos públicos e oportunidades de contratação.
-                    </p>
-                    <a href="/oportunidade_contratacao_publica" class="card-button">
-                        <span>Consultar as Oportunidades Contratação Pública</span>
-                        <i data-lucide="arrow-right" class="icon-small"></i>
-                    </a>
-                </div>
 
-                <!-- Card 5 - Outros -->
-                <div class="service-card">
-                    <div class="card-icon">
-                        <i data-lucide="life-buoy" class="icon-large"></i>
-                    </div>
-                    <h2 class="card-title">Outros</h2>
-                    <p class="card-description">
-                        Obtenha apoio e informações complementares sobre os serviços.
-                    </p>
-                    <a href="/outros" class="card-button">
-                        <span>Outros</span>
-                        <i data-lucide="arrow-right" class="icon-small"></i>
-                    </a>
-                </div>
-            </div>
-        </section>
-    </main>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            // Initialize Lucide icons
-            if (typeof lucide === 'undefined') {
-                console.warn('Lucide is not globally defined. Ensure Lucide library is properly included.');
-                lucide = { createIcons: function () { } };
-            }
-            lucide.createIcons();
-
-            // Add hover effect to service cards
-            const serviceCards = document.querySelectorAll('.service-card');
-
-            serviceCards.forEach(card => {
-                card.addEventListener('mouseenter', function () {
-                    this.classList.add('card-hover');
-                });
-
-                card.addEventListener('mouseleave', function () {
-                    this.classList.remove('card-hover');
-                });
-
-                // Make the entire card clickable
-                card.addEventListener('click', function (e) {
-                    // Only trigger if the click wasn't on the button itself
-                    if (!e.target.closest('.card-button')) {
-                        const link = this.querySelector('.card-button');
-                        if (link) {
-                            link.click();
-                        }
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    // Initialize Lucide icons
+                    if (typeof lucide === 'undefined') {
+                        console.warn('Lucide is not globally defined. Ensure Lucide library is properly included.');
+                        lucide = { createIcons: function () { } };
                     }
-                });
-            });
+                    lucide.createIcons();
 
-            // Add animation on scroll
-            function checkScroll() {
-                const topRowCards = document.querySelectorAll('.top-row .service-card');
-                const bottomRowCards = document.querySelectorAll('.bottom-row .service-card');
-                const triggerBottom = window.innerHeight * 0.8;
+                    // Add hover effect to service cards
+                    const serviceCards = document.querySelectorAll('.service-card');
 
-                // Animate top row
-                topRowCards.forEach((card, index) => {
-                    const cardTop = card.getBoundingClientRect().top;
+                    serviceCards.forEach(card => {
+                        card.addEventListener('mouseenter', function () {
+                            this.classList.add('card-hover');
+                        });
 
-                    if (cardTop < triggerBottom) {
-                        setTimeout(() => {
-                            card.classList.add('show');
-                        }, index * 100); // Staggered animation
+                        card.addEventListener('mouseleave', function () {
+                            this.classList.remove('card-hover');
+                        });
+
+                        // Make the entire card clickable
+                        card.addEventListener('click', function (e) {
+                            // Only trigger if the click wasn't on the button itself
+                            if (!e.target.closest('.card-button')) {
+                                const link = this.querySelector('.card-button');
+                                if (link) {
+                                    link.click();
+                                }
+                            }
+                        });
+                    });
+
+                    // Add animation on scroll
+                    function checkScroll() {
+                        const topRowCards = document.querySelectorAll('.top-row .service-card');
+                        const bottomRowCards = document.querySelectorAll('.bottom-row .service-card');
+                        const triggerBottom = window.innerHeight * 0.8;
+
+                        // Animate top row
+                        topRowCards.forEach((card, index) => {
+                            const cardTop = card.getBoundingClientRect().top;
+
+                            if (cardTop < triggerBottom) {
+                                setTimeout(() => {
+                                    card.classList.add('show');
+                                }, index * 100); // Staggered animation
+                            }
+                        });
+
+                        // Animate bottom row with a slight delay
+                        bottomRowCards.forEach((card, index) => {
+                            const cardTop = card.getBoundingClientRect().top;
+
+                            if (cardTop < triggerBottom) {
+                                setTimeout(() => {
+                                    card.classList.add('show');
+                                }, 300 + (index * 100)); // Delayed staggered animation
+                            }
+                        });
                     }
+
+                    // Run on initial load
+                    checkScroll();
+
+                    // Run on scroll
+                    window.addEventListener('scroll', checkScroll);
                 });
-
-                // Animate bottom row with a slight delay
-                bottomRowCards.forEach((card, index) => {
-                    const cardTop = card.getBoundingClientRect().top;
-
-                    if (cardTop < triggerBottom) {
-                        setTimeout(() => {
-                            card.classList.add('show');
-                        }, 300 + (index * 100)); // Delayed staggered animation
-                    }
-                });
-            }
-
-            // Run on initial load
-            checkScroll();
-
-            // Run on scroll
-            window.addEventListener('scroll', checkScroll);
-        });
-    </script>
+            </script>
 </body>
 
 </html>

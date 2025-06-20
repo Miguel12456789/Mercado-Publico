@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/footer.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    </head>
+    <head>
+        <!-- Other head elements -->
+      </head>
+    <body>
+        <footer class="site-footer">
+            <div class="footer-container">
+              <div class="footer-content">
+                <!-- Modified Logo Section - Only the icon, larger and centered on the left -->
+                <div class="footer-logo-container">
+                  <div class="footer-logo">
+                    <img src="/images/logo.png" alt="Logo" class="logo-icon-only">
+                    <!-- Text removed as requested -->
+                  </div>
+                </div>
+          
+                <!-- Navigation Columns - Unchanged -->
+                <div class="footer-nav">
+                  <!-- Learn More Section -->
+                  <div class="footer-section">
+                    <h3>Learn More</h3>
+                    <ul>
+                      <li><a href="/about">About Lift</a></li>
+                      <li><a href="/press">Press Releases</a></li>
+                      <li><a href="/environment">Environment</a></li>
+                      <li><a href="/jobs">Jobs</a></li>
+                      <li><a href="/privacy">Privacy Policy</a></li>
+                      <li><a href="/contact">Contact Us</a></li>
+                    </ul>
+                  </div>
+          
+                  <!-- Tickets & Booking Section -->
+                  <div class="footer-section">
+                    <h3>Tickets & Booking</h3>
+                    <ul>
+                      <li><a href="/tickets">Lift Tickets</a></li>
+                      <li><a href="/passes">Season Passes</a></li>
+                      <li><a href="/packages">Vacation Packages</a></li>
+                    </ul>
+                  </div>
+          
+                  <!-- Contact Us Section -->
+                  <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <ul>
+                      <li>Hotel Reservation: <span class="phone-number">123-456-7890</span></li>
+                      <li>Ticket Office: <span class="phone-number">123-456-7890</span></li>
+                    </ul>
+                  </div>
+          
+                  <!-- Social Media Section -->
+                  <div class="footer-section social">
+                    <h3>Social</h3>
+                    <div class="social-icons">
+                      <a href="https://www.facebook.com/login/?next=https%3A%2F%2Fwww.facebook.com%2Fhelpdeskpublico%2F" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                      <a href="https://www.instagram.com/helpdeskpublico/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                      <a href="https://x.com/i/flow/login?redirect_after_login=%2Fhelpdeskpublico%2F" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                      <a href="https://www.youtube.com/channel/UC58J5GYpiDIefPgDEsNgGJw" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                      <a href="https://www.linkedin.com/company/helpdeskpublico/" aria-label="Linkedin"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+              <!-- Divider -->
+              <div class="footer-divider"></div>
+          
+              <!-- Copyright Section -->
+              <div class="copyright">
+                <p>&copy; <span id="current-year"></span> Helpdesk Público | Todos os Direitos Reservados</p>
+              </div>
+            </div>
+          </footer>
+          
+          <!-- Script to update the year dynamically -->
+          <script>
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+
+          // Update copyright year dynamically
+          document.addEventListener('DOMContentLoaded', function() {
+            const yearElement = document.getElementById('current-year');
+            if (yearElement) {
+              yearElement.textContent = new Date().getFullYear();
+            }
+          });
+
+        </script>
+        <script src="" async defer></script>
+    </body>
+</html>
