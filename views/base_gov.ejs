@@ -444,6 +444,14 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="overlay-form-group" style="margin-top: 1.25rem;">
+                            <label class="form-label" style="display: flex; align-items: flex-start; gap: 0.5rem;">
+                                <input type="checkbox" id="aceito-privacidade" name="aceito-privacidade"
+                                    class="form-checkbox" required style="margin-top: 0.2em;">
+                                <span>Ao submeter o formulário declaro que li, que compreendi e que aceito a política de
+                                    privacidade do Helpdesk Público.</span>
+                            </label>
+                        </div>
                         <button type="submit" class="submit-btn">Continuar</button>
                     </form>
                 </div>
@@ -500,291 +508,291 @@
                     <p>Nenhum dado de contrato disponível no momento.</p>
                 </div>
                 <% } %>
-                        <%- include('components/button') %>
+                    <%- include('components/button') %>
 
-                            <script>
-                                document.addEventListener('DOMContentLoaded', () => {
-                                    console.log('DOM carregado');
+                        <script>
+                            document.addEventListener('DOMContentLoaded', () => {
+                                console.log('DOM carregado');
 
-                                    // ========== Utils ==========
-                                    const qs = (s, p = document) => p.querySelector(s);
-                                    const qsa = (s, p = document) => [...p.querySelectorAll(s)];
+                                // ========== Utils ==========
+                                const qs = (s, p = document) => p.querySelector(s);
+                                const qsa = (s, p = document) => [...p.querySelectorAll(s)];
 
-                                    // ========== Preencher selects de data ==========
-                                    function populateDateSelectors(yearId, monthId, dayId) {
-                                        const yearSelect = document.getElementById(yearId);
-                                        const monthSelect = document.getElementById(monthId);
-                                        const daySelect = document.getElementById(dayId);
+                                // ========== Preencher selects de data ==========
+                                function populateDateSelectors(yearId, monthId, dayId) {
+                                    const yearSelect = document.getElementById(yearId);
+                                    const monthSelect = document.getElementById(monthId);
+                                    const daySelect = document.getElementById(dayId);
 
-                                        const currentYear = new Date().getFullYear();
+                                    const currentYear = new Date().getFullYear();
 
-                                        // Placeholders
-                                        yearSelect.innerHTML = '<option disabled selected>Ano:</option>';
-                                        monthSelect.innerHTML = '<option disabled selected>Mês:</option>';
-                                        daySelect.innerHTML = '<option disabled selected>Dia:</option>';
+                                    // Placeholders
+                                    yearSelect.innerHTML = '<option disabled selected>Ano:</option>';
+                                    monthSelect.innerHTML = '<option disabled selected>Mês:</option>';
+                                    daySelect.innerHTML = '<option disabled selected>Dia:</option>';
 
-                                        // Preencher anos (do ano atual até 1900)
-                                        for (let y = currentYear; y >= 1900; y--) {
-                                            yearSelect.innerHTML += `<option value="${y}">${y}</option>`;
-                                        }
-
-                                        // Preencher meses (01 a 12)
-                                        for (let m = 1; m <= 12; m++) {
-                                            const paddedMonth = m.toString().padStart(2, '0');
-                                            monthSelect.innerHTML += `<option value="${m}">${paddedMonth}</option>`;
-                                        }
-
-                                        // Atualizar dias com base no mês e ano selecionados
-                                        function updateDays() {
-                                            const year = parseInt(yearSelect.value);
-                                            const month = parseInt(monthSelect.value);
-
-                                            if (!year || !month) return;
-
-                                            const daysInMonth = new Date(year, month, 0).getDate();
-                                            daySelect.innerHTML = '<option disabled selected>Dia:</option>';
-
-                                            for (let d = 1; d <= daysInMonth; d++) {
-                                                const paddedDay = d.toString().padStart(2, '0');
-                                                daySelect.innerHTML += `<option value="${d}">${paddedDay}</option>`;
-                                            }
-                                        }
-
-                                        yearSelect.addEventListener('change', updateDays);
-                                        monthSelect.addEventListener('change', updateDays);
-
-                                        yearSelect.selectedIndex = 0;
-                                        monthSelect.selectedIndex = 0;
-                                        daySelect.selectedIndex = 0;
+                                    // Preencher anos (do ano atual até 1900)
+                                    for (let y = currentYear; y >= 1900; y--) {
+                                        yearSelect.innerHTML += `<option value="${y}">${y}</option>`;
                                     }
 
-                                    populateDateSelectors('from-year', 'from-month', 'from-day');
-                                    populateDateSelectors('to-year', 'to-month', 'to-day');
+                                    // Preencher meses (01 a 12)
+                                    for (let m = 1; m <= 12; m++) {
+                                        const paddedMonth = m.toString().padStart(2, '0');
+                                        monthSelect.innerHTML += `<option value="${m}">${paddedMonth}</option>`;
+                                    }
 
+                                    // Atualizar dias com base no mês e ano selecionados
+                                    function updateDays() {
+                                        const year = parseInt(yearSelect.value);
+                                        const month = parseInt(monthSelect.value);
 
-                                    // ========== Ícones Lucide ==========
-                                    (typeof lucide === 'undefined' ? { createIcons: () => { } } : lucide).createIcons();
+                                        if (!year || !month) return;
 
-                                    // ========== Limpar formulário ==========
-                                    document.querySelector('#clear-form-btn')?.addEventListener('click', (e) => {
-                                        e.preventDefault(); // Impede o submit
-                                        const form = document.querySelector('form[action="/base_gov"]');
-                                        if (!form) return;
+                                        const daysInMonth = new Date(year, month, 0).getDate();
+                                        daySelect.innerHTML = '<option disabled selected>Dia:</option>';
 
-                                        form.reset(); // Limpa todos os campos automaticamente
-
-                                        // Para selects com value="0" ou "Todos"
-                                        form.querySelectorAll('select').forEach(select => {
-                                            select.selectedIndex = 0;
-                                        });
-
-                                        // Para os selects dependentes (desabilita)
-                                        const measureTypeSelect = document.getElementById('measure-type');
-                                        if (measureTypeSelect) measureTypeSelect.disabled = true;
-
-                                        const distritoSelect = document.getElementById('distrito-select');
-                                        if (distritoSelect) distritoSelect.disabled = true;
-
-                                        const concelhoSelect = document.getElementById('concelho-select');
-                                        if (concelhoSelect) concelhoSelect.disabled = true;
-                                    });
-
-                                    // ========== Mostrar resultados ==========
-                                    const resultsTable = qs('#results-table');
-                                    const notifContainer = qs('#notificacao-container');
-                                    qsa('.search-button, .submit-button').forEach(btn =>
-                                        btn.addEventListener('click', () => {
-                                            resultsTable?.style.setProperty('display', 'block');
-                                            notifContainer?.style.setProperty('display', 'block');
-                                            resultsTable?.scrollIntoView({ behavior: 'smooth' });
-                                        })
-                                    );
-
-
-                                    // ========== Dropdown ==========
-                                    const dropdownBtn = qs('#dropdown-button');
-                                    const dropdownMenu = qs('#dropdown-menu');
-                                    const searchInput = qs('.search-input');
-                                    const selectedContract = qs('#selected-contract');
-
-                                    const placeholderMap = {
-                                        Contrato: "Pesquisar pelo objeto do Contrato",
-                                        Anúncios: "Pesquisar pelo objeto do Anúncio",
-                                        Entidades: "Pesquisar pelo nome da Entidade",
-                                        "Modificações contratuais": "Pesquisar pela modificação contratual",
-                                        "Bens móveis": "Pesquisar pelo bem móvel",
-                                        "Não Celebrações de contrato": "Pesquisar pela não celebração",
-                                        Impugnação: "Pesquisar pela impugnação",
-                                    };
-
-                                    dropdownBtn?.addEventListener('click', () => {
-                                        const expanded = dropdownBtn.getAttribute("aria-expanded") === "true";
-                                        dropdownBtn.setAttribute("aria-expanded", String(!expanded));
-                                        dropdownMenu.style.display = expanded ? "none" : "block";
-                                    });
-
-                                    document.addEventListener('click', e => {
-                                        if (!dropdownBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
-                                            dropdownBtn.setAttribute("aria-expanded", "false");
-                                            dropdownMenu.style.display = "none";
+                                        for (let d = 1; d <= daysInMonth; d++) {
+                                            const paddedDay = d.toString().padStart(2, '0');
+                                            daySelect.innerHTML += `<option value="${d}">${paddedDay}</option>`;
                                         }
+                                    }
+
+                                    yearSelect.addEventListener('change', updateDays);
+                                    monthSelect.addEventListener('change', updateDays);
+
+                                    yearSelect.selectedIndex = 0;
+                                    monthSelect.selectedIndex = 0;
+                                    daySelect.selectedIndex = 0;
+                                }
+
+                                populateDateSelectors('from-year', 'from-month', 'from-day');
+                                populateDateSelectors('to-year', 'to-month', 'to-day');
+
+
+                                // ========== Ícones Lucide ==========
+                                (typeof lucide === 'undefined' ? { createIcons: () => { } } : lucide).createIcons();
+
+                                // ========== Limpar formulário ==========
+                                document.querySelector('#clear-form-btn')?.addEventListener('click', (e) => {
+                                    e.preventDefault(); // Impede o submit
+                                    const form = document.querySelector('form[action="/base_gov"]');
+                                    if (!form) return;
+
+                                    form.reset(); // Limpa todos os campos automaticamente
+
+                                    // Para selects com value="0" ou "Todos"
+                                    form.querySelectorAll('select').forEach(select => {
+                                        select.selectedIndex = 0;
                                     });
 
-                                    qsa('.dropdown-item').forEach(item =>
-                                        item.addEventListener('click', e => {
-                                            const val = e.currentTarget.dataset.value;
-                                            selectedContract.textContent = val;
-                                            searchInput.placeholder = placeholderMap[val] || '';
-                                            dropdownBtn.setAttribute("aria-expanded", "false");
-                                            dropdownMenu.style.display = "none";
-                                        })
-                                    );
-
-                                    // ========== Popup de Download ==========
-                                    const openBtn = qs('#openPopupBtn'), closeBtn = qs('#closeBtn'), overlay = qs('#overlay');
-                                    const form = qs('#downloadForm'), verifyBtn = qs('#verifyCodeBtn'), resendBtn = qs('#resendCodeBtn');
-                                    const step1 = qs('#downloadStep1'), step2 = qs('#downloadStep2'), step3 = qs('#downloadStep3');
-                                    const inputs = qsa('.verification-input');
-                                    let code = '', email = '';
-
-                                    const showStep = step => [step1, step2, step3].forEach(s => s.classList.toggle('active', s === step));
-                                    const genCode = () => (code = Math.floor(100 + Math.random() * 900).toString());
-                                    const sendCode = (email, code) => {
-                                        console.log(`Enviando código ${code} para ${email}`);
-                                        return new Promise(res => setTimeout(() => res(true), 1000));
-                                    };
-
-                                    openBtn?.addEventListener('click', () => {
-                                        overlay.style.display = 'flex';
-                                        document.body.style.overflow = 'hidden';
-                                    });
-
-                                    const closePopup = () => {
-                                        overlay.style.display = 'none';
-                                        document.body.style.overflow = 'auto';
-                                        showStep(step1);
-                                        form.reset();
-                                    };
-
-                                    closeBtn?.addEventListener('click', closePopup);
-                                    overlay?.addEventListener('click', e => e.target === overlay && closePopup());
-
-                                    form?.addEventListener('submit', e => {
-                                        e.preventDefault();
-                                        email = qs('#email').value;
-                                        sendCode(email, genCode()).then(() => {
-                                            showStep(step2);
-                                            inputs[0]?.focus();
-                                        });
-                                    });
-
-                                    // Referências aos elementos(faz bloquear e desbloquear as dropdowns se ela for selecionada)
-                                    const checkboxes = [
-                                        document.getElementById('special-measures'),
-                                        document.getElementById('include-mec')
-                                    ];
+                                    // Para os selects dependentes (desabilita)
                                     const measureTypeSelect = document.getElementById('measure-type');
-                                    // Função para atualizar o estado do dropdown
-                                    const updateDropdownState = () => {
-                                        measureTypeSelect.disabled = !checkboxes.some(cb => cb.checked);
-                                    };
-                                    // Adicionar evento a todos os checkboxes
-                                    checkboxes.forEach(cb => cb.addEventListener('change', updateDropdownState));
-                                    // Estado inicial
-                                    updateDropdownState();
+                                    if (measureTypeSelect) measureTypeSelect.disabled = true;
 
-                                    // ========== Listar os Conselhos ==========
-                                    // Referências aos elementos
-                                    const paisSelect = document.getElementById('pais-select');
                                     const distritoSelect = document.getElementById('distrito-select');
+                                    if (distritoSelect) distritoSelect.disabled = true;
+
                                     const concelhoSelect = document.getElementById('concelho-select');
-                                    const distritosConcelhos = {
-                                        aveiro: ["Águeda", "Albergaria-a-Velha", "Anadia", "Arouca", "Aveiro", "Castelo de Paiva", "Espinho", "Estarreja", "Ílhavo", "Mealhada", "Murtosa", "Oliveira de Azeméis", "Oliveira do Bairro", "Ovar", "Santa Maria da Feira", "São João da Madeira", "Sever do Vouga", "Vagos", "Vale de Cambra"],
-                                        beja: ["Aljustrel", "Almodôvar", "Alvito", "Barrancos", "Beja", "Castro Verde", "Cuba", "Ferreira do Alentejo", "Mértola", "Moura", "Odemira", "Ourique", "Serpa", "Vidigueira"],
-                                        braga: ["Amares", "Barcelos", "Braga", "Cabeceiras de Basto", "Celorico de Basto", "Esposende", "Fafe", "Guimarães", "Póvoa de Lanhoso", "Terras de Bouro", "Vieira do Minho", "Vila Nova de Famalicão", "Vila Verde", "Vizela"],
-                                        braganca: ["Alfândega da Fé", "Bragança", "Carrazeda de Ansiães", "Freixo de Espada à Cinta", "Macedo de Cavaleiros", "Miranda do Douro", "Mirandela", "Mogadouro", "Torre de Moncorvo", "Vila Flor", "Vimioso", "Vinhais"],
-                                        castelo_branco: ["Belmonte", "Castelo Branco", "Covilhã", "Fundão", "Idanha-a-Nova", "Oleiros", "Penamacor", "Proença-a-Nova", "Sertã", "Vila de Rei", "Vila Velha de Ródão"],
-                                        coimbra: ["Arganil", "Cantanhede", "Coimbra", "Condeixa-a-Nova", "Figueira da Foz", "Góis", "Lousã", "Mira", "Miranda do Corvo", "Montemor-o-Velho", "Oliveira do Hospital", "Pampilhosa da Serra", "Penacova", "Penela", "Soure", "Tábua", "Vila Nova de Poiares"],
-                                        evora: ["Alandroal", "Arraiolos", "Borba", "Estremoz", "Évora", "Montemor-o-Novo", "Mora", "Mourão", "Portel", "Redondo", "Reguengos de Monsaraz", "Vendas Novas", "Viana do Alentejo", "Vila Viçosa"],
-                                        faro: ["Albufeira", "Alcoutim", "Aljezur", "Castro Marim", "Faro", "Lagoa", "Lagos", "Loulé", "Monchique", "Olhão", "Portimão", "São Brás de Alportel", "Silves", "Tavira", "Vila do Bispo", "Vila Real de Santo António"],
-                                        guarda: ["Aguiar da Beira", "Almeida", "Celorico da Beira", "Figueira de Castelo Rodrigo", "Fornos de Algodres", "Gouveia", "Guarda", "Manteigas", "Mêda", "Pinhel", "Sabugal", "Seia", "Trancoso", "Vila Nova de Foz Côa"],
-                                        leiria: ["Alcobaça", "Alvaiázere", "Ansião", "Batalha", "Bombarral", "Caldas da Rainha", "Castanheira de Pêra", "Figueiró dos Vinhos", "Leiria", "Marinha Grande", "Nazaré", "Óbidos", "Pedrógão Grande", "Peniche", "Pombal", "Porto de Mós"],
-                                        lisboa: ["Alenquer", "Amadora", "Arruda dos Vinhos", "Azambuja", "Cadaval", "Cascais", "Lisboa", "Loures", "Lourinhã", "Mafra", "Odivelas", "Oeiras", "Sintra", "Sobral de Monte Agraço", "Torres Vedras", "Vila Franca de Xira"],
-                                        portalegre: ["Alter do Chão", "Arronches", "Avis", "Campo Maior", "Castelo de Vide", "Crato", "Elvas", "Fronteira", "Gavião", "Marvão", "Monforte", "Nisa", "Ponte de Sor", "Portalegre", "Sousel"],
-                                        porto: ["Amarante", "Baião", "Felgueiras", "Gondomar", "Lousada", "Maia", "Marco de Canaveses", "Matosinhos", "Paços de Ferreira", "Paredes", "Penafiel", "Porto", "Póvoa de Varzim", "Santo Tirso", "São João da Madeira", "Trofa", "Valongo", "Vila do Conde", "Vila Nova de Gaia"],
-                                        santarem: ["Abrantes", "Alcanena", "Almeirim", "Alpiarça", "Benavente", "Cartaxo", "Chamusca", "Constância", "Coruche", "Entroncamento", "Ferreira do Zêzere", "Golegã", "Mação", "Ourém", "Rio Maior", "Salvaterra de Magos", "Santarém", "Sardoal", "Tomar", "Torres Novas", "Vila Nova da Barquinha"],
-                                        setubal: ["Alcácer do Sal", "Almada", "Barreiro", "Grândola", "Moita", "Montijo", "Palmela", "Santiago do Cacém", "Seixal", "Sesimbra", "Setúbal", "Sines"],
-                                        viana_do_castelo: ["Arcos de Valdevez", "Caminha", "Melgaço", "Monção", "Paredes de Coura", "Ponte da Barca", "Ponte de Lima", "Valença", "Viana do Castelo", "Vila Nova de Cerveira"],
-                                        vila_real: ["Alijó", "Boticas", "Chaves", "Mesão Frio", "Mondim de Basto", "Montalegre", "Murça", "Peso da Régua", "Ribeira de Pena", "Sabrosa", "Santa Marta de Penaguião", "Valpaços", "Vila Pouca de Aguiar", "Vila Real"],
-                                        viseu: ["Armamar", "Carregal do Sal", "Castro Daire", "Cinfães", "Lamego", "Mangualde", "Moimenta da Beira", "Mortágua", "Nelas", "Oliveira de Frades", "Penalva do Castelo", "Penedono", "Resende", "Santa Comba Dão", "São João da Pesqueira", "São Pedro do Sul", "Sátão", "Sernancelhe", "Tabuaço", "Tarouca", "Tondela", "Vila Nova de Paiva", "Viseu", "Vouzela"]
-                                    };
-                                    // Utilitário para ativar/desativar <select>
-                                    const setDisabled = (select, disabled) => {
-                                        select.disabled = disabled;
-                                        if (disabled) select.value = "";
-                                    };
-
-                                    // Atualiza o estado dos selects de distrito e concelho com base no país
-                                    const atualizarDistritos = () => {
-                                        const isPortugal = paisSelect.value === "portugal";
-                                        setDisabled(distritoSelect, !isPortugal);
-                                        setDisabled(concelhoSelect, true);
-                                        concelhoSelect.innerHTML = '<option value="">Todos os distritos</option>';
-                                    };
-
-                                    // Preenche os concelhos com base no distrito selecionado
-                                    const preencherConcelhos = () => {
-                                        const concelhos = distritosConcelhos[distritoSelect.value] || [];
-                                        concelhoSelect.innerHTML = '<option value="">Todos os concelhos</option>';
-                                        setDisabled(concelhoSelect, concelhos.length === 0);
-
-                                        concelhos.forEach(nome => {
-                                            const option = new Option(nome, nome.toLowerCase().replace(/\s+/g, '_'));
-                                            concelhoSelect.appendChild(option);
-                                        });
-                                    };
-
-                                    // Mostrar resultados ao clicar no botão de pesquisa
-                                    document.querySelector('#search-contracts-button').addEventListener('click', () => {
-                                        const resultsTable = document.querySelector('#results-table');
-                                        resultsTable.style.display = 'block';
-                                        resultsTable.scrollIntoView({ behavior: 'smooth' });
-                                    });
-
-                                    let currentFilters = {}; // fora do escopo da função
-
-                                    // Envio do formulário com AJAX
-                                    document.querySelector('form[action="/base_gov"]').addEventListener('submit', e => {
-                                        const submitter = e.submitter;
-
-                                        // Só prossegue se foi o botão "Pesquisar"
-                                        if (!submitter || submitter.id !== 'search-contracts-button') {
-                                            e.preventDefault();
-                                            return;
-                                        }
-
-                                        e.preventDefault();
-
-                                        console.log('Enviando pesquisa...');
-                                        const form = e.currentTarget;
-                                        const formData = new FormData(form);
-                                        const limit = document.getElementById('items-select')?.value || 25;
-
-                                        currentFilters = {};
-                                        formData.forEach((value, key) => {
-                                            currentFilters[key] = value;
-                                        });
-
-                                        loadContracts(1, limit);
-                                    });
-
-                                    // Listeners de selects
-                                    paisSelect.addEventListener('change', atualizarDistritos);
-                                    distritoSelect.addEventListener('change', preencherConcelhos);
-
+                                    if (concelhoSelect) concelhoSelect.disabled = true;
                                 });
 
-                            </script>
+                                // ========== Mostrar resultados ==========
+                                const resultsTable = qs('#results-table');
+                                const notifContainer = qs('#notificacao-container');
+                                qsa('.search-button, .submit-button').forEach(btn =>
+                                    btn.addEventListener('click', () => {
+                                        resultsTable?.style.setProperty('display', 'block');
+                                        notifContainer?.style.setProperty('display', 'block');
+                                        resultsTable?.scrollIntoView({ behavior: 'smooth' });
+                                    })
+                                );
+
+
+                                // ========== Dropdown ==========
+                                const dropdownBtn = qs('#dropdown-button');
+                                const dropdownMenu = qs('#dropdown-menu');
+                                const searchInput = qs('.search-input');
+                                const selectedContract = qs('#selected-contract');
+
+                                const placeholderMap = {
+                                    Contrato: "Pesquisar pelo objeto do Contrato",
+                                    Anúncios: "Pesquisar pelo objeto do Anúncio",
+                                    Entidades: "Pesquisar pelo nome da Entidade",
+                                    "Modificações contratuais": "Pesquisar pela modificação contratual",
+                                    "Bens móveis": "Pesquisar pelo bem móvel",
+                                    "Não Celebrações de contrato": "Pesquisar pela não celebração",
+                                    Impugnação: "Pesquisar pela impugnação",
+                                };
+
+                                dropdownBtn?.addEventListener('click', () => {
+                                    const expanded = dropdownBtn.getAttribute("aria-expanded") === "true";
+                                    dropdownBtn.setAttribute("aria-expanded", String(!expanded));
+                                    dropdownMenu.style.display = expanded ? "none" : "block";
+                                });
+
+                                document.addEventListener('click', e => {
+                                    if (!dropdownBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                                        dropdownBtn.setAttribute("aria-expanded", "false");
+                                        dropdownMenu.style.display = "none";
+                                    }
+                                });
+
+                                qsa('.dropdown-item').forEach(item =>
+                                    item.addEventListener('click', e => {
+                                        const val = e.currentTarget.dataset.value;
+                                        selectedContract.textContent = val;
+                                        searchInput.placeholder = placeholderMap[val] || '';
+                                        dropdownBtn.setAttribute("aria-expanded", "false");
+                                        dropdownMenu.style.display = "none";
+                                    })
+                                );
+
+                                // ========== Popup de Download ==========
+                                const openBtn = qs('#openPopupBtn'), closeBtn = qs('#closeBtn'), overlay = qs('#overlay');
+                                const form = qs('#downloadForm'), verifyBtn = qs('#verifyCodeBtn'), resendBtn = qs('#resendCodeBtn');
+                                const step1 = qs('#downloadStep1'), step2 = qs('#downloadStep2'), step3 = qs('#downloadStep3');
+                                const inputs = qsa('.verification-input');
+                                let code = '', email = '';
+
+                                const showStep = step => [step1, step2, step3].forEach(s => s.classList.toggle('active', s === step));
+                                const genCode = () => (code = Math.floor(100 + Math.random() * 900).toString());
+                                const sendCode = (email, code) => {
+                                    console.log(`Enviando código ${code} para ${email}`);
+                                    return new Promise(res => setTimeout(() => res(true), 1000));
+                                };
+
+                                openBtn?.addEventListener('click', () => {
+                                    overlay.style.display = 'flex';
+                                    document.body.style.overflow = 'hidden';
+                                });
+
+                                const closePopup = () => {
+                                    overlay.style.display = 'none';
+                                    document.body.style.overflow = 'auto';
+                                    showStep(step1);
+                                    form.reset();
+                                };
+
+                                closeBtn?.addEventListener('click', closePopup);
+                                overlay?.addEventListener('click', e => e.target === overlay && closePopup());
+
+                                form?.addEventListener('submit', e => {
+                                    e.preventDefault();
+                                    email = qs('#email').value;
+                                    sendCode(email, genCode()).then(() => {
+                                        showStep(step2);
+                                        inputs[0]?.focus();
+                                    });
+                                });
+
+                                // Referências aos elementos(faz bloquear e desbloquear as dropdowns se ela for selecionada)
+                                const checkboxes = [
+                                    document.getElementById('special-measures'),
+                                    document.getElementById('include-mec')
+                                ];
+                                const measureTypeSelect = document.getElementById('measure-type');
+                                // Função para atualizar o estado do dropdown
+                                const updateDropdownState = () => {
+                                    measureTypeSelect.disabled = !checkboxes.some(cb => cb.checked);
+                                };
+                                // Adicionar evento a todos os checkboxes
+                                checkboxes.forEach(cb => cb.addEventListener('change', updateDropdownState));
+                                // Estado inicial
+                                updateDropdownState();
+
+                                // ========== Listar os Conselhos ==========
+                                // Referências aos elementos
+                                const paisSelect = document.getElementById('pais-select');
+                                const distritoSelect = document.getElementById('distrito-select');
+                                const concelhoSelect = document.getElementById('concelho-select');
+                                const distritosConcelhos = {
+                                    aveiro: ["Águeda", "Albergaria-a-Velha", "Anadia", "Arouca", "Aveiro", "Castelo de Paiva", "Espinho", "Estarreja", "Ílhavo", "Mealhada", "Murtosa", "Oliveira de Azeméis", "Oliveira do Bairro", "Ovar", "Santa Maria da Feira", "São João da Madeira", "Sever do Vouga", "Vagos", "Vale de Cambra"],
+                                    beja: ["Aljustrel", "Almodôvar", "Alvito", "Barrancos", "Beja", "Castro Verde", "Cuba", "Ferreira do Alentejo", "Mértola", "Moura", "Odemira", "Ourique", "Serpa", "Vidigueira"],
+                                    braga: ["Amares", "Barcelos", "Braga", "Cabeceiras de Basto", "Celorico de Basto", "Esposende", "Fafe", "Guimarães", "Póvoa de Lanhoso", "Terras de Bouro", "Vieira do Minho", "Vila Nova de Famalicão", "Vila Verde", "Vizela"],
+                                    braganca: ["Alfândega da Fé", "Bragança", "Carrazeda de Ansiães", "Freixo de Espada à Cinta", "Macedo de Cavaleiros", "Miranda do Douro", "Mirandela", "Mogadouro", "Torre de Moncorvo", "Vila Flor", "Vimioso", "Vinhais"],
+                                    castelo_branco: ["Belmonte", "Castelo Branco", "Covilhã", "Fundão", "Idanha-a-Nova", "Oleiros", "Penamacor", "Proença-a-Nova", "Sertã", "Vila de Rei", "Vila Velha de Ródão"],
+                                    coimbra: ["Arganil", "Cantanhede", "Coimbra", "Condeixa-a-Nova", "Figueira da Foz", "Góis", "Lousã", "Mira", "Miranda do Corvo", "Montemor-o-Velho", "Oliveira do Hospital", "Pampilhosa da Serra", "Penacova", "Penela", "Soure", "Tábua", "Vila Nova de Poiares"],
+                                    evora: ["Alandroal", "Arraiolos", "Borba", "Estremoz", "Évora", "Montemor-o-Novo", "Mora", "Mourão", "Portel", "Redondo", "Reguengos de Monsaraz", "Vendas Novas", "Viana do Alentejo", "Vila Viçosa"],
+                                    faro: ["Albufeira", "Alcoutim", "Aljezur", "Castro Marim", "Faro", "Lagoa", "Lagos", "Loulé", "Monchique", "Olhão", "Portimão", "São Brás de Alportel", "Silves", "Tavira", "Vila do Bispo", "Vila Real de Santo António"],
+                                    guarda: ["Aguiar da Beira", "Almeida", "Celorico da Beira", "Figueira de Castelo Rodrigo", "Fornos de Algodres", "Gouveia", "Guarda", "Manteigas", "Mêda", "Pinhel", "Sabugal", "Seia", "Trancoso", "Vila Nova de Foz Côa"],
+                                    leiria: ["Alcobaça", "Alvaiázere", "Ansião", "Batalha", "Bombarral", "Caldas da Rainha", "Castanheira de Pêra", "Figueiró dos Vinhos", "Leiria", "Marinha Grande", "Nazaré", "Óbidos", "Pedrógão Grande", "Peniche", "Pombal", "Porto de Mós"],
+                                    lisboa: ["Alenquer", "Amadora", "Arruda dos Vinhos", "Azambuja", "Cadaval", "Cascais", "Lisboa", "Loures", "Lourinhã", "Mafra", "Odivelas", "Oeiras", "Sintra", "Sobral de Monte Agraço", "Torres Vedras", "Vila Franca de Xira"],
+                                    portalegre: ["Alter do Chão", "Arronches", "Avis", "Campo Maior", "Castelo de Vide", "Crato", "Elvas", "Fronteira", "Gavião", "Marvão", "Monforte", "Nisa", "Ponte de Sor", "Portalegre", "Sousel"],
+                                    porto: ["Amarante", "Baião", "Felgueiras", "Gondomar", "Lousada", "Maia", "Marco de Canaveses", "Matosinhos", "Paços de Ferreira", "Paredes", "Penafiel", "Porto", "Póvoa de Varzim", "Santo Tirso", "São João da Madeira", "Trofa", "Valongo", "Vila do Conde", "Vila Nova de Gaia"],
+                                    santarem: ["Abrantes", "Alcanena", "Almeirim", "Alpiarça", "Benavente", "Cartaxo", "Chamusca", "Constância", "Coruche", "Entroncamento", "Ferreira do Zêzere", "Golegã", "Mação", "Ourém", "Rio Maior", "Salvaterra de Magos", "Santarém", "Sardoal", "Tomar", "Torres Novas", "Vila Nova da Barquinha"],
+                                    setubal: ["Alcácer do Sal", "Almada", "Barreiro", "Grândola", "Moita", "Montijo", "Palmela", "Santiago do Cacém", "Seixal", "Sesimbra", "Setúbal", "Sines"],
+                                    viana_do_castelo: ["Arcos de Valdevez", "Caminha", "Melgaço", "Monção", "Paredes de Coura", "Ponte da Barca", "Ponte de Lima", "Valença", "Viana do Castelo", "Vila Nova de Cerveira"],
+                                    vila_real: ["Alijó", "Boticas", "Chaves", "Mesão Frio", "Mondim de Basto", "Montalegre", "Murça", "Peso da Régua", "Ribeira de Pena", "Sabrosa", "Santa Marta de Penaguião", "Valpaços", "Vila Pouca de Aguiar", "Vila Real"],
+                                    viseu: ["Armamar", "Carregal do Sal", "Castro Daire", "Cinfães", "Lamego", "Mangualde", "Moimenta da Beira", "Mortágua", "Nelas", "Oliveira de Frades", "Penalva do Castelo", "Penedono", "Resende", "Santa Comba Dão", "São João da Pesqueira", "São Pedro do Sul", "Sátão", "Sernancelhe", "Tabuaço", "Tarouca", "Tondela", "Vila Nova de Paiva", "Viseu", "Vouzela"]
+                                };
+                                // Utilitário para ativar/desativar <select>
+                                const setDisabled = (select, disabled) => {
+                                    select.disabled = disabled;
+                                    if (disabled) select.value = "";
+                                };
+
+                                // Atualiza o estado dos selects de distrito e concelho com base no país
+                                const atualizarDistritos = () => {
+                                    const isPortugal = paisSelect.value === "portugal";
+                                    setDisabled(distritoSelect, !isPortugal);
+                                    setDisabled(concelhoSelect, true);
+                                    concelhoSelect.innerHTML = '<option value="">Todos os distritos</option>';
+                                };
+
+                                // Preenche os concelhos com base no distrito selecionado
+                                const preencherConcelhos = () => {
+                                    const concelhos = distritosConcelhos[distritoSelect.value] || [];
+                                    concelhoSelect.innerHTML = '<option value="">Todos os concelhos</option>';
+                                    setDisabled(concelhoSelect, concelhos.length === 0);
+
+                                    concelhos.forEach(nome => {
+                                        const option = new Option(nome, nome.toLowerCase().replace(/\s+/g, '_'));
+                                        concelhoSelect.appendChild(option);
+                                    });
+                                };
+
+                                // Mostrar resultados ao clicar no botão de pesquisa
+                                document.querySelector('#search-contracts-button').addEventListener('click', () => {
+                                    const resultsTable = document.querySelector('#results-table');
+                                    resultsTable.style.display = 'block';
+                                    resultsTable.scrollIntoView({ behavior: 'smooth' });
+                                });
+
+                                let currentFilters = {}; // fora do escopo da função
+
+                                // Envio do formulário com AJAX
+                                document.querySelector('form[action="/base_gov"]').addEventListener('submit', e => {
+                                    const submitter = e.submitter;
+
+                                    // Só prossegue se foi o botão "Pesquisar"
+                                    if (!submitter || submitter.id !== 'search-contracts-button') {
+                                        e.preventDefault();
+                                        return;
+                                    }
+
+                                    e.preventDefault();
+
+                                    console.log('Enviando pesquisa...');
+                                    const form = e.currentTarget;
+                                    const formData = new FormData(form);
+                                    const limit = document.getElementById('items-select')?.value || 25;
+
+                                    currentFilters = {};
+                                    formData.forEach((value, key) => {
+                                        currentFilters[key] = value;
+                                    });
+
+                                    loadContracts(1, limit);
+                                });
+
+                                // Listeners de selects
+                                paisSelect.addEventListener('change', atualizarDistritos);
+                                distritoSelect.addEventListener('change', preencherConcelhos);
+
+                            });
+
+                        </script>
 
 </body>
 
