@@ -32,4 +32,17 @@ const sendEmail = async (req, res) => {
   }
 };
 
-module.exports = { sendEmail };  
+
+const verify_code = async (req, res) => {
+  const { code } = req.body;
+
+  if (req.session && req.session.verificationCode == code) {
+    return res.json({ success: true });
+  }
+
+  return res.json({ success: false, message: 'Código incorreto. Tente novamente.' });
+
+}
+
+
+module.exports = { sendEmail, verify_code };  
