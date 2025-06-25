@@ -10,6 +10,8 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '../views')); // Garante o caminho correto para as views
 
 // Static file
+app.use(express.json()); 
+app.use(express.urlencoded({ extended: true })); // Para formulários tradicionais
 app.use(express.static("public")); // Serve static files from the public folder
 app.use(express.static("src")); // Serve static files from the src folder
 
