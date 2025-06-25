@@ -595,7 +595,7 @@
 
                                             const result = await response.json();
                                             if (result.success) {
-                                                console.log('Código enviado para o email:', data.email); // <-- Adicionado
+                                                console.log('Código enviado para o email:', data.email);
                                                 // Avança para o passo 2 (verificação)
                                                 document.getElementById('downloadStep1').classList.remove('active');
                                                 document.getElementById('downloadStep2').classList.add('active');
@@ -606,6 +606,33 @@
                                             alert('Erro ao enviar email: ' + error.message);
                                         }
                                     });
+
+                                    // ADICIONE ESTE BLOCO PARA O REENVIO:
+                                    if (resendBtn) {
+                                        resendBtn.addEventListener('click', async function (e) {
+                                            e.preventDefault();
+                                            // Pegue os dados do formulário preenchido
+                                            const formData = new FormData(form);
+                                            const data = Object.fromEntries(formData.entries());
+
+                                            try {
+                                                const response = await fetch('/components/mail_receiver', {
+                                                    method: 'POST',
+                                                    headers: { 'Content-Type': 'application/json' },
+                                                    body: JSON.stringify(data)
+                                                });
+
+                                                const result = await response.json();
+                                                if (result.success) {
+                                                    console.log('Código reenviado para o email: ' + data.email);
+                                                } else {
+                                                    alert('Erro ao reenviar código: ' + (result.message || 'Tente novamente.'));
+                                                }
+                                            } catch (error) {
+                                                alert('Erro ao reenviar código: ' + error.message);
+                                            }
+                                        });
+                                    }
                                 });
 
                             </script>
