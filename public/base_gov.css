@@ -897,6 +897,7 @@ main,
   pointer-events: auto;
 }
 
+
 /* Responsive styles */
 @media (max-width: 768px) {
   .search-row {
