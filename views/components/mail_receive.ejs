@@ -169,5 +169,52 @@
   </div>
 
 </body>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const inputs = document.querySelectorAll(".verification-input");
+
+    inputs.forEach((input, index) => {
+      input.addEventListener("input", (e) => {
+        const value = e.target.value;
+
+        // Se colaram múltiplos caracteres
+        if (value.length > 1) {
+          handlePaste(value);
+          return;
+        }
+
+        // Avança se digitou algo
+        if (value && index < inputs.length - 1) {
+          inputs[index + 1].focus();
+        }
+      });
+
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Backspace" && !input.value && index > 0) {
+          inputs[index - 1].focus();
+        }
+      });
+    });
+
+    // Colar o código inteiro
+    const container = document.querySelector(".verification-code-container");
+    container.addEventListener("paste", (e) => {
+      const paste = (e.clipboardData || window.clipboardData).getData("text");
+      handlePaste(paste);
+      e.preventDefault();
+    });
+
+    function handlePaste(paste) {
+      const chars = paste.replace(/\D/g, "").split("").slice(0, inputs.length);
+      inputs.forEach((input, i) => {
+        input.value = chars[i] || "";
+      });
+      const next = inputs[chars.length] || inputs[inputs.length - 1];
+      next.focus();
+    }
+
+    lucide.createIcons();
+  });
+</script>
 
 </html>
