@@ -138,6 +138,10 @@
           <p>Enviamos um código de verificação de 5 dígitos para o seu email.</p>
           <p>Por favor, verifique sua caixa de entrada e insira o código abaixo:</p>
 
+          <div id="resend-message" style="display:none; color: #3c6c2a; margin-bottom: 10px;">
+            O código foi reenviado para o seu email.
+          </div>
+
           <div class="verification-code-container">
             <input type="text" class="verification-input" maxlength="1" data-index="0">
             <input type="text" class="verification-input" maxlength="1" data-index="1">
@@ -225,7 +229,7 @@
     const regex = /^\d{9}$/;
 
     if (downloadForm && telefoneInput) {
-      downloadForm.addEventListener('submit', function(e) {
+      downloadForm.addEventListener('submit', function (e) {
         if (!regex.test(telefoneInput.value)) {
           telefoneInput.classList.add('input-error');
           telefoneInput.focus();

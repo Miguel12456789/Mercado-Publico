@@ -624,12 +624,54 @@
 
                                                 const result = await response.json();
                                                 if (result.success) {
+                                                    // Mostra a mensagem de reenvio
+                                                    const resendMsg = document.getElementById('resend-message');
+                                                    if (resendMsg) {
+                                                        resendMsg.style.display = 'block';
+                                                        // Esconde a mensagem após 5 segundos (opcional)
+                                                        setTimeout(() => { resendMsg.style.display = 'none'; }, 10000);
+                                                    }
                                                     console.log('Código reenviado para o email: ' + data.email);
                                                 } else {
                                                     alert('Erro ao reenviar código: ' + (result.message || 'Tente novamente.'));
                                                 }
                                             } catch (error) {
                                                 alert('Erro ao reenviar código: ' + error.message);
+                                            }
+                                        });
+                                    }
+
+                                    const verifyCodeBtn = document.getElementById('verifyCodeBtn');
+                                    if (verifyCodeBtn) {
+                                        verifyCodeBtn.addEventListener('click', async () => {
+                                            const inputs = document.querySelectorAll(".verification-input");
+                                            const code = [...inputs].map(i => i.value).join("");
+
+                                            if (code.length !== 5 || !/^\d{5}$/.test(code)) {
+                                                alert("Por favor, insira um código de 5 dígitos.");
+                                                return;
+                                            }
+
+                                            try {
+                                                const response = await fetch('/components/mail_receiver', {
+                                                    method: 'POST',
+                                                    headers: { 'Content-Type': 'application/json' },
+                                                    body: JSON.stringify({ code })
+                                                });
+
+                                                const result = await response.json();
+                                                if (result.success) {
+                                                    // Código correto, avança para a próxima etapa
+                                                    document.getElementById('downloadStep2').classList.remove('active');
+                                                    document.getElementById('downloadStep3').classList.add('active');
+
+                                                    // Opcional: iniciar download automático aqui se desejar
+                                                    document.getElementById('downloadLink')?.click();
+                                                } else {
+                                                    alert(result.message || "Código incorreto.");
+                                                }
+                                            } catch (err) {
+                                                alert("Erro ao verificar o código: " + err.message);
                                             }
                                         });
                                     }
