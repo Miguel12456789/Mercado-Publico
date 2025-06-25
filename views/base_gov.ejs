@@ -38,24 +38,6 @@
         <form action="/base_gov" method="get">
             <div class="search-container">
                 <div class="search-row">
-                    <div class="dropdown" id="contracts-dropdown">
-                        <button type="button" id="dropdown-button" class="dropdown-select" aria-haspopup="true"
-                            aria-expanded="false">
-                            <span class="dropdown-text" id="selected-contract">Contrato</span>
-                            <i data-lucide="chevron-down" class="dropdown-icon"></i>
-                        </button>
-
-                        <div class="dropdown-menu" id="dropdown-menu">
-                            <div class="dropdown-item" data-value="Contrato">Contratos</div>
-                            <div class="dropdown-item" data-value="Entidades">Entidades</div>
-                            <div class="dropdown-item" data-value="Modificações contratuais">Modificações contratuais
-                            </div>
-                            <div class="dropdown-item" data-value="Bens móveis">Bens móveis</div>
-                            <div class="dropdown-item" data-value="Não Celebrações de contrato">Não Celebrações de
-                                contrato</div>
-                            <div class="dropdown-item" data-value="Impugnação">Impugnações</div>
-                        </div>
-                    </div>
                     <input type="text" name="search" placeholder="Pesquisar pelo objeto do Contrato"
                         class="search-input" />
                 </div>
@@ -468,46 +450,6 @@
                                             resultsTable?.scrollIntoView({ behavior: 'smooth' });
                                         })
                                     )
-
-
-                                    // ========== Dropdown ==========
-                                    const dropdownBtn = qs('#dropdown-button');
-                                    const dropdownMenu = qs('#dropdown-menu');
-                                    const searchInput = qs('.search-input');
-                                    const selectedContract = qs('#selected-contract');
-
-                                    const placeholderMap = {
-                                        Contrato: "Pesquisar pelo objeto do Contrato",
-                                        Anúncios: "Pesquisar pelo objeto do Anúncio",
-                                        Entidades: "Pesquisar pelo nome da Entidade",
-                                        "Modificações contratuais": "Pesquisar pela modificação contratual",
-                                        "Bens móveis": "Pesquisar pelo bem móvel",
-                                        "Não Celebrações de contrato": "Pesquisar pela não celebração",
-                                        Impugnação: "Pesquisar pela impugnação",
-                                    };
-
-                                    dropdownBtn?.addEventListener('click', () => {
-                                        const expanded = dropdownBtn.getAttribute("aria-expanded") === "true";
-                                        dropdownBtn.setAttribute("aria-expanded", String(!expanded));
-                                        dropdownMenu.style.display = expanded ? "none" : "block";
-                                    });
-
-                                    document.addEventListener('click', e => {
-                                        if (!dropdownBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
-                                            dropdownBtn.setAttribute("aria-expanded", "false");
-                                            dropdownMenu.style.display = "none";
-                                        }
-                                    });
-
-                                    qsa('.dropdown-item').forEach(item =>
-                                        item.addEventListener('click', e => {
-                                            const val = e.currentTarget.dataset.value;
-                                            selectedContract.textContent = val;
-                                            searchInput.placeholder = placeholderMap[val] || '';
-                                            dropdownBtn.setAttribute("aria-expanded", "false");
-                                            dropdownMenu.style.display = "none";
-                                        })
-                                    );
 
                                     // Referências aos elementos(faz bloquear e desbloquear as dropdowns se ela for selecionada)
                                     const checkboxes = [

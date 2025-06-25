@@ -10,7 +10,6 @@
 </head>
 
 <body>
-  <!-- Overlay e Popup de Download -->
   <div class="overlay" id="overlay">
     <div class="popup">
       <button class="close-btn" id="closeBtn">&times;</button>
@@ -44,7 +43,9 @@
             <label for="telefone" class="form-label">Telefone Profissional</label>
             <div class="phone-input-container">
               <div class="country-code">+351</div>
-              <input type="tel" id="telefone" name="telefone" class="form-input phone-input" required>
+              <input type="tel" id="telefone" name="telefone" class="form-input phone-input" required pattern="\d{9}"
+                maxlength="9" minlength="9" inputmode="numeric" placeholder="912345678"
+                title="Introduza exatamente 9 dígitos numéricos.">
             </div>
           </div>
 
@@ -88,9 +89,10 @@
               <option value="18">Actividades artísticas, de espectáculos, desportivas e
                 recreativas
               </option>
-              <option value="19">Actividades das famílias empregadoras de pessoal doméstico e
+              <option value="19">Outras actividades de serviços</option>
+              <option value="20">Actividades das famílias empregadoras de pessoal doméstico e
                 actividades de produção das famílias para uso próprio</option>
-              <option value="20">Actividades dos organismos internacionais e outras instituições
+              <option value="21">Actividades dos organismos internacionais e outras instituições
                 extra-territoriais</option>
             </select>
           </div>
@@ -111,14 +113,14 @@
                 <label for="formatPdf">PDF</label>
               </div>
             </div>
-          </div>
-          <div class="overlay-form-group" style="margin-top: 1.25rem;">
-            <label class="form-label" style="display: flex; align-items: flex-start; gap: 0.5rem;">
-              <input type="checkbox" id="aceito-privacidade" name="aceito-privacidade" class="form-checkbox" required
-                style="margin-top: 0.2em;">
-              <span>Ao submeter o formulário declaro que li, que compreendi e que aceito a política de
-                privacidade do Helpdesk Público.</span>
-            </label>
+            <div class="overlay-form-group" style="margin-top: 1.25rem;">
+              <label class="form-label" style="display: flex; align-items: flex-start; gap: 0.5rem;">
+                <input type="checkbox" id="aceito-privacidade" name="aceito-privacidade" class="form-checkbox" required
+                  style="margin-top: 0.2em;">
+                <span>Ao submeter o formulário declaro que li, que compreendi e que aceito a política de
+                  privacidade do Helpdesk Público.</span>
+              </label>
+            </div>
           </div>
           <button type="submit" class="submit-btn">Continuar</button>
         </form>
@@ -130,9 +132,9 @@
           <div class="verification-icon">
             <i data-lucide="mail"></i>
           </div>
-          <h3>Verificação por email</h3>
-          <p>Um código de verificação de 5 dígitos para o seu email.</p>
-          <p>Por favor, verifique a sua caixa de entrada e insira o código abaixo:</p>
+          <h3>Verificação por Email</h3>
+          <p>Enviamos um código de verificação de 5 dígitos para o seu email.</p>
+          <p>Por favor, verifique sua caixa de entrada e insira o código abaixo:</p>
 
           <div class="verification-code-container">
             <input type="text" class="verification-input" maxlength="1" data-index="0">
@@ -156,12 +158,12 @@
             <i data-lucide="check-circle" class="icon-large"></i>
           </div>
           <h3>Download Pronto!</h3>
-          <p>O seu download começará automaticamente em alguns segundos.</p>
+          <p>Seu download começará automaticamente em alguns segundos.</p>
           <p>Se o download não iniciar, clique no botão abaixo:</p>
 
           <a href="#" id="downloadLink" class="download-link">
             <i data-lucide="download" class="icon-small"></i>
-            <span>Instalar Arquivo</span>
+            <span>Baixar Arquivo</span>
           </a>
         </div>
       </div>
@@ -214,6 +216,18 @@
     }
 
     lucide.createIcons();
+
+
+    const telefoneInput = document.getElementById('telefone');
+    const regex = /^\d{9}$/;
+
+    if (!regex.test(telefoneInput.value)) {
+      telefoneInput.classList.add('input-error');
+      telefoneInput.focus();
+      e.preventDefault();
+    } else {
+      telefoneInput.classList.remove('input-error');
+    }
   });
 </script>
 
