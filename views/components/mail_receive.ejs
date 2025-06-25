@@ -139,9 +139,20 @@
           <p>Enviamos um código de verificação de 5 dígitos para o seu email.</p>
           <p>Por favor, verifique sua caixa de entrada e insira o código abaixo:</p>
 
-          <div id="resend-message" style="display:none; color: #3c6c2a; margin-bottom: 10px;">
+          <!-- Mensagens simplificadas para o código de verificação -->
+          <div id="resend-message" class="verification-alert verification-alert--success" style="display:none;">
+            <i data-lucide="check" class="verification-alert__icon"></i>
             O código foi reenviado para o seu email.
           </div>
+
+          <div id="verify-message" class="verification-alert verification-alert--error" style="display:none;">
+            <i data-lucide="x" class="verification-alert__icon"></i>
+            O código introduzido está incorreto.
+          </div>
+
+
+
+
 
           <div class="verification-code-container">
             <input type="text" class="verification-input" maxlength="1" data-index="0">
@@ -181,6 +192,15 @@
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const inputs = document.querySelectorAll(".verification-input");
+    const verifyCodeBtn = document.getElementById('verifyCodeBtn');
+
+    // Verifica se todos os campos estão preenchidos e envia automaticamente
+    function checkAndSubmitCode() {
+      const codeComplete = Array.from(inputs).every(input => input.value.trim() !== "");
+      if (codeComplete) {
+        verifyCodeBtn.click();
+      }
+    }
 
     inputs.forEach((input, index) => {
       input.addEventListener("input", (e) => {
@@ -196,11 +216,18 @@
         if (value && index < inputs.length - 1) {
           inputs[index + 1].focus();
         }
+
+        // Verifica se todos os campos estão preenchidos
+        checkAndSubmitCode();
       });
 
       input.addEventListener("keydown", (e) => {
         if (e.key === "Backspace" && !input.value && index > 0) {
           inputs[index - 1].focus();
+        }
+        if (e.key === "Enter") {
+          e.preventDefault();
+          verifyCodeBtn.click();
         }
       });
     });
@@ -220,6 +247,7 @@
       });
       const next = inputs[chars.length] || inputs[inputs.length - 1];
       next.focus();
+      checkAndSubmitCode();
     }
 
     lucide.createIcons();
@@ -240,19 +268,8 @@
         }
       });
     }
-
-    const verifyCodeBtn = document.getElementById('verifyCodeBtn');
-    const verificationInputs = document.querySelectorAll('.verification-input');
-
-    verificationInputs.forEach(input => {
-      input.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          verifyCodeBtn.click();
-        }
-      });
-    });
   });
 </script>
+
 
 </html>

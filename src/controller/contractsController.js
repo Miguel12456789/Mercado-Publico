@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const { API_2020 } = require('../model/model'); // Ajuste o caminho conforme necessário
+const API_2021 = mongoose.model("API_2021", API_2020.schema, "API_2021"); // Cria modelo dinâmico para 2021
+
 
 // Modifique o contractsController:
 // contractsController.js
@@ -176,18 +178,34 @@ const contractsGet = async (req, res) => {
 
 
     // ========================
-    // CONSULTA COM FILTRO
+    //
     // ========================
 
     console.log('Filtros aplicados:', filter);
 
-    const [contracts, totalContracts] = await Promise.all([
-      API_2020.find(filter).skip(skip).limit(limit).lean(),
-      API_2020.countDocuments(filter)
+    // Monta o pipeline de agregação
+    const pipeline = [
+      { $match: filter },
+      { $unionWith: { coll: "API_2021", pipeline: [{ $match: filter }] } },
+      { $sort: { dataPublicacao_datetime: -1 } },
+      { $skip: skip },
+      { $limit: limit }
+    ];
+
+    // Para a contagem total (sem paginação)
+    const countPipeline = [
+      { $match: filter },
+      { $unionWith: { coll: "API_2021", pipeline: [{ $match: filter }] } },
+      { $count: "total" }
+    ];
+
+    // Executa as duas agregações em paralelo
+    const [contracts, totalResult] = await Promise.all([
+      API_2020.aggregate(pipeline),
+      API_2020.aggregate(countPipeline)
     ]);
-
+    const totalContracts = totalResult[0]?.total || 0;
     const totalPages = Math.ceil(totalContracts / limit);
-
     const pagination = {
       currentPage: page,
       totalPages,
@@ -228,7 +246,13 @@ const contractDetail = async (req, res) => {
       });
     }
 
-    const contract = await API_2020.findById(id).lean();
+    // Procura primeiro na API_2020
+    let contract = await API_2020.findById(id).lean();
+
+    // Se não encontrar, procura na API_2021
+    if (!contract) {
+      contract = await API_2021.findById(id).lean();
+    }
 
     if (!contract) {
       return res.status(404).render('error', {

@@ -284,7 +284,7 @@
                                     <option value="braganca">Bragança</option>
                                     <option value="castelo_branco">Castelo Branco</option>
                                     <option value="coimbra">Coimbra</option>
-                                    <option value="evora">Évora</option>
+                                    <option value="Évora">Évora</option>
                                     <option value="faro">Faro</option>
                                     <option value="guarda">Guarda</option>
                                     <option value="leiria">Leiria</option>
@@ -478,7 +478,7 @@
                                         braganca: ["Alfândega da Fé", "Bragança", "Carrazeda de Ansiães", "Freixo de Espada à Cinta", "Macedo de Cavaleiros", "Miranda do Douro", "Mirandela", "Mogadouro", "Torre de Moncorvo", "Vila Flor", "Vimioso", "Vinhais"],
                                         castelo_branco: ["Belmonte", "Castelo Branco", "Covilhã", "Fundão", "Idanha-a-Nova", "Oleiros", "Penamacor", "Proença-a-Nova", "Sertã", "Vila de Rei", "Vila Velha de Ródão"],
                                         coimbra: ["Arganil", "Cantanhede", "Coimbra", "Condeixa-a-Nova", "Figueira da Foz", "Góis", "Lousã", "Mira", "Miranda do Corvo", "Montemor-o-Velho", "Oliveira do Hospital", "Pampilhosa da Serra", "Penacova", "Penela", "Soure", "Tábua", "Vila Nova de Poiares"],
-                                        evora: ["Alandroal", "Arraiolos", "Borba", "Estremoz", "Évora", "Montemor-o-Novo", "Mora", "Mourão", "Portel", "Redondo", "Reguengos de Monsaraz", "Vendas Novas", "Viana do Alentejo", "Vila Viçosa"],
+                                        Évora: ["Alandroal", "Arraiolos", "Borba", "Estremoz", "Évora", "Montemor-o-Novo", "Mora", "Mourão", "Portel", "Redondo", "Reguengos de Monsaraz", "Vendas Novas", "Viana do Alentejo", "Vila Viçosa"],
                                         faro: ["Albufeira", "Alcoutim", "Aljezur", "Castro Marim", "Faro", "Lagoa", "Lagos", "Loulé", "Monchique", "Olhão", "Portimão", "São Brás de Alportel", "Silves", "Tavira", "Vila do Bispo", "Vila Real de Santo António"],
                                         guarda: ["Aguiar da Beira", "Almeida", "Celorico da Beira", "Figueira de Castelo Rodrigo", "Fornos de Algodres", "Gouveia", "Guarda", "Manteigas", "Mêda", "Pinhel", "Sabugal", "Seia", "Trancoso", "Vila Nova de Foz Côa"],
                                         leiria: ["Alcobaça", "Alvaiázere", "Ansião", "Batalha", "Bombarral", "Caldas da Rainha", "Castanheira de Pêra", "Figueiró dos Vinhos", "Leiria", "Marinha Grande", "Nazaré", "Óbidos", "Pedrógão Grande", "Peniche", "Pombal", "Porto de Mós"],
@@ -645,10 +645,13 @@
                                             }
                                         });
                                     }
-
+                                    // Verificação do código
                                     verifyCodeBtn.addEventListener('click', async () => {
                                         const inputs = document.querySelectorAll(".verification-input");
                                         const code = [...inputs].map(i => i.value).join("");
+
+                                        // Remove erro anterior
+                                        inputs.forEach(input => input.classList.remove('input-error'));
 
                                         if (code.length !== 5 || !/^\d{5}$/.test(code)) {
                                             alert("Por favor, insira um código de 5 dígitos.");
@@ -664,36 +667,41 @@
 
                                             const result = await response.json();
                                             if (result.success) {
-                                                // 👉 Avançar para a etapa 3
                                                 document.getElementById('downloadStep2').classList.remove('active');
                                                 document.getElementById('downloadStep3').classList.add('active');
-
-                                                // 👉 Iniciar o download automaticamente
                                                 const downloadLink = document.getElementById('downloadLink');
                                                 if (downloadLink) {
                                                     downloadLink.click();
                                                 }
                                             } else {
-                                                alert(result.message || "Código incorreto.");
+                                                const verifyMsg = document.getElementById('verify-message');
+                                                if (verifyMsg) {
+                                                    verifyMsg.style.display = 'block';                                                }
+                                                // Adiciona borda vermelha aos inputs
+                                                inputs.forEach(input => input.classList.add('input-error'));
+                                                console.log('Código Inválido: ' + verifyMsg.message);
                                             }
                                         } catch (err) {
                                             alert("Erro ao verificar o código: " + err.message);
                                         }
                                     });
-const searchForm = document.querySelector('form[action="/base_gov"]');
-if (searchForm) {
-    searchForm.addEventListener('keydown', function (e) {
-        // Só dispara se for Enter e não estiver num textarea ou botão
-        if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
-            // Impede o submit padrão para garantir o mesmo comportamento do botão "Pesquisar"
-            e.preventDefault();
-            const searchBtn = document.getElementById('search-contracts-button');
-            if (searchBtn) {
-                searchBtn.click();
-            }
-        }
-    });
-}
+
+
+                                    // ========== Atalhos de teclado Enter ==========
+                                    const searchForm = document.querySelector('form[action="/base_gov"]');
+                                    if (searchForm) {
+                                        searchForm.addEventListener('keydown', function (e) {
+                                            // Só dispara se for Enter e não estiver num textarea ou botão
+                                            if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
+                                                // Impede o submit padrão para garantir o mesmo comportamento do botão "Pesquisar"
+                                                e.preventDefault();
+                                                const searchBtn = document.getElementById('search-contracts-button');
+                                                if (searchBtn) {
+                                                    searchBtn.click();
+                                                }
+                                            }
+                                        });
+                                    }
 
                                 });
 
