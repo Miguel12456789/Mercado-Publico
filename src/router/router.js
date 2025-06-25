@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const navegationController = require('./navegationController');
+const emailController = require('../controller/emailController');
 const contractsController = require('../controller/contractsController');
 
 router.get("/", navegationController.home);
@@ -8,6 +9,8 @@ router.get("/", navegationController.home);
 router.get("/base_gov", contractsController.contractsGet);
 
 router.get("/detalhescontrato/:id", contractsController.contractDetail);
+
+router.post('/components/mail_receiver', emailController.sendEmail);
 
 router.get("/estatisticas_setor_publico", navegationController.estatisticas_setor_publico);
 router.get("/estatisticas_setor_privado", navegationController.estatisticas_setor_privado);

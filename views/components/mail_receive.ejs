@@ -228,6 +228,36 @@
     } else {
       telefoneInput.classList.remove('input-error');
     }
+    const form = document.getElementById("downloadForm");
+    const step1 = document.getElementById("downloadStep1");
+    const step2 = document.getElementById("downloadStep2");
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault(); // Impede envio normal do formulário
+
+      const formData = new FormData(form);
+
+      try {
+        const response = await fetch("/api/send-email", {
+          method: "POST",
+          body: formData,
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          // Avança para a etapa 2
+          step1.classList.remove("active");
+          step2.classList.add("active");
+        } else {
+          alert("Erro ao enviar email: " + (result.message || "Tente novamente."));
+        }
+      } catch (err) {
+        console.error("Erro ao enviar requisição:", err);
+        alert("Erro de rede ou no servidor.");
+      }
+    });
+
   });
 </script>
 

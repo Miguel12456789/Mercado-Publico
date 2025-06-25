@@ -694,6 +694,13 @@ h3 {
   background: #fff5f5;
 } */
 
+.download-step {
+  display: none;
+}
+.download-step.active {
+  display: block;
+}
+
 /* Scoped animations to avoid conflicts */
 @keyframes custom-notif-fadeIn {
     from {
