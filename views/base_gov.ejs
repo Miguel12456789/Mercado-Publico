@@ -338,168 +338,27 @@
                 </div>
             </div>
         </form>
+    </main>
 
 
-
-        <!-- Overlay e Popup de Download -->
-        <div class="overlay" id="overlay">
-            <div class="popup">
-                <button class="close-btn" id="closeBtn">&times;</button>
-                <h2 class="popup-title">Formulário de Download</h2>
-
-                <div id="downloadStep1" class="download-step active">
-                    <form id="downloadForm">
-                        <!-- Nome -->
-                        <div class="name-fields">
-                            <!-- Nome -->
-                            <div class="overlay-form-group">
-                                <label for="nome" class="form-label">Nome*</label>
-                                <input type="text" id="nome" name="nome" class="form-input" required>
-                            </div>
-
-                            <!-- Sobrenome -->
-                            <div class="overlay-form-group">
-                                <label for="sobrenome" class="form-label">Sobrenome*</label>
-                                <input type="text" id="sobrenome" name="sobrenome" class="form-input" required>
-                            </div>
-                        </div>
-
-                        <!-- E-mail Profissional -->
-                        <div class="overlay-form-group">
-                            <label for="email" class="form-label">E-mail Profissional*</label>
-                            <input type="email" id="email" name="email" class="form-input" required>
-                        </div>
-
-                        <!-- Telefone Profissional -->
-                        <div class="overlay-form-group">
-                            <label for="telefone" class="form-label">Telefone Profissional</label>
-                            <div class="phone-input-container">
-                                <div class="country-code">+351</div>
-                                <input type="tel" id="telefone" name="telefone" class="form-input phone-input" required>
-                            </div>
-                        </div>
-
-                        <!-- Setor de Atividade Profissional (Setor Público/Privado) -->
-                        <div class="overlay-form-group">
-                            <label for="setor-principal" class="form-label">Setor de Atividade Profissional*</label>
-                            <select id="setor-principal" name="setor-principal" class="form-select" required>
-                                <option value="" disabled selected>Selecione um setor</option>
-                                <option value="01">01 - Setor Público </option>
-                                <option value="02">02 - Setor Privado</option>
-                            </select>
-                        </div>
-
-                        <!-- Setor de Atividade Profissional (Área de atividade) -->
-                        <div class="overlay-form-group">
-                            <label for="setor-atividade" class="form-label">Área de Atividade Profissional*</label>
-                            <select id="setor-atividade" name="setor-atividade" class="form-select" required>
-                                <option value="" disabled selected>Selecione um setor</option>
-                                <option value="1">Agricultura, produção animal, caça, floresta e pesca</option>
-                                <option value="2">Indústrias extractivas</option>
-                                <option value="3">Indústrias transformadoras</option>
-                                <option value="4">Electricidade, gás, vapor, água quente e fria e ar frio</option>
-                                <option value="5">Captação, tratamento e distribuição de água; saneamento, gestão de
-                                    resíduos e despoluição</option>
-                                <option value="6">Construção</option>
-                                <option value="7">Comércio por grosso e a retalho; reparação de veículos automóveis
-                                    e
-                                    motociclos</option>
-                                <option value="8">Transportes e armazenagem</option>
-                                <option value="9">Alojamento, restauração e similares</option>
-                                <option value="10">Actividades de informação e de comunicação</option>
-                                <option value="11">Actividades financeiras e de seguros</option>
-                                <option value="12">Actividades imobiliárias</option>
-                                <option value="13">Actividades de consultoria, científicas, técnicas e similares
-                                </option>
-                                <option value="14">Actividades administrativas e dos serviços de apoio</option>
-                                <option value="15">Administração Pública e Defesa; Segurança Social Obrigatória
-                                </option>
-                                <option value="16">Educação</option>
-                                <option value="17">Actividades de saúde humana e apoio social</option>
-                                <option value="18">Actividades artísticas, de espectáculos, desportivas e
-                                    recreativas
-                                </option>
-                                <option value="19">Actividades das famílias empregadoras de pessoal doméstico e
-                                    actividades de produção das famílias para uso próprio</option>
-                                <option value="20">Actividades dos organismos internacionais e outras instituições
-                                    extra-territoriais</option>
-                            </select>
-                        </div>
-                        <!-- Formato de Download -->
-                        <div class="download-format-group">
-                            <label class="form-label">Em que formato pretende efetuar o download:*</label>
-                            <div class="format-options">
-                                <div class="format-option">
-                                    <input type="radio" id="formatCsv" name="formato" value="csv" class="format-radio"
-                                        required checked>
-                                    <label for="formatCsv">CSV</label>
-                                </div>
-                                <div class="format-option">
-                                    <input type="radio" id="formatXls" name="formato" value="xls" class="format-radio">
-                                    <label for="formatXls">XLS</label>
-                                </div>
-                                <div class="format-option">
-                                    <input type="radio" id="formatPdf" name="formato" value="pdf" class="format-radio">
-                                    <label for="formatPdf">PDF</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="overlay-form-group" style="margin-top: 1.25rem;">
-                            <label class="form-label" style="display: flex; align-items: flex-start; gap: 0.5rem;">
-                                <input type="checkbox" id="aceito-privacidade" name="aceito-privacidade"
-                                    class="form-checkbox" required style="margin-top: 0.2em;">
-                                <span>Ao submeter o formulário declaro que li, que compreendi e que aceito a política de
-                                    privacidade do Helpdesk Público.</span>
-                            </label>
-                        </div>
-                        <button type="submit" class="submit-btn">Continuar</button>
-                    </form>
+    <div class="custom-notif__container" id="notificacao-container" style="display: none;">
+        <div class="custom-notif__wrapper">
+            <div class="custom-notif__content">
+                <div class="custom-notif__icon">
+                    <i class="fas fa-envelope"></i>
                 </div>
-
-                <!-- Etapa 2: Verificação por Email -->
-                <div id="downloadStep2" class="download-step">
-                    <div class="verification-container">
-                        <div class="verification-icon">
-                            <i data-lucide="mail"></i>
-                        </div>
-                        <h3>Verificação por email</h3>
-                        <p>Um código de verificação de 5 dígitos para o seu email.</p>
-                        <p>Por favor, verifique a sua caixa de entrada e insira o código abaixo:</p>
-
-                        <div class="verification-code-container">
-                            <input type="text" class="verification-input" maxlength="1" data-index="0">
-                            <input type="text" class="verification-input" maxlength="1" data-index="1">
-                            <input type="text" class="verification-input" maxlength="1" data-index="2">
-                            <input type="text" class="verification-input" maxlength="1" data-index="3">
-                            <input type="text" class="verification-input" maxlength="1" data-index="4">
-                        </div>
-
-                        <div class="verification-actions">
-                            <button id="verifyCodeBtn" class="submit-btn">Verificar</button>
-                            <button id="resendCodeBtn" class="resend-btn">Reenviar Código</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Etapa 3: Download Concluído -->
-                <div id="downloadStep3" class="download-step">
-                    <div class="success-container">
-                        <div class="success-icon">
-                            <i data-lucide="check-circle" class="icon-large"></i>
-                        </div>
-                        <h3>Download Pronto!</h3>
-                        <p>O seu download começará automaticamente em alguns segundos.</p>
-                        <p>Se o download não iniciar, clique no botão abaixo:</p>
-
-                        <a href="#" id="downloadLink" class="download-link">
-                            <i data-lucide="download" class="icon-small"></i>
-                            <span>Instalar Arquivo</span>
-                        </a>
-                    </div>
+                <div class="custom-notif__text">
+                    Deseja fazer download desta informação?
+                    <a class="custom-notif__link" id="openPopupBtn">Clique aqui</a> e após inserir os seus dados
+                    iniciar-se-á o download.
                 </div>
             </div>
+            <button class="custom-notif__close"
+                onclick="document.getElementById('notificacao-container').style.display='none'">
+                &times;
+            </button>
         </div>
-    </main>
+    </div>
 
     <% if (typeof contracts !=='undefined' ) { %>
         <%- include('components/tab_base', {contracts: contracts}) %>
@@ -508,291 +367,275 @@
                     <p>Nenhum dado de contrato disponível no momento.</p>
                 </div>
                 <% } %>
-                    <%- include('components/button') %>
 
-                        <script>
-                            document.addEventListener('DOMContentLoaded', () => {
-                                console.log('DOM carregado');
+                    <%- include('components/mail_receive') %>
+                        <%- include('components/button') %>
 
-                                // ========== Utils ==========
-                                const qs = (s, p = document) => p.querySelector(s);
-                                const qsa = (s, p = document) => [...p.querySelectorAll(s)];
+                            <script>
+                                document.addEventListener('DOMContentLoaded', () => {
+                                    console.log('DOM carregado');
 
-                                // ========== Preencher selects de data ==========
-                                function populateDateSelectors(yearId, monthId, dayId) {
-                                    const yearSelect = document.getElementById(yearId);
-                                    const monthSelect = document.getElementById(monthId);
-                                    const daySelect = document.getElementById(dayId);
+                                    // ========== Utils ==========
+                                    const qs = (s, p = document) => p.querySelector(s);
+                                    const qsa = (s, p = document) => [...p.querySelectorAll(s)];
 
-                                    const currentYear = new Date().getFullYear();
+                                    // ========== Preencher selects de data ==========
+                                    function populateDateSelectors(yearId, monthId, dayId) {
+                                        const yearSelect = document.getElementById(yearId);
+                                        const monthSelect = document.getElementById(monthId);
+                                        const daySelect = document.getElementById(dayId);
 
-                                    // Placeholders
-                                    yearSelect.innerHTML = '<option disabled selected>Ano:</option>';
-                                    monthSelect.innerHTML = '<option disabled selected>Mês:</option>';
-                                    daySelect.innerHTML = '<option disabled selected>Dia:</option>';
+                                        const currentYear = new Date().getFullYear();
 
-                                    // Preencher anos (do ano atual até 1900)
-                                    for (let y = currentYear; y >= 1900; y--) {
-                                        yearSelect.innerHTML += `<option value="${y}">${y}</option>`;
-                                    }
-
-                                    // Preencher meses (01 a 12)
-                                    for (let m = 1; m <= 12; m++) {
-                                        const paddedMonth = m.toString().padStart(2, '0');
-                                        monthSelect.innerHTML += `<option value="${m}">${paddedMonth}</option>`;
-                                    }
-
-                                    // Atualizar dias com base no mês e ano selecionados
-                                    function updateDays() {
-                                        const year = parseInt(yearSelect.value);
-                                        const month = parseInt(monthSelect.value);
-
-                                        if (!year || !month) return;
-
-                                        const daysInMonth = new Date(year, month, 0).getDate();
+                                        // Placeholders
+                                        yearSelect.innerHTML = '<option disabled selected>Ano:</option>';
+                                        monthSelect.innerHTML = '<option disabled selected>Mês:</option>';
                                         daySelect.innerHTML = '<option disabled selected>Dia:</option>';
 
-                                        for (let d = 1; d <= daysInMonth; d++) {
-                                            const paddedDay = d.toString().padStart(2, '0');
-                                            daySelect.innerHTML += `<option value="${d}">${paddedDay}</option>`;
+                                        // Preencher anos (do ano atual até 1900)
+                                        for (let y = currentYear; y >= 1900; y--) {
+                                            yearSelect.innerHTML += `<option value="${y}">${y}</option>`;
                                         }
+
+                                        // Preencher meses (01 a 12)
+                                        for (let m = 1; m <= 12; m++) {
+                                            const paddedMonth = m.toString().padStart(2, '0');
+                                            monthSelect.innerHTML += `<option value="${m}">${paddedMonth}</option>`;
+                                        }
+
+                                        // Atualizar dias com base no mês e ano selecionados
+                                        function updateDays() {
+                                            const year = parseInt(yearSelect.value);
+                                            const month = parseInt(monthSelect.value);
+
+                                            if (!year || !month) return;
+
+                                            const daysInMonth = new Date(year, month, 0).getDate();
+                                            daySelect.innerHTML = '<option disabled selected>Dia:</option>';
+
+                                            for (let d = 1; d <= daysInMonth; d++) {
+                                                const paddedDay = d.toString().padStart(2, '0');
+                                                daySelect.innerHTML += `<option value="${d}">${paddedDay}</option>`;
+                                            }
+                                        }
+
+                                        yearSelect.addEventListener('change', updateDays);
+                                        monthSelect.addEventListener('change', updateDays);
+
+                                        yearSelect.selectedIndex = 0;
+                                        monthSelect.selectedIndex = 0;
+                                        daySelect.selectedIndex = 0;
                                     }
 
-                                    yearSelect.addEventListener('change', updateDays);
-                                    monthSelect.addEventListener('change', updateDays);
-
-                                    yearSelect.selectedIndex = 0;
-                                    monthSelect.selectedIndex = 0;
-                                    daySelect.selectedIndex = 0;
-                                }
-
-                                populateDateSelectors('from-year', 'from-month', 'from-day');
-                                populateDateSelectors('to-year', 'to-month', 'to-day');
+                                    populateDateSelectors('from-year', 'from-month', 'from-day');
+                                    populateDateSelectors('to-year', 'to-month', 'to-day');
 
 
-                                // ========== Ícones Lucide ==========
-                                (typeof lucide === 'undefined' ? { createIcons: () => { } } : lucide).createIcons();
+                                    // ========== Ícones Lucide ==========
+                                    (typeof lucide === 'undefined' ? { createIcons: () => { } } : lucide).createIcons();
 
-                                // ========== Limpar formulário ==========
-                                document.querySelector('#clear-form-btn')?.addEventListener('click', (e) => {
-                                    e.preventDefault(); // Impede o submit
-                                    const form = document.querySelector('form[action="/base_gov"]');
-                                    if (!form) return;
+                                    // ========== Limpar formulário ==========
+                                    document.querySelector('#clear-form-btn')?.addEventListener('click', (e) => {
+                                        e.preventDefault(); // Impede o submit
+                                        const form = document.querySelector('form[action="/base_gov"]');
+                                        if (!form) return;
 
-                                    form.reset(); // Limpa todos os campos automaticamente
+                                        form.reset(); // Limpa todos os campos automaticamente
 
-                                    // Para selects com value="0" ou "Todos"
-                                    form.querySelectorAll('select').forEach(select => {
-                                        select.selectedIndex = 0;
+                                        // Para selects com value="0" ou "Todos"
+                                        form.querySelectorAll('select').forEach(select => {
+                                            select.selectedIndex = 0;
+                                        });
+
+                                        // Para os selects dependentes (desabilita)
+                                        const measureTypeSelect = document.getElementById('measure-type');
+                                        if (measureTypeSelect) measureTypeSelect.disabled = true;
+
+                                        const distritoSelect = document.getElementById('distrito-select');
+                                        if (distritoSelect) distritoSelect.disabled = true;
+
+                                        const concelhoSelect = document.getElementById('concelho-select');
+                                        if (concelhoSelect) concelhoSelect.disabled = true;
                                     });
 
-                                    // Para os selects dependentes (desabilita)
+                                    // ========== Mostrar resultados ==========
+                                    const resultsTable = qs('#results-table');
+                                    const notifContainer = qs('#notificacao-container');
+                                    qsa('.search-button, .submit-button').forEach(btn =>
+                                        btn.addEventListener('click', () => {
+                                            resultsTable?.style.setProperty('display', 'block');
+                                            notifContainer?.style.setProperty('display', 'block'); // Mostra a notificação só após pesquisa
+                                            resultsTable?.scrollIntoView({ behavior: 'smooth' });
+                                        })
+                                    )
+
+
+                                    // ========== Dropdown ==========
+                                    const dropdownBtn = qs('#dropdown-button');
+                                    const dropdownMenu = qs('#dropdown-menu');
+                                    const searchInput = qs('.search-input');
+                                    const selectedContract = qs('#selected-contract');
+
+                                    const placeholderMap = {
+                                        Contrato: "Pesquisar pelo objeto do Contrato",
+                                        Anúncios: "Pesquisar pelo objeto do Anúncio",
+                                        Entidades: "Pesquisar pelo nome da Entidade",
+                                        "Modificações contratuais": "Pesquisar pela modificação contratual",
+                                        "Bens móveis": "Pesquisar pelo bem móvel",
+                                        "Não Celebrações de contrato": "Pesquisar pela não celebração",
+                                        Impugnação: "Pesquisar pela impugnação",
+                                    };
+
+                                    dropdownBtn?.addEventListener('click', () => {
+                                        const expanded = dropdownBtn.getAttribute("aria-expanded") === "true";
+                                        dropdownBtn.setAttribute("aria-expanded", String(!expanded));
+                                        dropdownMenu.style.display = expanded ? "none" : "block";
+                                    });
+
+                                    document.addEventListener('click', e => {
+                                        if (!dropdownBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                                            dropdownBtn.setAttribute("aria-expanded", "false");
+                                            dropdownMenu.style.display = "none";
+                                        }
+                                    });
+
+                                    qsa('.dropdown-item').forEach(item =>
+                                        item.addEventListener('click', e => {
+                                            const val = e.currentTarget.dataset.value;
+                                            selectedContract.textContent = val;
+                                            searchInput.placeholder = placeholderMap[val] || '';
+                                            dropdownBtn.setAttribute("aria-expanded", "false");
+                                            dropdownMenu.style.display = "none";
+                                        })
+                                    );
+
+                                    // Referências aos elementos(faz bloquear e desbloquear as dropdowns se ela for selecionada)
+                                    const checkboxes = [
+                                        document.getElementById('special-measures'),
+                                        document.getElementById('include-mec')
+                                    ];
                                     const measureTypeSelect = document.getElementById('measure-type');
-                                    if (measureTypeSelect) measureTypeSelect.disabled = true;
+                                    // Função para atualizar o estado do dropdown
+                                    const updateDropdownState = () => {
+                                        measureTypeSelect.disabled = !checkboxes.some(cb => cb.checked);
+                                    };
+                                    // Adicionar evento a todos os checkboxes
+                                    checkboxes.forEach(cb => cb.addEventListener('change', updateDropdownState));
+                                    // Estado inicial
+                                    updateDropdownState();
 
+                                    // ========== Listar os Conselhos ==========
+                                    // Referências aos elementos
+                                    const paisSelect = document.getElementById('pais-select');
                                     const distritoSelect = document.getElementById('distrito-select');
-                                    if (distritoSelect) distritoSelect.disabled = true;
-
                                     const concelhoSelect = document.getElementById('concelho-select');
-                                    if (concelhoSelect) concelhoSelect.disabled = true;
-                                });
+                                    const distritosConcelhos = {
+                                        aveiro: ["Águeda", "Albergaria-a-Velha", "Anadia", "Arouca", "Aveiro", "Castelo de Paiva", "Espinho", "Estarreja", "Ílhavo", "Mealhada", "Murtosa", "Oliveira de Azeméis", "Oliveira do Bairro", "Ovar", "Santa Maria da Feira", "São João da Madeira", "Sever do Vouga", "Vagos", "Vale de Cambra"],
+                                        beja: ["Aljustrel", "Almodôvar", "Alvito", "Barrancos", "Beja", "Castro Verde", "Cuba", "Ferreira do Alentejo", "Mértola", "Moura", "Odemira", "Ourique", "Serpa", "Vidigueira"],
+                                        braga: ["Amares", "Barcelos", "Braga", "Cabeceiras de Basto", "Celorico de Basto", "Esposende", "Fafe", "Guimarães", "Póvoa de Lanhoso", "Terras de Bouro", "Vieira do Minho", "Vila Nova de Famalicão", "Vila Verde", "Vizela"],
+                                        braganca: ["Alfândega da Fé", "Bragança", "Carrazeda de Ansiães", "Freixo de Espada à Cinta", "Macedo de Cavaleiros", "Miranda do Douro", "Mirandela", "Mogadouro", "Torre de Moncorvo", "Vila Flor", "Vimioso", "Vinhais"],
+                                        castelo_branco: ["Belmonte", "Castelo Branco", "Covilhã", "Fundão", "Idanha-a-Nova", "Oleiros", "Penamacor", "Proença-a-Nova", "Sertã", "Vila de Rei", "Vila Velha de Ródão"],
+                                        coimbra: ["Arganil", "Cantanhede", "Coimbra", "Condeixa-a-Nova", "Figueira da Foz", "Góis", "Lousã", "Mira", "Miranda do Corvo", "Montemor-o-Velho", "Oliveira do Hospital", "Pampilhosa da Serra", "Penacova", "Penela", "Soure", "Tábua", "Vila Nova de Poiares"],
+                                        evora: ["Alandroal", "Arraiolos", "Borba", "Estremoz", "Évora", "Montemor-o-Novo", "Mora", "Mourão", "Portel", "Redondo", "Reguengos de Monsaraz", "Vendas Novas", "Viana do Alentejo", "Vila Viçosa"],
+                                        faro: ["Albufeira", "Alcoutim", "Aljezur", "Castro Marim", "Faro", "Lagoa", "Lagos", "Loulé", "Monchique", "Olhão", "Portimão", "São Brás de Alportel", "Silves", "Tavira", "Vila do Bispo", "Vila Real de Santo António"],
+                                        guarda: ["Aguiar da Beira", "Almeida", "Celorico da Beira", "Figueira de Castelo Rodrigo", "Fornos de Algodres", "Gouveia", "Guarda", "Manteigas", "Mêda", "Pinhel", "Sabugal", "Seia", "Trancoso", "Vila Nova de Foz Côa"],
+                                        leiria: ["Alcobaça", "Alvaiázere", "Ansião", "Batalha", "Bombarral", "Caldas da Rainha", "Castanheira de Pêra", "Figueiró dos Vinhos", "Leiria", "Marinha Grande", "Nazaré", "Óbidos", "Pedrógão Grande", "Peniche", "Pombal", "Porto de Mós"],
+                                        lisboa: ["Alenquer", "Amadora", "Arruda dos Vinhos", "Azambuja", "Cadaval", "Cascais", "Lisboa", "Loures", "Lourinhã", "Mafra", "Odivelas", "Oeiras", "Sintra", "Sobral de Monte Agraço", "Torres Vedras", "Vila Franca de Xira"],
+                                        portalegre: ["Alter do Chão", "Arronches", "Avis", "Campo Maior", "Castelo de Vide", "Crato", "Elvas", "Fronteira", "Gavião", "Marvão", "Monforte", "Nisa", "Ponte de Sor", "Portalegre", "Sousel"],
+                                        porto: ["Amarante", "Baião", "Felgueiras", "Gondomar", "Lousada", "Maia", "Marco de Canaveses", "Matosinhos", "Paços de Ferreira", "Paredes", "Penafiel", "Porto", "Póvoa de Varzim", "Santo Tirso", "São João da Madeira", "Trofa", "Valongo", "Vila do Conde", "Vila Nova de Gaia"],
+                                        santarem: ["Abrantes", "Alcanena", "Almeirim", "Alpiarça", "Benavente", "Cartaxo", "Chamusca", "Constância", "Coruche", "Entroncamento", "Ferreira do Zêzere", "Golegã", "Mação", "Ourém", "Rio Maior", "Salvaterra de Magos", "Santarém", "Sardoal", "Tomar", "Torres Novas", "Vila Nova da Barquinha"],
+                                        setubal: ["Alcácer do Sal", "Almada", "Barreiro", "Grândola", "Moita", "Montijo", "Palmela", "Santiago do Cacém", "Seixal", "Sesimbra", "Setúbal", "Sines"],
+                                        viana_do_castelo: ["Arcos de Valdevez", "Caminha", "Melgaço", "Monção", "Paredes de Coura", "Ponte da Barca", "Ponte de Lima", "Valença", "Viana do Castelo", "Vila Nova de Cerveira"],
+                                        vila_real: ["Alijó", "Boticas", "Chaves", "Mesão Frio", "Mondim de Basto", "Montalegre", "Murça", "Peso da Régua", "Ribeira de Pena", "Sabrosa", "Santa Marta de Penaguião", "Valpaços", "Vila Pouca de Aguiar", "Vila Real"],
+                                        viseu: ["Armamar", "Carregal do Sal", "Castro Daire", "Cinfães", "Lamego", "Mangualde", "Moimenta da Beira", "Mortágua", "Nelas", "Oliveira de Frades", "Penalva do Castelo", "Penedono", "Resende", "Santa Comba Dão", "São João da Pesqueira", "São Pedro do Sul", "Sátão", "Sernancelhe", "Tabuaço", "Tarouca", "Tondela", "Vila Nova de Paiva", "Viseu", "Vouzela"]
+                                    };
+                                    // Utilitário para ativar/desativar <select>
+                                    const setDisabled = (select, disabled) => {
+                                        select.disabled = disabled;
+                                        if (disabled) select.value = "";
+                                    };
 
-                                // ========== Mostrar resultados ==========
-                                const resultsTable = qs('#results-table');
-                                const notifContainer = qs('#notificacao-container');
-                                qsa('.search-button, .submit-button').forEach(btn =>
-                                    btn.addEventListener('click', () => {
-                                        resultsTable?.style.setProperty('display', 'block');
-                                        notifContainer?.style.setProperty('display', 'block');
-                                        resultsTable?.scrollIntoView({ behavior: 'smooth' });
-                                    })
-                                );
+                                    // Atualiza o estado dos selects de distrito e concelho com base no país
+                                    const atualizarDistritos = () => {
+                                        const isPortugal = paisSelect.value === "portugal";
+                                        setDisabled(distritoSelect, !isPortugal);
+                                        setDisabled(concelhoSelect, true);
+                                        concelhoSelect.innerHTML = '<option value="">Todos os distritos</option>';
+                                    };
 
+                                    // Preenche os concelhos com base no distrito selecionado
+                                    const preencherConcelhos = () => {
+                                        const concelhos = distritosConcelhos[distritoSelect.value] || [];
+                                        concelhoSelect.innerHTML = '<option value="">Todos os concelhos</option>';
+                                        setDisabled(concelhoSelect, concelhos.length === 0);
 
-                                // ========== Dropdown ==========
-                                const dropdownBtn = qs('#dropdown-button');
-                                const dropdownMenu = qs('#dropdown-menu');
-                                const searchInput = qs('.search-input');
-                                const selectedContract = qs('#selected-contract');
+                                        concelhos.forEach(nome => {
+                                            const option = new Option(nome, nome.toLowerCase().replace(/\s+/g, '_'));
+                                            concelhoSelect.appendChild(option);
+                                        });
+                                    };
 
-                                const placeholderMap = {
-                                    Contrato: "Pesquisar pelo objeto do Contrato",
-                                    Anúncios: "Pesquisar pelo objeto do Anúncio",
-                                    Entidades: "Pesquisar pelo nome da Entidade",
-                                    "Modificações contratuais": "Pesquisar pela modificação contratual",
-                                    "Bens móveis": "Pesquisar pelo bem móvel",
-                                    "Não Celebrações de contrato": "Pesquisar pela não celebração",
-                                    Impugnação: "Pesquisar pela impugnação",
-                                };
-
-                                dropdownBtn?.addEventListener('click', () => {
-                                    const expanded = dropdownBtn.getAttribute("aria-expanded") === "true";
-                                    dropdownBtn.setAttribute("aria-expanded", String(!expanded));
-                                    dropdownMenu.style.display = expanded ? "none" : "block";
-                                });
-
-                                document.addEventListener('click', e => {
-                                    if (!dropdownBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
-                                        dropdownBtn.setAttribute("aria-expanded", "false");
-                                        dropdownMenu.style.display = "none";
-                                    }
-                                });
-
-                                qsa('.dropdown-item').forEach(item =>
-                                    item.addEventListener('click', e => {
-                                        const val = e.currentTarget.dataset.value;
-                                        selectedContract.textContent = val;
-                                        searchInput.placeholder = placeholderMap[val] || '';
-                                        dropdownBtn.setAttribute("aria-expanded", "false");
-                                        dropdownMenu.style.display = "none";
-                                    })
-                                );
-
-                                // ========== Popup de Download ==========
-                                const openBtn = qs('#openPopupBtn'), closeBtn = qs('#closeBtn'), overlay = qs('#overlay');
-                                const form = qs('#downloadForm'), verifyBtn = qs('#verifyCodeBtn'), resendBtn = qs('#resendCodeBtn');
-                                const step1 = qs('#downloadStep1'), step2 = qs('#downloadStep2'), step3 = qs('#downloadStep3');
-                                const inputs = qsa('.verification-input');
-                                let code = '', email = '';
-
-                                const showStep = step => [step1, step2, step3].forEach(s => s.classList.toggle('active', s === step));
-                                const genCode = () => (code = Math.floor(100 + Math.random() * 900).toString());
-                                const sendCode = (email, code) => {
-                                    console.log(`Enviando código ${code} para ${email}`);
-                                    return new Promise(res => setTimeout(() => res(true), 1000));
-                                };
-
-                                openBtn?.addEventListener('click', () => {
-                                    overlay.style.display = 'flex';
-                                    document.body.style.overflow = 'hidden';
-                                });
-
-                                const closePopup = () => {
-                                    overlay.style.display = 'none';
-                                    document.body.style.overflow = 'auto';
-                                    showStep(step1);
-                                    form.reset();
-                                };
-
-                                closeBtn?.addEventListener('click', closePopup);
-                                overlay?.addEventListener('click', e => e.target === overlay && closePopup());
-
-                                form?.addEventListener('submit', e => {
-                                    e.preventDefault();
-                                    email = qs('#email').value;
-                                    sendCode(email, genCode()).then(() => {
-                                        showStep(step2);
-                                        inputs[0]?.focus();
+                                    // Mostrar resultados ao clicar no botão de pesquisa
+                                    document.querySelector('#search-contracts-button').addEventListener('click', () => {
+                                        const resultsTable = document.querySelector('#results-table');
+                                        resultsTable.style.display = 'block';
+                                        resultsTable.scrollIntoView({ behavior: 'smooth' });
                                     });
-                                });
 
-                                // Referências aos elementos(faz bloquear e desbloquear as dropdowns se ela for selecionada)
-                                const checkboxes = [
-                                    document.getElementById('special-measures'),
-                                    document.getElementById('include-mec')
-                                ];
-                                const measureTypeSelect = document.getElementById('measure-type');
-                                // Função para atualizar o estado do dropdown
-                                const updateDropdownState = () => {
-                                    measureTypeSelect.disabled = !checkboxes.some(cb => cb.checked);
-                                };
-                                // Adicionar evento a todos os checkboxes
-                                checkboxes.forEach(cb => cb.addEventListener('change', updateDropdownState));
-                                // Estado inicial
-                                updateDropdownState();
+                                    let currentFilters = {}; // fora do escopo da função
 
-                                // ========== Listar os Conselhos ==========
-                                // Referências aos elementos
-                                const paisSelect = document.getElementById('pais-select');
-                                const distritoSelect = document.getElementById('distrito-select');
-                                const concelhoSelect = document.getElementById('concelho-select');
-                                const distritosConcelhos = {
-                                    aveiro: ["Águeda", "Albergaria-a-Velha", "Anadia", "Arouca", "Aveiro", "Castelo de Paiva", "Espinho", "Estarreja", "Ílhavo", "Mealhada", "Murtosa", "Oliveira de Azeméis", "Oliveira do Bairro", "Ovar", "Santa Maria da Feira", "São João da Madeira", "Sever do Vouga", "Vagos", "Vale de Cambra"],
-                                    beja: ["Aljustrel", "Almodôvar", "Alvito", "Barrancos", "Beja", "Castro Verde", "Cuba", "Ferreira do Alentejo", "Mértola", "Moura", "Odemira", "Ourique", "Serpa", "Vidigueira"],
-                                    braga: ["Amares", "Barcelos", "Braga", "Cabeceiras de Basto", "Celorico de Basto", "Esposende", "Fafe", "Guimarães", "Póvoa de Lanhoso", "Terras de Bouro", "Vieira do Minho", "Vila Nova de Famalicão", "Vila Verde", "Vizela"],
-                                    braganca: ["Alfândega da Fé", "Bragança", "Carrazeda de Ansiães", "Freixo de Espada à Cinta", "Macedo de Cavaleiros", "Miranda do Douro", "Mirandela", "Mogadouro", "Torre de Moncorvo", "Vila Flor", "Vimioso", "Vinhais"],
-                                    castelo_branco: ["Belmonte", "Castelo Branco", "Covilhã", "Fundão", "Idanha-a-Nova", "Oleiros", "Penamacor", "Proença-a-Nova", "Sertã", "Vila de Rei", "Vila Velha de Ródão"],
-                                    coimbra: ["Arganil", "Cantanhede", "Coimbra", "Condeixa-a-Nova", "Figueira da Foz", "Góis", "Lousã", "Mira", "Miranda do Corvo", "Montemor-o-Velho", "Oliveira do Hospital", "Pampilhosa da Serra", "Penacova", "Penela", "Soure", "Tábua", "Vila Nova de Poiares"],
-                                    evora: ["Alandroal", "Arraiolos", "Borba", "Estremoz", "Évora", "Montemor-o-Novo", "Mora", "Mourão", "Portel", "Redondo", "Reguengos de Monsaraz", "Vendas Novas", "Viana do Alentejo", "Vila Viçosa"],
-                                    faro: ["Albufeira", "Alcoutim", "Aljezur", "Castro Marim", "Faro", "Lagoa", "Lagos", "Loulé", "Monchique", "Olhão", "Portimão", "São Brás de Alportel", "Silves", "Tavira", "Vila do Bispo", "Vila Real de Santo António"],
-                                    guarda: ["Aguiar da Beira", "Almeida", "Celorico da Beira", "Figueira de Castelo Rodrigo", "Fornos de Algodres", "Gouveia", "Guarda", "Manteigas", "Mêda", "Pinhel", "Sabugal", "Seia", "Trancoso", "Vila Nova de Foz Côa"],
-                                    leiria: ["Alcobaça", "Alvaiázere", "Ansião", "Batalha", "Bombarral", "Caldas da Rainha", "Castanheira de Pêra", "Figueiró dos Vinhos", "Leiria", "Marinha Grande", "Nazaré", "Óbidos", "Pedrógão Grande", "Peniche", "Pombal", "Porto de Mós"],
-                                    lisboa: ["Alenquer", "Amadora", "Arruda dos Vinhos", "Azambuja", "Cadaval", "Cascais", "Lisboa", "Loures", "Lourinhã", "Mafra", "Odivelas", "Oeiras", "Sintra", "Sobral de Monte Agraço", "Torres Vedras", "Vila Franca de Xira"],
-                                    portalegre: ["Alter do Chão", "Arronches", "Avis", "Campo Maior", "Castelo de Vide", "Crato", "Elvas", "Fronteira", "Gavião", "Marvão", "Monforte", "Nisa", "Ponte de Sor", "Portalegre", "Sousel"],
-                                    porto: ["Amarante", "Baião", "Felgueiras", "Gondomar", "Lousada", "Maia", "Marco de Canaveses", "Matosinhos", "Paços de Ferreira", "Paredes", "Penafiel", "Porto", "Póvoa de Varzim", "Santo Tirso", "São João da Madeira", "Trofa", "Valongo", "Vila do Conde", "Vila Nova de Gaia"],
-                                    santarem: ["Abrantes", "Alcanena", "Almeirim", "Alpiarça", "Benavente", "Cartaxo", "Chamusca", "Constância", "Coruche", "Entroncamento", "Ferreira do Zêzere", "Golegã", "Mação", "Ourém", "Rio Maior", "Salvaterra de Magos", "Santarém", "Sardoal", "Tomar", "Torres Novas", "Vila Nova da Barquinha"],
-                                    setubal: ["Alcácer do Sal", "Almada", "Barreiro", "Grândola", "Moita", "Montijo", "Palmela", "Santiago do Cacém", "Seixal", "Sesimbra", "Setúbal", "Sines"],
-                                    viana_do_castelo: ["Arcos de Valdevez", "Caminha", "Melgaço", "Monção", "Paredes de Coura", "Ponte da Barca", "Ponte de Lima", "Valença", "Viana do Castelo", "Vila Nova de Cerveira"],
-                                    vila_real: ["Alijó", "Boticas", "Chaves", "Mesão Frio", "Mondim de Basto", "Montalegre", "Murça", "Peso da Régua", "Ribeira de Pena", "Sabrosa", "Santa Marta de Penaguião", "Valpaços", "Vila Pouca de Aguiar", "Vila Real"],
-                                    viseu: ["Armamar", "Carregal do Sal", "Castro Daire", "Cinfães", "Lamego", "Mangualde", "Moimenta da Beira", "Mortágua", "Nelas", "Oliveira de Frades", "Penalva do Castelo", "Penedono", "Resende", "Santa Comba Dão", "São João da Pesqueira", "São Pedro do Sul", "Sátão", "Sernancelhe", "Tabuaço", "Tarouca", "Tondela", "Vila Nova de Paiva", "Viseu", "Vouzela"]
-                                };
-                                // Utilitário para ativar/desativar <select>
-                                const setDisabled = (select, disabled) => {
-                                    select.disabled = disabled;
-                                    if (disabled) select.value = "";
-                                };
+                                    // Envio do formulário com AJAX
+                                    document.querySelector('form[action="/base_gov"]').addEventListener('submit', e => {
+                                        const submitter = e.submitter;
 
-                                // Atualiza o estado dos selects de distrito e concelho com base no país
-                                const atualizarDistritos = () => {
-                                    const isPortugal = paisSelect.value === "portugal";
-                                    setDisabled(distritoSelect, !isPortugal);
-                                    setDisabled(concelhoSelect, true);
-                                    concelhoSelect.innerHTML = '<option value="">Todos os distritos</option>';
-                                };
+                                        // Só prossegue se foi o botão "Pesquisar"
+                                        if (!submitter || submitter.id !== 'search-contracts-button') {
+                                            e.preventDefault();
+                                            return;
+                                        }
 
-                                // Preenche os concelhos com base no distrito selecionado
-                                const preencherConcelhos = () => {
-                                    const concelhos = distritosConcelhos[distritoSelect.value] || [];
-                                    concelhoSelect.innerHTML = '<option value="">Todos os concelhos</option>';
-                                    setDisabled(concelhoSelect, concelhos.length === 0);
-
-                                    concelhos.forEach(nome => {
-                                        const option = new Option(nome, nome.toLowerCase().replace(/\s+/g, '_'));
-                                        concelhoSelect.appendChild(option);
-                                    });
-                                };
-
-                                // Mostrar resultados ao clicar no botão de pesquisa
-                                document.querySelector('#search-contracts-button').addEventListener('click', () => {
-                                    const resultsTable = document.querySelector('#results-table');
-                                    resultsTable.style.display = 'block';
-                                    resultsTable.scrollIntoView({ behavior: 'smooth' });
-                                });
-
-                                let currentFilters = {}; // fora do escopo da função
-
-                                // Envio do formulário com AJAX
-                                document.querySelector('form[action="/base_gov"]').addEventListener('submit', e => {
-                                    const submitter = e.submitter;
-
-                                    // Só prossegue se foi o botão "Pesquisar"
-                                    if (!submitter || submitter.id !== 'search-contracts-button') {
                                         e.preventDefault();
-                                        return;
-                                    }
 
-                                    e.preventDefault();
+                                        console.log('Enviando pesquisa...');
+                                        const form = e.currentTarget;
+                                        const formData = new FormData(form);
+                                        const limit = document.getElementById('items-select')?.value || 25;
 
-                                    console.log('Enviando pesquisa...');
-                                    const form = e.currentTarget;
-                                    const formData = new FormData(form);
-                                    const limit = document.getElementById('items-select')?.value || 25;
+                                        currentFilters = {};
+                                        formData.forEach((value, key) => {
+                                            currentFilters[key] = value;
+                                        });
 
-                                    currentFilters = {};
-                                    formData.forEach((value, key) => {
-                                        currentFilters[key] = value;
+                                        loadContracts(1, limit);
                                     });
 
-                                    loadContracts(1, limit);
+                                    // Listeners de selects
+                                    paisSelect.addEventListener('change', atualizarDistritos);
+                                    distritoSelect.addEventListener('change', preencherConcelhos);
+
+
+                                    // Abrir popup de download ao clicar em "Clique aqui"
+                                    const openBtn = document.getElementById('openPopupBtn');
+                                    const overlay = document.getElementById('overlay');
+                                    if (openBtn && overlay) {
+                                        openBtn.addEventListener('click', function (e) {
+                                            e.preventDefault();
+                                            overlay.style.display = 'flex';
+                                            document.body.style.overflow = 'hidden';
+                                        });
+                                    }
+
+                                    // Fechar popup (caso já não tenha)
+                                    const closeBtn = document.getElementById('closeBtn');
+                                    if (closeBtn && overlay) {
+                                        closeBtn.addEventListener('click', function () {
+                                            overlay.style.display = 'none';
+                                            document.body.style.overflow = 'auto';
+                                        });
+                                    }
                                 });
 
-                                // Listeners de selects
-                                paisSelect.addEventListener('change', atualizarDistritos);
-                                distritoSelect.addEventListener('change', preencherConcelhos);
-
-                            });
-
-                        </script>
+                            </script>
 
 </body>
 
