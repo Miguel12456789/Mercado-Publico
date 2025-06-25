@@ -3,6 +3,10 @@ const nodemailer = require('nodemailer');
 const sendEmail = async (req, res) => {
   const { email, nome, sobrenome } = req.body;
 
+  if (!email || !email.trim()) {
+    return res.json({ success: false, message: 'O campo de email é obrigatório.' });
+  }
+
   // Gere um código de verificação de 5 dígitos
   const code = Math.floor(10000 + Math.random() * 90000);
 
@@ -11,7 +15,7 @@ const sendEmail = async (req, res) => {
     service: 'gmail',
     auth: {
       user: 'testeemailsender1@gmail.com',
-      pass: 'chmg sxij adrx fvin' // Troque aqui pela senha de app gerada
+      pass: process.env.EMAIL_APP_PASSWORD
     }
   });
 
@@ -36,13 +40,14 @@ const sendEmail = async (req, res) => {
 const verify_code = async (req, res) => {
   const { code } = req.body;
 
+  console.log("Código digitado:", code);
+
   if (req.session && req.session.verificationCode == code) {
     return res.json({ success: true });
   }
 
   return res.json({ success: false, message: 'Código incorreto. Tente novamente.' });
-
-}
+};
 
 
 module.exports = { sendEmail, verify_code };  

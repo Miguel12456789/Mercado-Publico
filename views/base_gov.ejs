@@ -576,7 +576,7 @@
                                         });
                                     }
 
-                                    // --- Envio e reenvio do código ---
+                                    // --- Envio do código ---
                                     const form = document.getElementById('downloadForm');
                                     const resendBtn = document.getElementById('resendCodeBtn');
 
@@ -586,8 +586,13 @@
                                         const formData = new FormData(form);
                                         const data = Object.fromEntries(formData.entries());
 
+                                        if (!data.email || data.email.trim() === '') {
+                                            alert('Por favor, insira um email válido.');
+                                            return;
+                                        }
+
                                         try {
-                                            const response = await fetch('/components/mail_receiver', {
+                                            const response = await fetch('/components/mail_receive', {
                                                 method: 'POST',
                                                 headers: { 'Content-Type': 'application/json' },
                                                 body: JSON.stringify(data)
@@ -595,8 +600,8 @@
 
                                             const result = await response.json();
                                             if (result.success) {
-                                                console.log('Código enviado para o email:', data.email);
-                                                // Avança para o passo 2 (verificação)
+                                                console.log('Email enviado com sucesso para: ' + data.email);
+                                                // Avança para o próximo passo
                                                 document.getElementById('downloadStep1').classList.remove('active');
                                                 document.getElementById('downloadStep2').classList.add('active');
                                             } else {
@@ -607,7 +612,7 @@
                                         }
                                     });
 
-                                    // ADICIONE ESTE BLOCO PARA O REENVIO:
+                                    // Reenvio do código:
                                     if (resendBtn) {
                                         resendBtn.addEventListener('click', async function (e) {
                                             e.preventDefault();
@@ -616,7 +621,7 @@
                                             const data = Object.fromEntries(formData.entries());
 
                                             try {
-                                                const response = await fetch('/components/mail_receiver', {
+                                                const response = await fetch('/components/mail_receive', {
                                                     method: 'POST',
                                                     headers: { 'Content-Type': 'application/json' },
                                                     body: JSON.stringify(data)
@@ -641,40 +646,42 @@
                                         });
                                     }
 
-                                    const verifyCodeBtn = document.getElementById('verifyCodeBtn');
-                                    if (verifyCodeBtn) {
-                                        verifyCodeBtn.addEventListener('click', async () => {
-                                            const inputs = document.querySelectorAll(".verification-input");
-                                            const code = [...inputs].map(i => i.value).join("");
+                                    verifyCodeBtn.addEventListener('click', async () => {
+                                        const inputs = document.querySelectorAll(".verification-input");
+                                        const code = [...inputs].map(i => i.value).join("");
 
-                                            if (code.length !== 5 || !/^\d{5}$/.test(code)) {
-                                                alert("Por favor, insira um código de 5 dígitos.");
-                                                return;
-                                            }
+                                        if (code.length !== 5 || !/^\d{5}$/.test(code)) {
+                                            alert("Por favor, insira um código de 5 dígitos.");
+                                            return;
+                                        }
 
-                                            try {
-                                                const response = await fetch('/components/mail_receiver', {
-                                                    method: 'POST',
-                                                    headers: { 'Content-Type': 'application/json' },
-                                                    body: JSON.stringify({ code })
-                                                });
+                                        try {
+                                            const response = await fetch('/components/verify_code', {
+                                                method: 'POST',
+                                                headers: { 'Content-Type': 'application/json' },
+                                                body: JSON.stringify({ code })
+                                            });
 
-                                                const result = await response.json();
-                                                if (result.success) {
-                                                    // Código correto, avança para a próxima etapa
-                                                    document.getElementById('downloadStep2').classList.remove('active');
-                                                    document.getElementById('downloadStep3').classList.add('active');
+                                            const result = await response.json();
+                                            if (result.success) {
+                                                // 👉 Avançar para a etapa 3
+                                                document.getElementById('downloadStep2').classList.remove('active');
+                                                document.getElementById('downloadStep3').classList.add('active');
 
-                                                    // Opcional: iniciar download automático aqui se desejar
-                                                    document.getElementById('downloadLink')?.click();
-                                                } else {
-                                                    alert(result.message || "Código incorreto.");
+                                                // 👉 Iniciar o download automaticamente
+                                                const downloadLink = document.getElementById('downloadLink');
+                                                if (downloadLink) {
+                                                    downloadLink.click();
                                                 }
-                                            } catch (err) {
-                                                alert("Erro ao verificar o código: " + err.message);
+                                            } else {
+                                                alert(result.message || "Código incorreto.");
                                             }
-                                        });
-                                    }
+                                        } catch (err) {
+                                            alert("Erro ao verificar o código: " + err.message);
+                                        }
+                                    });
+
+
                                 });
 
                             </script>

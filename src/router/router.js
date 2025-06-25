@@ -11,7 +11,9 @@ router.get("/base_gov", contractsController.contractsGet);
 
 router.get("/detalhescontrato/:id", contractsController.contractDetail);
 
-router.post('/components/mail_receiver', emailController.sendEmail, emailController.verify_code);
+router.post('/components/mail_receive', emailController.sendEmail);
+router.post('/components/verify_code', emailController.verify_code);
+
 
 router.get("/estatisticas_setor_publico", navegationController.estatisticas_setor_publico);
 router.get("/estatisticas_setor_privado", navegationController.estatisticas_setor_privado);

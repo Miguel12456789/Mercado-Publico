@@ -39,7 +39,17 @@ const contractSchema = new mongoose.Schema({
     dataPublicacao_datetime: { type: Date, default: Date.now },
 });
 
+const codigoVerificacaoSchema = new mongoose.Schema({
+    email: { type: String, required: true },
+    codigo: { type: String, required: true },
+    data_criacao: { type: Date, default: Date.now },
+    estado: { type: String, enum: ['usado', 'nao_usado'], default: 'nao_usado' }
+});
+
+// Nome do modelo e da coleção: VerificacaoCodigos
+const VerificacaoCodigos = mongoose.model("VerificacaoCodigos", codigoVerificacaoSchema, "VerificacaoCodigos");
+
 //collection Part
 const API_2020 = mongoose.model("API_2020", contractSchema, "API_2020");
 
-module.exports = { API_2020 };
+module.exports = { API_2020, VerificacaoCodigos };
