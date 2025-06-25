@@ -680,7 +680,20 @@
                                             alert("Erro ao verificar o código: " + err.message);
                                         }
                                     });
-
+const searchForm = document.querySelector('form[action="/base_gov"]');
+if (searchForm) {
+    searchForm.addEventListener('keydown', function (e) {
+        // Só dispara se for Enter e não estiver num textarea ou botão
+        if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
+            // Impede o submit padrão para garantir o mesmo comportamento do botão "Pesquisar"
+            e.preventDefault();
+            const searchBtn = document.getElementById('search-contracts-button');
+            if (searchBtn) {
+                searchBtn.click();
+            }
+        }
+    });
+}
 
                                 });
 
