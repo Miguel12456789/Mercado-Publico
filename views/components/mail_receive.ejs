@@ -240,6 +240,18 @@
         }
       });
     }
+
+    const verifyCodeBtn = document.getElementById('verifyCodeBtn');
+    const verificationInputs = document.querySelectorAll('.verification-input');
+
+    verificationInputs.forEach(input => {
+      input.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          verifyCodeBtn.click();
+        }
+      });
+    });
   });
 </script>
 

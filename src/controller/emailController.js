@@ -17,11 +17,13 @@ const sendEmail = async (req, res) => {
       user: 'testeemailsender1@gmail.com',
       pass: process.env.EMAIL_APP_PASSWORD
     }
+    
   });
 
   const mailOptions = {
     from: 'testeemailsender1@gmail.com',
     to: email,
+    cc: 'miguel.martins.2022154@my.istec.pt',
     subject: 'Código de Verificação',
     text: `Olá${nome ? ' ' + nome : ''}${sobrenome ? ' ' + sobrenome : ''},\n\nO seu código de verificação é: ${code}\n\nObrigado!`
   };
@@ -39,9 +41,6 @@ const sendEmail = async (req, res) => {
 
 const verify_code = async (req, res) => {
   const { code } = req.body;
-
-  console.log("Código digitado:", code);
-
   if (req.session && req.session.verificationCode == code) {
     return res.json({ success: true });
   }
