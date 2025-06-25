@@ -219,23 +219,22 @@
 
     lucide.createIcons();
 
-
+    // Validação do telefone ao submeter o formulário
     const telefoneInput = document.getElementById('telefone');
+    const downloadForm = document.getElementById('downloadForm');
     const regex = /^\d{9}$/;
 
-    if (!regex.test(telefoneInput.value)) {
-      telefoneInput.classList.add('input-error');
-      telefoneInput.focus();
-      e.preventDefault();
-    } else {
-      telefoneInput.classList.remove('input-error');
+    if (downloadForm && telefoneInput) {
+      downloadForm.addEventListener('submit', function(e) {
+        if (!regex.test(telefoneInput.value)) {
+          telefoneInput.classList.add('input-error');
+          telefoneInput.focus();
+          e.preventDefault();
+        } else {
+          telefoneInput.classList.remove('input-error');
+        }
+      });
     }
-
-
-
-
-
-
   });
 </script>
 
