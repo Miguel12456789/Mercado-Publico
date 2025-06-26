@@ -46,9 +46,10 @@
             <label for="telefone" class="form-label">Telefone Profissional</label>
             <div class="phone-input-container">
               <div class="country-code">+351</div>
-              <input type="tel" id="telefone" name="telefone" class="form-input phone-input" required pattern="\d{9}"
+              <input type="tel" id="telefone" name="telefone" class="form-input phone-input" pattern="\d{9}"
                 maxlength="9" minlength="9" inputmode="numeric" placeholder="912345678"
                 title="Introduza exatamente 9 dígitos numéricos.">
+
             </div>
           </div>
 
@@ -259,7 +260,8 @@
 
     if (downloadForm && telefoneInput) {
       downloadForm.addEventListener('submit', function (e) {
-        if (!regex.test(telefoneInput.value)) {
+        const telefone = telefoneInput.value.trim();
+        if (telefone !== "" && !regex.test(telefone)) {
           telefoneInput.classList.add('input-error');
           telefoneInput.focus();
           e.preventDefault();
