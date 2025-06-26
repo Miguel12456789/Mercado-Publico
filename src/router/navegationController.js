@@ -8,12 +8,12 @@ const renderPage = (page) => (req, res) => {
 
 const home = renderPage("home");
 const API_2020 = renderPage("API_2020")
-const tab_base = renderPage("tab_base")
-const estatisticas_setor_publico = renderPage("estatisticas_setor_publico")
-const estatisticas_setor_privado = renderPage("estatisticas_setor_privado")
-const oportunidade_contratacao_publica = renderPage("oportunidade_contratacao_publica")
+const tab_estat_mp = renderPage("tab_estat_mp")
+const estat_spub = renderPage("estat_spub")
+const estat_spri = renderPage("estat_spri")
+const op_cp = renderPage("op_cp")
 const outros = renderPage("outros")
 
 const detalhescontrato = renderPage("detalhescontrato")
 
-module.exports = { home, API_2020, estatisticas_setor_publico, estatisticas_setor_privado, oportunidade_contratacao_publica, outros, tab_base, detalhescontrato };
+module.exports = { home, API_2020, estat_spub, estat_spri, op_cp, outros, tab_estat_mp, detalhescontrato };

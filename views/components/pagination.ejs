@@ -11,114 +11,111 @@
     <div class="items-per-page">
       <label for="items-select">Contratos por página:</label>
       <select id="items-select" class="items-select" aria-describedby="pagination-summary">
-        <option value="25" <%= pagination.limit === 25 ? 'selected' : '' %>>25</option>
-        <option value="50" <%= pagination.limit === 50 ? 'selected' : '' %>>50</option>
-        <option value="100" <%= pagination.limit === 100 ? 'selected' : '' %>>100</option>
+        <option value="25" <%=pagination.limit===25 ? 'selected' : '' %>>25</option>
+        <option value="50" <%=pagination.limit===50 ? 'selected' : '' %>>50</option>
+        <option value="100" <%=pagination.limit===100 ? 'selected' : '' %>>100</option>
       </select>
     </div>
 
     <div class="page-navigation" role="group" aria-label="Navegação entre páginas">
-      <button id="prev-page" class="page-button" 
-              <%= !pagination.hasPrevPage ? 'disabled' : '' %>
-              data-page="<%= pagination.currentPage - 1 %>"
-              aria-label="Página anterior">
-        <i data-lucide="chevron-left" class="page-icon" aria-hidden="true"></i>
+      <button id="prev-page" class="page-button" <%=!pagination.hasPrevPage ? 'disabled' : '' %>
+        data-page="<%= pagination.currentPage - 1 %>"
+          aria-label="Página anterior">
+          <i data-lucide="chevron-left" class="page-icon" aria-hidden="true"></i>
       </button>
 
       <div id="page-numbers" class="page-numbers">
-        <% for (let i = Math.max(1, pagination.currentPage - 2); i <= Math.min(pagination.totalPages, pagination.currentPage + 2); i++) { %>
-          <button class="page-number <%= i === pagination.currentPage ? 'active' : '' %>"
-                  data-page="<%= i %>"
-                  aria-label="Ir para a página <%= i %>"
-                  aria-current="<%= i === pagination.currentPage ? 'page' : false %>">
+        <% for (let i=Math.max(1, pagination.currentPage - 2); i <=Math.min(pagination.totalPages,
+          pagination.currentPage + 2); i++) { %>
+          <button class="page-number <%= i === pagination.currentPage ? 'active' : '' %>" data-page="<%= i %>"
+            aria-label="Ir para a página <%= i %>" aria-current="<%= i === pagination.currentPage ? 'page' : false %>">
             <%= i %>
           </button>
-        <% } %>
+          <% } %>
       </div>
 
-      <button id="next-page" class="page-button" 
-              <%= !pagination.hasNextPage ? 'disabled' : '' %>
-              data-page="<%= pagination.currentPage + 1 %>"
-              aria-label="Próxima página">
-        <i data-lucide="chevron-right" class="page-icon" aria-hidden="true"></i>
+      <button id="next-page" class="page-button" <%=!pagination.hasNextPage ? 'disabled' : '' %>
+        data-page="<%= pagination.currentPage + 1 %>"
+          aria-label="Próxima página">
+          <i data-lucide="chevron-right" class="page-icon" aria-hidden="true"></i>
       </button>
     </div>
   </div>
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const itemsSelect = document.getElementById('items-select');
-        const pageNumbers = document.getElementById('page-numbers');
-        const prevPageBtn = document.getElementById('prev-page');
-        const nextPageBtn = document.getElementById('next-page');
-        const showingEntries = document.getElementById('showing-entries');
+  document.addEventListener('DOMContentLoaded', () => {
+    const itemsSelect = document.getElementById('items-select');
+    const pageNumbers = document.getElementById('page-numbers');
+    const prevPageBtn = document.getElementById('prev-page');
+    const nextPageBtn = document.getElementById('next-page');
+    const showingEntries = document.getElementById('showing-entries');
 
-        // 🔸 Guarda filtros atuais
-        let currentFilters = {};
+    // 🔸 Guarda filtros atuais
+    let currentFilters = {};
 
-        // 🔸 Submit do formulário
-        document.querySelector('form[action="/base_gov"]').addEventListener('submit', e => {
-            e.preventDefault();
+    // 🔸 Submit do formulário
+    document.querySelector('form[action="/estat_mp"]').addEventListener('submit', e => {
+      e.preventDefault();
 
-            const form = e.currentTarget;
-            const formData = new FormData(form);
-            const limit = itemsSelect.value;
+      const form = e.currentTarget;
+      const formData = new FormData(form);
+      const limit = itemsSelect.value;
 
-            currentFilters = {};
-            formData.forEach((value, key) => {
-                currentFilters[key] = value;
-            });
+      currentFilters = {};
+      formData.forEach((value, key) => {
+        currentFilters[key] = value;
+      });
 
-            loadContracts(1, limit);
-        });
+      loadContracts(1, limit);
+    });
 
-        // 🔸 Carrega contratos com filtros ativos
-        const loadContracts = (page = 1, limit = itemsSelect.value) => {
-            window.loadContracts = loadContracts;
-            const url = new URL('/base_gov', window.location.origin);
-            url.searchParams.set('page', page);
-            url.searchParams.set('limit', limit);
+    // 🔸 Carrega contratos com filtros ativos
+    const loadContracts = (page = 1, limit = itemsSelect.value) => {
+      window.loadContracts = loadContracts;
+      const url = new URL('/estat_mp', window.location.origin);
+      url.searchParams.set('page', page);
+      url.searchParams.set('limit', limit);
 
-            for (const [key, value] of Object.entries(currentFilters)) {
-                url.searchParams.set(key, value);
-            }
+      for (const [key, value] of Object.entries(currentFilters)) {
+        url.searchParams.set(key, value);
+      }
 
-            fetch(url, { headers: { 'Accept': 'application/json' } })
-                .then(res => res.json())
-                .then(data => {
-                    console.log('Dados recebidos da API:', data);
-                    console.log('Total de contratos filtrados:', data.pagination?.totalContracts);
+      fetch(url, { headers: { 'Accept': 'application/json' } })
+        .then(res => res.json())
+        .then(data => {
+          console.log('Dados recebidos da API:', data);
+          console.log('Total de contratos filtrados:', data.pagination?.totalContracts);
 
-                    const resultsTable = document.querySelector('#results-table');
-                    resultsTable.style.display = 'block';
-                    updateTable(data.contracts);
-                    updatePagination(data.pagination);
+          const resultsTable = document.querySelector('#results-table');
+          resultsTable.style.display = 'block';
+          updateTable(data.contracts);
+          updatePagination(data.pagination);
 
-                    const countDisplay = document.getElementById('count-display');
-                    const countNumber = document.getElementById('count-number');
-                    const total = data.pagination.totalContracts;
+          const countDisplay = document.getElementById('count-display');
+          const countNumber = document.getElementById('count-number');
+          const total = data.pagination.totalContracts;
 
-                    countNumber.textContent = total;
+          countNumber.textContent = total;
 
-                    const plural = total !== 1 ? 's' : '';
-                    countDisplay.innerHTML = `
+          const plural = total !== 1 ? 's' : '';
+          countDisplay.innerHTML = `
                                                 <span id="count-number">${total}</span> contrato${plural} encontrado${plural}
                                                 `;
-                });
-        };
+        });
+    };
 
-        // 🔸 FUNÇÃO UPDATETABLE CORRIGIDA COM DATA-LABELS
-        const updateTable = (contracts) => {
-            const tbody = document.querySelector('.results-table tbody');
-            tbody.innerHTML = '';
+    // 🔸 FUNÇÃO UPDATETABLE CORRIGIDA COM DATA-LABELS
+    const updateTable = (contracts) => {
+      const tbody = document.querySelector('.results-table tbody');
+      tbody.innerHTML = '';
 
-            if (!contracts.length) {
-                tbody.innerHTML = `<tr><td colspan="7" class="no-results">Nenhum contrato encontrado.</td></tr>`;
-                return;
-            }
+      if (!contracts.length) {
+        tbody.innerHTML = `<tr><td colspan="7" class="no-results">Nenhum contrato encontrado.</td></tr>`;
+        return;
+      }
 
-            const rowsHtml = contracts.map(contract => `
+      const rowsHtml = contracts.map(contract => `
                 <tr>
                     <td data-label="Objeto do contrato" class="table-cell-truncate">${contract.tipoContrato ?? 'N/A'}</td>
                     <td data-label="Tipo de procedimento" class="table-cell-truncate">${contract.tipoprocedimento ?? 'N/A'}</td>
@@ -134,62 +131,62 @@
                 </tr>
             `).join('');
 
-            tbody.innerHTML = rowsHtml;
-            bindDetailButtons();
-        };
+      tbody.innerHTML = rowsHtml;
+      bindDetailButtons();
+    };
 
-        const updatePagination = ({ currentPage, totalPages, limit, startIndex, endIndex, totalContracts, hasPrevPage, hasNextPage }) => {
-            showingEntries.textContent = `Mostrando ${startIndex}-${endIndex} de ${totalContracts} registros`;
-            itemsSelect.value = limit;
-            pageNumbers.innerHTML = '';
+    const updatePagination = ({ currentPage, totalPages, limit, startIndex, endIndex, totalContracts, hasPrevPage, hasNextPage }) => {
+      showingEntries.textContent = `Mostrando ${startIndex}-${endIndex} de ${totalContracts} registros`;
+      itemsSelect.value = limit;
+      pageNumbers.innerHTML = '';
 
-            const createPageButton = (page) => {
-                const btn = document.createElement('button');
-                btn.className = `page-number ${page === currentPage ? 'active' : ''}`;
-                btn.dataset.page = page;
-                btn.textContent = page;
-                btn.addEventListener('click', () => loadContracts(page, limit));
-                return btn;
-            };
+      const createPageButton = (page) => {
+        const btn = document.createElement('button');
+        btn.className = `page-number ${page === currentPage ? 'active' : ''}`;
+        btn.dataset.page = page;
+        btn.textContent = page;
+        btn.addEventListener('click', () => loadContracts(page, limit));
+        return btn;
+      };
 
-            for (let i = Math.max(1, currentPage - 2); i <= Math.min(totalPages, currentPage + 2); i++) {
-                pageNumbers.appendChild(createPageButton(i));
-            }
+      for (let i = Math.max(1, currentPage - 2); i <= Math.min(totalPages, currentPage + 2); i++) {
+        pageNumbers.appendChild(createPageButton(i));
+      }
 
-            prevPageBtn.disabled = !hasPrevPage;
-            nextPageBtn.disabled = !hasNextPage;
+      prevPageBtn.disabled = !hasPrevPage;
+      nextPageBtn.disabled = !hasNextPage;
 
-            prevPageBtn.onclick = hasPrevPage ? () => loadContracts(currentPage - 1, limit) : null;
-            nextPageBtn.onclick = hasNextPage ? () => loadContracts(currentPage + 1, limit) : null;
+      prevPageBtn.onclick = hasPrevPage ? () => loadContracts(currentPage - 1, limit) : null;
+      nextPageBtn.onclick = hasNextPage ? () => loadContracts(currentPage + 1, limit) : null;
 
-            if (typeof lucide !== 'undefined') lucide.createIcons();
-        };
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    };
 
-        const formatPrice = (price) => {
-            const numericPrice = Number(String(price).trim());
-            if (isNaN(numericPrice)) return 'N/A';
-            const parts = numericPrice.toFixed(2).split('.');
-            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-            return `${parts[0]},${parts[1]} €`;
-        };
+    const formatPrice = (price) => {
+      const numericPrice = Number(String(price).trim());
+      if (isNaN(numericPrice)) return 'N/A';
+      const parts = numericPrice.toFixed(2).split('.');
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+      return `${parts[0]},${parts[1]} €`;
+    };
 
-        const bindDetailButtons = () => {
-            document.querySelectorAll('.details-button').forEach(button => {
-                button.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const href = button.getAttribute('href');
-                    if (href) window.location.href = href;
-                });
-            });
-        };
-
-        // 🔸 Troca de itens por página
-        itemsSelect.addEventListener('change', () => {
-            loadContracts(1, itemsSelect.value);
+    const bindDetailButtons = () => {
+      document.querySelectorAll('.details-button').forEach(button => {
+        button.addEventListener('click', (e) => {
+          e.preventDefault();
+          const href = button.getAttribute('href');
+          if (href) window.location.href = href;
         });
+      });
+    };
 
-        // 🔸 Inicializa (carrega tudo sem filtros se não houver formulário)
-        const searchForm = document.querySelector('form[action="/base_gov"]');
-        if (!searchForm) loadContracts();
+    // 🔸 Troca de itens por página
+    itemsSelect.addEventListener('change', () => {
+      loadContracts(1, itemsSelect.value);
     });
+
+    // 🔸 Inicializa (carrega tudo sem filtros se não houver formulário)
+    const searchForm = document.querySelector('form[action="/estat_mp"]');
+    if (!searchForm) loadContracts();
+  });
 </script>
