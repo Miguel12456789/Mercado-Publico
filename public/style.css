@@ -9,6 +9,11 @@
   font-family: 'Poppins', sans-serif;
 }
 
+body {
+  background-color: #f9fafb; /* Light gray background */
+  color: #1f2937; /* Dark gray text */
+}
+
 /* Services Section */
 .services-section {
   margin: 0 auto; /* Centraliza horizontalmente */
