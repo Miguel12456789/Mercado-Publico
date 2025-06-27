@@ -192,85 +192,174 @@
 </body>
 <script>
   document.addEventListener("DOMContentLoaded", function () {
-    const inputs = document.querySelectorAll(".verification-input");
-    const verifyCodeBtn = document.getElementById('verifyCodeBtn');
+  const inputs = document.querySelectorAll(".verification-input");
+  const verifyCodeBtn = document.getElementById('verifyCodeBtn');
 
-    // Verifica se todos os campos estão preenchidos e envia automaticamente
-    function checkAndSubmitCode() {
-      const codeComplete = Array.from(inputs).every(input => input.value.trim() !== "");
-      if (codeComplete) {
+  // Verifica se todos os campos estão preenchidos e envia automaticamente
+  function checkAndSubmitCode() {
+    const codeComplete = Array.from(inputs).every(input => input.value.trim() !== "");
+    if (codeComplete) {
+      verifyCodeBtn.click();
+    }
+  }
+
+  inputs.forEach((input, index) => {
+    input.addEventListener("input", (e) => {
+      const value = e.target.value;
+
+      // Se colaram múltiplos caracteres
+      if (value.length > 1) {
+        handlePaste(value);
+        return;
+      }
+
+      // Avança se digitou algo
+      if (value && index < inputs.length - 1) {
+        inputs[index + 1].focus();
+      }
+
+      // Verifica se todos os campos estão preenchidos
+      checkAndSubmitCode();
+    });
+
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Backspace" && !input.value && index > 0) {
+        inputs[index - 1].focus();
+      }
+      if (e.key === "Enter") {
+        e.preventDefault();
         verifyCodeBtn.click();
       }
-    }
-
-    inputs.forEach((input, index) => {
-      input.addEventListener("input", (e) => {
-        const value = e.target.value;
-
-        // Se colaram múltiplos caracteres
-        if (value.length > 1) {
-          handlePaste(value);
-          return;
-        }
-
-        // Avança se digitou algo
-        if (value && index < inputs.length - 1) {
-          inputs[index + 1].focus();
-        }
-
-        // Verifica se todos os campos estão preenchidos
-        checkAndSubmitCode();
-      });
-
-      input.addEventListener("keydown", (e) => {
-        if (e.key === "Backspace" && !input.value && index > 0) {
-          inputs[index - 1].focus();
-        }
-        if (e.key === "Enter") {
-          e.preventDefault();
-          verifyCodeBtn.click();
-        }
-      });
     });
-
-    // Colar o código inteiro
-    const container = document.querySelector(".verification-code-container");
-    container.addEventListener("paste", (e) => {
-      const paste = (e.clipboardData || window.clipboardData).getData("text");
-      handlePaste(paste);
-      e.preventDefault();
-    });
-
-    function handlePaste(paste) {
-      const chars = paste.replace(/\D/g, "").split("").slice(0, inputs.length);
-      inputs.forEach((input, i) => {
-        input.value = chars[i] || "";
-      });
-      const next = inputs[chars.length] || inputs[inputs.length - 1];
-      next.focus();
-      checkAndSubmitCode();
-    }
-
-    lucide.createIcons();
-
-    // Validação do telefone ao submeter o formulário
-    const telefoneInput = document.getElementById('telefone');
-    const downloadForm = document.getElementById('downloadForm');
-    const regex = /^\d{9}$/;
-
-    if (downloadForm && telefoneInput) {
-      downloadForm.addEventListener('submit', function (e) {
-        const telefone = telefoneInput.value.trim();
-        if (telefone !== "" && !regex.test(telefone)) {
-          telefoneInput.classList.add('input-error');
-          telefoneInput.focus();
-          e.preventDefault();
-        } else {
-          telefoneInput.classList.remove('input-error');
-        }
-      });
-    }
   });
+
+  // Colar o código inteiro
+  const container = document.querySelector(".verification-code-container");
+  container.addEventListener("paste", (e) => {
+    const paste = (e.clipboardData || window.clipboardData).getData("text");
+    handlePaste(paste);
+    e.preventDefault();
+  });
+
+  function handlePaste(paste) {
+    const chars = paste.replace(/\D/g, "").split("").slice(0, inputs.length);
+    inputs.forEach((input, i) => {
+      input.value = chars[i] || "";
+    });
+    const next = inputs[chars.length] || inputs[inputs.length - 1];
+    next.focus();
+    checkAndSubmitCode();
+  }
+
+  lucide.createIcons();
+
+  // Validação do telefone ao submeter o formulário
+  const telefoneInput = document.getElementById('telefone');
+  const downloadForm = document.getElementById('downloadForm');
+  const regex = /^\d{9}$/;
+
+  if (downloadForm && telefoneInput) {
+    downloadForm.addEventListener('submit', function (e) {
+      const telefone = telefoneInput.value.trim();
+      if (telefone !== "" && !regex.test(telefone)) {
+        telefoneInput.classList.add('input-error');
+        telefoneInput.focus();
+        e.preventDefault();
+      } else {
+        telefoneInput.classList.remove('input-error');
+      }
+    });
+  }
+
+  // --- REENVIAR CÓDIGO ---
+  const resendBtn = document.getElementById('resendCodeBtn');
+  let resendCooldown = false;
+  let cooldownTimeout = null;
+  let cooldownInterval = null;
+  let cooldownSeconds = 30;
+
+  // Garante que só adiciona o listener UMA vez
+  if (resendBtn && !resendBtn.dataset.listener) {
+    resendBtn.dataset.listener = "true";
+    resendBtn.addEventListener('click', async function (e) {
+      e.preventDefault();
+
+      // Se estiver em cooldown, só mostra a mensagem e retorna
+      if (resendCooldown) {
+        showCooldownMessage();
+        return;
+      }
+
+      // Inicia cooldown
+      resendCooldown = true;
+      resendBtn.disabled = true;
+      cooldownSeconds = 30;
+      showCooldownMessage();
+
+      // Atualiza o número a cada segundo
+      if (cooldownInterval) clearInterval(cooldownInterval);
+      cooldownInterval = setInterval(() => {
+        cooldownSeconds--;
+        showCooldownMessage();
+        if (cooldownSeconds <= 0) {
+          clearInterval(cooldownInterval);
+        }
+      }, 1000);
+
+      // Timer de 30 segundos para liberar o botão
+      if (cooldownTimeout) clearTimeout(cooldownTimeout);
+      cooldownTimeout = setTimeout(() => {
+        resendCooldown = false;
+        resendBtn.disabled = false;
+        let resendMsg = document.getElementById('resend-message');
+        if (resendMsg) resendMsg.style.display = 'none';
+        clearInterval(cooldownInterval);
+      }, 30000);
+
+      // Envio do código normalmente
+      const form = document.getElementById('downloadForm');
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+
+      try {
+        const response = await fetch('/components/mail_receive', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+        if (result.success) {
+          // Mensagem de sucesso já tratada pelo cooldown
+        } else {
+          alert('Erro ao reenviar código: ' + (result.message || 'Tente novamente.'));
+        }
+      } catch (error) {
+        alert('Erro ao reenviar código: ' + error.message);
+      }
+    });
+  }
+
+  // Função para mostrar a mensagem de cooldown com o número de segundos
+  function showCooldownMessage() {
+    let resendMsg = document.getElementById('resend-message');
+    let seconds = resendCooldown ? cooldownSeconds : 30;
+    if (resendMsg) {
+      resendMsg.innerHTML = `<i data-lucide="check" class="verification-alert__icon"></i> Aguarde <span id="cooldown-timer">${seconds}</span> segundo${seconds === 1 ? '' : 's'} para reenviar o código.`;
+      resendMsg.style.display = 'block';
+      lucide.createIcons();
+    } else {
+      // Cria a mensagem se não existir (fallback)
+      resendMsg = document.createElement('div');
+      resendMsg.id = 'resend-message';
+      resendMsg.className = 'verification-alert verification-alert--success';
+      resendMsg.innerHTML = `<i data-lucide="check" class="verification-alert__icon"></i> Aguarde <span id="cooldown-timer">${seconds}</span> segundo${seconds === 1 ? '' : 's'} para reenviar o código.`;
+      document.querySelector('.verification-container')?.appendChild(resendMsg);
+      resendMsg.style.display = 'block';
+      lucide.createIcons();
+    }
+  }
+});
 </script>
 
 

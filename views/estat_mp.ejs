@@ -330,7 +330,7 @@
                     <i class="fas fa-envelope"></i>
                 </div>
                 <div class="custom-notif__text">
-                    Deseja fazer download desta informação?
+                    Deseja fazer o download desta informação?
                     <a class="custom-notif__link" id="openPopupBtn">Clique aqui</a> e após inserir os seus dados
                     iniciar-se-á o download.
                 </div>
@@ -702,7 +702,46 @@
                                             }
                                         });
                                     }
+                                    // ...existing code...
 
+// Função para fechar e resetar o popup de download
+function resetDownloadPopup() {
+    const overlay = document.getElementById('overlay');
+    const downloadForm = document.getElementById('downloadForm');
+    const step1 = document.getElementById('downloadStep1');
+    const step2 = document.getElementById('downloadStep2');
+    const step3 = document.getElementById('downloadStep3');
+    if (overlay) overlay.style.display = 'none';
+    if (downloadForm) downloadForm.reset();
+    // Volta para o passo 1 do formulário
+    if (step1 && step2 && step3) {
+        step1.classList.add('active');
+        step2.classList.remove('active');
+        step3.classList.remove('active');
+    }
+    // Limpa inputs do código de verificação
+    document.querySelectorAll('.verification-input').forEach(input => {
+        input.value = '';
+        input.classList.remove('input-error');
+    });
+    // Esconde mensagens de erro/sucesso
+    const verifyMsg = document.getElementById('verify-message');
+    const resendMsg = document.getElementById('resend-message');
+    if (verifyMsg) verifyMsg.style.display = 'none';
+    if (resendMsg) resendMsg.style.display = 'none';
+}
+
+// Sempre que o utilizador faz uma nova pesquisa, reseta o popup
+const estatForm = document.querySelector('form[action="/estat_mp"]');
+if (estatForm) {
+    estatForm.addEventListener('submit', function() {
+        resetDownloadPopup();
+    });
+    // Opcional: reseta também ao mudar qualquer filtro (input/select)
+    estatForm.querySelectorAll('input, select').forEach(el => {
+        el.addEventListener('change', resetDownloadPopup);
+    });
+}
                                 });
 
                             </script>
