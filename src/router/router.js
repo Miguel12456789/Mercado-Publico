@@ -11,6 +11,8 @@ router.get("/estat_mp", contractsController.contractsGet);
 
 router.get("/detalhescontrato/:id", contractsController.contractDetail);
 
+router.get('/download_contracts', contractsController.downloadContracts);
+
 router.post('/components/mail_receive', emailController.sendEmail);
 router.post('/components/verify_code', emailController.verify_code);
 

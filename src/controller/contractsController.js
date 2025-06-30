@@ -3,6 +3,9 @@ const express = require('express');
 const { API_2020 } = require('../model/model'); // Ajuste o caminho conforme necessário
 const API_2021 = mongoose.model("API_2021", API_2020.schema, "API_2021"); // Cria modelo dinâmico para 2021
 
+const { Parser } = require('json2csv'); // para CSV
+const ExcelJS = require('exceljs');     // para XLS
+const PDFDocument = require('pdfkit');  // para PDF
 
 // Modifique o contractsController:
 // contractsController.js
@@ -217,6 +220,11 @@ const contractsGet = async (req, res) => {
       endIndex: Math.min(skip + limit, totalContracts)
     };
 
+    if (req.session) {
+      req.session.lastQuery = filter;
+    }
+
+
     const isAjax = req.xhr || req.headers.accept?.includes('json');
 
     if (isAjax) {
@@ -273,6 +281,53 @@ const contractDetail = async (req, res) => {
 };
 
 
+const downloadContracts = async (req, res) => {
+  try {
+    const format = req.query.format || 'csv';
+    const filters = req.session?.lastQuery || {}; // guarda os filtros aplicados
+
+    // Aplicar os mesmos filtros usados na pesquisa
+    const contratos = await API_2020.find(filters).lean(); // ou usa o aggregation se necessário
+
+    if (format === 'csv') {
+      const fields = Object.keys(contratos[0] || {});
+      const parser = new Parser({ fields });
+      const csv = parser.parse(contratos);
+
+      res.setHeader('Content-Disposition', 'attachment; filename=contratos.csv');
+      res.setHeader('Content-Type', 'text/csv');
+      return res.send(csv);
+    }
+
+    if (format === 'xls') {
+      const workbook = new ExcelJS.Workbook();
+      const worksheet = workbook.addWorksheet('Contratos');
+      worksheet.columns = Object.keys(contratos[0] || {}).map(key => ({ header: key, key }));
+      worksheet.addRows(contratos);
+
+      res.setHeader('Content-Disposition', 'attachment; filename=contratos.xlsx');
+      res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+      await workbook.xlsx.write(res);
+      return res.end();
+    }
+
+    if (format === 'pdf') {
+      const doc = new PDFDocument();
+      res.setHeader('Content-Disposition', 'attachment; filename=contratos.pdf');
+      res.setHeader('Content-Type', 'application/pdf');
+      doc.pipe(res);
+      contratos.forEach(c => doc.text(JSON.stringify(c)).moveDown());
+      doc.end();
+      return;
+    }
+
+    return res.status(400).send('Formato inválido.');
+  } catch (err) {
+    console.error('Erro ao exportar contratos:', err);
+    res.status(500).send('Erro ao gerar ficheiro.');
+  }
+};
 
 
-module.exports = { contractsGet, contractDetail };
+
+module.exports = { contractsGet, contractDetail, downloadContracts };

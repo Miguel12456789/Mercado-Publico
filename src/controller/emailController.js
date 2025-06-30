@@ -23,7 +23,7 @@ const sendEmail = async (req, res) => {
   const mailOptions = {
     from: 'testeemailsender1@gmail.com',
     to: email,
-    cc: 'miguel.martins.2022154@my.istec.pt',
+    // cc: 'miguel.martins.2022154@my.istec.pt',
     subject: 'Código de Verificação',
     text: `Olá${nome ? ' ' + nome : ''}${sobrenome ? ' ' + sobrenome : ''},\n\nO seu código de verificação é: ${code}\n\nObrigado!`
   };
