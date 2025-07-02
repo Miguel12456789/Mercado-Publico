@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const { API_2020 } = require('../model/model'); // Ajuste o caminho conforme necessário
-const API_2021 = mongoose.model("API_2021", API_2020.schema, "API_2021"); // Cria modelo dinâmico para 2021
 
 const { Parser } = require('json2csv'); // para CSV
 const ExcelJS = require('exceljs');     // para XLS
@@ -189,7 +188,6 @@ const contractsGet = async (req, res) => {
     // Monta o pipeline de agregação
     const pipeline = [
       { $match: filter },
-      { $unionWith: { coll: "API_2021", pipeline: [{ $match: filter }] } },
       { $sort: { dataPublicacao_datetime: -1 } },
       { $skip: skip },
       { $limit: limit }
@@ -198,7 +196,6 @@ const contractsGet = async (req, res) => {
     // Para a contagem total (sem paginação)
     const countPipeline = [
       { $match: filter },
-      { $unionWith: { coll: "API_2021", pipeline: [{ $match: filter }] } },
       { $count: "total" }
     ];
 
@@ -257,11 +254,6 @@ const contractDetail = async (req, res) => {
     // Procura primeiro na API_2020
     let contract = await API_2020.findById(id).lean();
 
-    // Se não encontrar, procura na API_2021
-    if (!contract) {
-      contract = await API_2021.findById(id).lean();
-    }
-
     if (!contract) {
       return res.status(404).render('error', {
         message: "Contrato não encontrado"
@@ -282,6 +274,45 @@ const contractDetail = async (req, res) => {
 
 
 const downloadContracts = async (req, res) => {
+
+  const headerMap = {
+    nAnuncio: 'Número do Anúncio',
+    TipoAnuncio: 'Tipo de Anúncio',
+    idINCM: 'ID INCM',
+    tipoContrato: 'Tipo de Contrato',
+    idprocedimento: 'ID do Procedimento',
+    tipoprocedimento: 'Tipo de Procedimento',
+    objectoContrato: 'Objeto do Contrato',
+    descContrato: 'Descrição do Contrato',
+    adjudicante: 'Entidade Adjudicante',
+    adjudicatarios: 'Entidade Adjudicatária',
+    dataPublicacao: 'Data de Publicação',
+    dataCelebracaoContrato: 'Data de Celebração do Contrato',
+    precoContratual: 'Preço Contratual',
+    cpv: 'CPV',
+    prazoExecucao: 'Prazo de Execução',
+    localExecucao: 'Local de Execução',
+    fundamentacao: 'Fundamentação',
+    ProcedimentoCentralizado: 'Procedimento Centralizado',
+    numAcordoQuadro: 'Número do Acordo-Quadro',
+    DescrAcordoQuadro: 'Descrição do Acordo-Quadro',
+    precoBaseProcedimento: 'Preço Base do Procedimento',
+    dataDecisaoAdjudicacao: 'Data de Decisão da Adjudicação',
+    dataFechoContrato: 'Data de Fecho do Contrato',
+    PrecoTotalEfetivo: 'Preço Total Efetivo',
+    regime: 'Regime',
+    justifNReducEscrContrato: 'Justificativo da Não Redução a Escrita',
+    tipoFimContrato: 'Tipo de Fim do Contrato',
+    CritMateriais: 'Critérios Materiais',
+    concorrentes: 'Número de Concorrentes',
+    linkPecasProc: 'Link das Peças do Procedimento',
+    Observacoes: 'Observações',
+    ContratEcologico: 'Contrato Ecológico',
+    Ano: 'Ano',
+    fundamentAjusteDireto: 'Fundamentação do Ajuste Direto',
+    dataPublicacao_datetime: 'Data de Publicação (Datetime)'
+  };
+
   try {
     const format = req.query.format || 'csv';
     const filters = req.session?.lastQuery || {}; // guarda os filtros aplicados
@@ -289,21 +320,58 @@ const downloadContracts = async (req, res) => {
     // Aplicar os mesmos filtros usados na pesquisa
     const contratos = await API_2020.find(filters).lean(); // ou usa o aggregation se necessário
 
+    const contratosLimpos = contratos.map(c => {
+      const novoContrato = {};
+
+      Object.entries(c).forEach(([key, value]) => {
+        if (['_id', 'idcontrato'].includes(key)) return; // Ignora campos indesejados
+        novoContrato[key] = value === null || value === undefined || value === '' ? 'Não aplicável' : value;
+      });
+
+      return novoContrato;
+    });
+
     if (format === 'csv') {
-      const fields = Object.keys(contratos[0] || {});
-      const parser = new Parser({ fields });
-      const csv = parser.parse(contratos);
+      const fields = Object.keys(contratosLimpos[0] || []).map(key => ({
+        label: headerMap[key] || key,
+        value: key
+      }));
+
+      const parser = new Parser({
+        fields,
+        delimiter: ';', // <-- Use ponto e vírgula como separador
+        quote: '"',
+        withBOM: true
+      });
+
+      let csv = parser.parse(contratosLimpos);
+
+      const replacements = {
+        'Nã£o': 'Não',
+        'AquisiÃ§Ã£o': 'Aquisição',
+        'PrÃ©via': 'Prévia',
+        'Ã³': 'ó', 'Ã§': 'ç', 'Ã£': 'ã', 'Ãª': 'ê',
+        'Ãº': 'ú', 'Ã¡': 'á', 'Ã­': 'í', 'Ã´': 'ô',
+        'Ã“': 'Ó', 'Ã‰': 'É'
+      };
+
+      for (const [errado, certo] of Object.entries(replacements)) {
+        csv = csv.replace(new RegExp(errado, 'g'), certo);
+      }
 
       res.setHeader('Content-Disposition', 'attachment; filename=contratos.csv');
-      res.setHeader('Content-Type', 'text/csv');
+      res.setHeader('Content-Type', 'text/csv; charset=utf-8');
       return res.send(csv);
     }
+
+
 
     if (format === 'xls') {
       const workbook = new ExcelJS.Workbook();
       const worksheet = workbook.addWorksheet('Contratos');
-      worksheet.columns = Object.keys(contratos[0] || {}).map(key => ({ header: key, key }));
-      worksheet.addRows(contratos);
+
+      worksheet.columns = Object.keys(contratosLimpos[0] || {}).map(key => ({ header: key, key }));
+      worksheet.addRows(contratosLimpos);
 
       res.setHeader('Content-Disposition', 'attachment; filename=contratos.xlsx');
       res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
@@ -316,7 +384,14 @@ const downloadContracts = async (req, res) => {
       res.setHeader('Content-Disposition', 'attachment; filename=contratos.pdf');
       res.setHeader('Content-Type', 'application/pdf');
       doc.pipe(res);
-      contratos.forEach(c => doc.text(JSON.stringify(c)).moveDown());
+
+      contratosLimpos.forEach(c => {
+        Object.entries(c).forEach(([key, value]) => {
+          doc.text(`${key}: ${value}`);
+        });
+        doc.moveDown();
+      });
+
       doc.end();
       return;
     }

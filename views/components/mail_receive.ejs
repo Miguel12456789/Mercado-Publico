@@ -360,6 +360,27 @@
       }
     }
 
+    const overlay = document.getElementById('overlay');
+    const popup = overlay.querySelector('.popup');
+    const closeBtn = document.getElementById('closeBtn');
+
+    // Fecha ao clicar no X
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function () {
+        overlay.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      });
+    }
+
+    // Fecha ao clicar fora (no overlay)
+    overlay.addEventListener('click', function (e) {
+      // Se clicou diretamente no overlay (e não dentro do popup)
+      if (e.target === overlay) {
+        overlay.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+    });
+
   });
 </script>
 

@@ -1,211 +1,333 @@
-<!-- Overlay e Popup de Download -->
-        <div class="overlay" id="overlay">
-            <div class="popup">
-                <button class="close-btn" id="closeBtn">&times;</button>
-                <h2 class="popup-title">Formulário de Download</h2>
+const mongoose = require('mongoose');
+const express = require('express');
+const { API_2020 } = require('../model/model'); // Ajuste o caminho conforme necessário
+const API_2021 = mongoose.model("API_2021", API_2020.schema, "API_2021"); // Cria modelo dinâmico para 2021
 
-                <div id="downloadStep1" class="download-step active">
-                    <form id="downloadForm">
-                        <!-- Nome -->
-                        <div class="name-fields">
-                            <!-- Nome -->
-                            <div class="overlay-form-group">
-                                <label for="nome" class="form-label">Nome*</label>
-                                <input type="text" id="nome" name="nome" class="form-input" required>
-                            </div>
+const { Parser } = require('json2csv'); // para CSV
+const ExcelJS = require('exceljs');     // para XLS
+const PDFDocument = require('pdfkit');  // para PDF
 
-                            <!-- Sobrenome -->
-                            <div class="overlay-form-group">
-                                <label for="sobrenome" class="form-label">Sobrenome*</label>
-                                <input type="text" id="sobrenome" name="sobrenome" class="form-input" required>
-                            </div>
-                        </div>
+// Modifique o contractsController:
+// contractsController.js
+const contractsGet = async (req, res) => {
+  try {
+    console.log('Query params recebidos:', req.query);
 
-                        <!-- E-mail Profissional -->
-                        <div class="overlay-form-group">
-                            <label for="email" class="form-label">E-mail Profissional*</label>
-                            <input type="email" id="email" name="email" class="form-input" required>
-                        </div>
+    const page = Math.max(parseInt(req.query.page) || 1, 1);
+    const limit = [25, 50, 100].includes(parseInt(req.query.limit)) ? parseInt(req.query.limit) : 25;
+    const skip = (page - 1) * limit;
 
-                        <!-- Telefone Profissional -->
-                        <div class="overlay-form-group">
-                            <label for="telefone" class="form-label">Telefone Profissional</label>
-                            <div class="phone-input-container">
-                                <div class="country-code">+351</div>
-                                <input type="tel" id="telefone" name="telefone" class="form-input phone-input" required>
-                            </div>
-                        </div>
+    // ========================
+    // FILTROS
+    // ========================
+    const filter = {};
 
-                        <!-- Setor de Atividade Profissional (Setor Público/Privado) -->
-                        <div class="overlay-form-group">
-                            <label for="setor-principal" class="form-label">Setor de Atividade Profissional*</label>
-                            <select id="setor-principal" name="setor-principal" class="form-select" required>
-                                <option value="" disabled selected>Selecione um setor</option>
-                                <option value="01">01 - Setor Público </option>
-                                <option value="02">02 - Setor Privado</option>
-                            </select>
-                        </div>
+    if (req.query.search?.trim()) {
+      filter.objectoContrato = { $regex: req.query.search.trim(), $options: 'i' };
+    }
 
-                        <!-- Setor de Atividade Profissional (Área de atividade) -->
-                        <div class="overlay-form-group">
-                            <label for="setor-atividade" class="form-label">Área de Atividade Profissional*</label>
-                            <select id="setor-atividade" name="setor-atividade" class="form-select" required>
-                                <option value="" disabled selected>Selecione um setor</option>
-                                <option value="1">Agricultura, produção animal, caça, floresta e pesca</option>
-                                <option value="2">Indústrias extractivas</option>
-                                <option value="3">Indústrias transformadoras</option>
-                                <option value="4">Electricidade, gás, vapor, água quente e fria e ar frio</option>
-                                <option value="5">Captação, tratamento e distribuição de água; saneamento, gestão de
-                                    resíduos e despoluição</option>
-                                <option value="6">Construção</option>
-                                <option value="7">Comércio por grosso e a retalho; reparação de veículos automóveis
-                                    e
-                                    motociclos</option>
-                                <option value="8">Transportes e armazenagem</option>
-                                <option value="9">Alojamento, restauração e similares</option>
-                                <option value="10">Actividades de informação e de comunicação</option>
-                                <option value="11">Actividades financeiras e de seguros</option>
-                                <option value="12">Actividades imobiliárias</option>
-                                <option value="13">Actividades de consultoria, científicas, técnicas e similares
-                                </option>
-                                <option value="14">Actividades administrativas e dos serviços de apoio</option>
-                                <option value="15">Administração Pública e Defesa; Segurança Social Obrigatória
-                                </option>
-                                <option value="16">Educação</option>
-                                <option value="17">Actividades de saúde humana e apoio social</option>
-                                <option value="18">Actividades artísticas, de espectáculos, desportivas e
-                                    recreativas
-                                </option>
-                                <option value="19">Actividades das famílias empregadoras de pessoal doméstico e
-                                    actividades de produção das famílias para uso próprio</option>
-                                <option value="20">Actividades dos organismos internacionais e outras instituições
-                                    extra-territoriais</option>
-                            </select>
-                        </div>
-                        <!-- Formato de Download -->
-                        <div class="download-format-group">
-                            <label class="form-label">Em que formato pretende efetuar o download:*</label>
-                            <div class="format-options">
-                                <div class="format-option">
-                                    <input type="radio" id="formatCsv" name="formato" value="csv" class="format-radio"
-                                        required checked>
-                                    <label for="formatCsv">CSV</label>
-                                </div>
-                                <div class="format-option">
-                                    <input type="radio" id="formatXls" name="formato" value="xls" class="format-radio">
-                                    <label for="formatXls">XLS</label>
-                                </div>
-                                <div class="format-option">
-                                    <input type="radio" id="formatPdf" name="formato" value="pdf" class="format-radio">
-                                    <label for="formatPdf">PDF</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="overlay-form-group" style="margin-top: 1.25rem;">
-                            <label class="form-label" style="display: flex; align-items: flex-start; gap: 0.5rem;">
-                                <input type="checkbox" id="aceito-privacidade" name="aceito-privacidade"
-                                    class="form-checkbox" required style="margin-top: 0.2em;">
-                                <span>Ao submeter o formulário declaro que li, que compreendi e que aceito a política de
-                                    privacidade do Helpdesk Público.</span>
-                            </label>
-                        </div>
-                        <button type="submit" class="submit-btn">Continuar</button>
-                    </form>
-                </div>
+    if (req.query['special-measures'] === 'on') {
+      filter.medidasEspeciais = true;
+    }
 
-                <!-- Etapa 2: Verificação por Email -->
-                <div id="downloadStep2" class="download-step">
-                    <div class="verification-container">
-                        <div class="verification-icon">
-                            <i data-lucide="mail"></i>
-                        </div>
-                        <h3>Verificação por email</h3>
-                        <p>Um código de verificação de 5 dígitos para o seu email.</p>
-                        <p>Por favor, verifique a sua caixa de entrada e insira o código abaixo:</p>
+    if (req.query['include-mec'] === 'on') {
+      filter.mec = true;
+    }
 
-                        <div class="verification-code-container">
-                            <input type="text" class="verification-input" maxlength="1" data-index="0">
-                            <input type="text" class="verification-input" maxlength="1" data-index="1">
-                            <input type="text" class="verification-input" maxlength="1" data-index="2">
-                            <input type="text" class="verification-input" maxlength="1" data-index="3">
-                            <input type="text" class="verification-input" maxlength="1" data-index="4">
-                        </div>
+    if (req.query['measure-type'] && req.query['measure-type'] !== 'Todos') {
+      filter.tipoMedidaEspecial = req.query['measure-type'];
+    }
 
-                        <div class="verification-actions">
-                            <button id="verifyCodeBtn" class="submit-btn">Verificar</button>
-                            <button id="resendCodeBtn" class="resend-btn">Reenviar Código</button>
-                        </div>
-                    </div>
-                </div>
+    const procedimentoMap = {
+      1: "Ajuste Direto Regime Geral",
+      2: "Concurso público",
+      3: "Concurso limitado por prévia qualificação",
+      4: "Procedimento de negociação",
+      5: "Diálogo concorrencial",
+      6: "Ao abrigo de acordo-quadro (art.º 258.º)",
+      7: "Ao abrigo de acordo-quadro (art.º 259.º)",
+      8: "Consulta Prévia",
+      9: "Parceria para a inovação",
+      10: "Disponibilização de bens móveis",
+      11: "Serviços sociais e outros serviços específicos",
+      13: "Concurso de conceção simplificado",
+      14: "Concurso de ideias simplificado",
+      15: "Consulta Prévia Simplificada",
+      16: "Concurso público simplificado",
+      17: "Concurso limitado por prévia qualificação simplificado",
+      18: "Ajuste Direto Regime Geral ao abrigo do artigo 7º da Lei n.º 30/2021, de 21.05",
+      19: "Consulta prévia ao abrigo do artigo 7º da Lei n.º 30/2021, de 21.05",
+      20: "Ajuste direto simplificado",
+      21: "Ajuste direto simplificado ao abrigo da Lei n.º 30/2021, de 21.05",
+      22: "Setores especiais - isenção parte II",
+      23: "Contratação excluída II",
+    };
 
-                <!-- Etapa 3: Download Concluído -->
-                <div id="downloadStep3" class="download-step">
-                    <div class="success-container">
-                        <div class="success-icon">
-                            <i data-lucide="check-circle" class="icon-large"></i>
-                        </div>
-                        <h3>Download Pronto!</h3>
-                        <p>O seu download começará automaticamente em alguns segundos.</p>
-                        <p>Se o download não iniciar, clique no botão abaixo:</p>
+    if (req.query['tipoProcedimento'] && req.query['tipoProcedimento'] !== '0') {
+      const procedimentoStr = procedimentoMap[parseInt(req.query['tipoProcedimento'])];
+      if (procedimentoStr) {
+        filter.tipoprocedimento = procedimentoStr;
+      }
+    }
 
-                        <a href="#" id="downloadLink" class="download-link">
-                            <i data-lucide="download" class="icon-small"></i>
-                            <span>Instalar Arquivo</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+    if (req.query['entidade']?.trim()) {
+      filter.adjudicante = { $regex: req.query['entidade'].trim(), $options: 'i' };
+    }
+
+    const tipoContratoMap = {
+      1: "Aquisição de bens móveis",
+      2: "Aquisição de serviços",
+      3: "Concessão de obras públicas",
+      4: "Concessão de serviços públicos",
+      5: "Empreitadas de obras públicas",
+      6: "Locação de bens móveis",
+      7: "Sociedade",
+      8: "Outros"
+    };
+
+    if (req.query['tipoContrato'] && req.query['tipoContrato'] !== '0') {
+      const tipoContratoStr = tipoContratoMap[parseInt(req.query['tipoContrato'])];
+      if (tipoContratoStr) {
+        filter.tipoContrato = tipoContratoStr;
+      }
+    }
 
 
+    if (req.query['adjudicatario']?.trim()) {
+      filter.adjudicatarios = { $regex: req.query['adjudicatario'].trim(), $options: 'i' };
+    }
+
+    if (req.query['cpv']?.trim()) {
+      filter.cpv = { $regex: req.query['cpv'].trim(), $options: 'i' };
+    }
+
+    if (req.query['environmental-criteria'] === 'on') {
+      filter.ContratEcologico = "Sim";
+    } else {
+      filter.ContratEcologico = "NÃ£o";
+    }
+    if (req.query['pais'] && req.query['pais'].toLowerCase() !== 'todos') {
+      const pais = req.query['pais'].toLowerCase();
+      const distrito = req.query['distrito']?.replace(/_/g, ' ').toLowerCase();
+      const concelho = req.query['concelho']?.replace(/_/g, ' ').toLowerCase();
+
+      let regexStr = pais;
+
+      if (pais === 'portugal') {
+        if (distrito) regexStr += `,\\s*${distrito}`;
+        if (concelho) regexStr += `,\\s*${concelho}`;
+      }
+
+      // Aplica filtro com regex (exato ou parcial, conforme os níveis escolhidos)
+      filter.localExecucao = { $regex: new RegExp(`^${regexStr}`, 'i') };
+    }
+
+
+    const {
+      'date-type': dateTypeValue,
+      'from-year': fy,
+      'from-month': fm,
+      'from-day': fd,
+      'to-year': ty,
+      'to-month': tm,
+      'to-day': td
+    } = req.query;
+
+    // Mapeia os valores do dropdown
+    const dateFieldMap = {
+      "0": "dataPublicacao_datetime",
+      "1": "dataContrato_datetime",       // se não existir, ignore
+      "2": "dataFechoContrato"
+    };
+
+    const field = dateFieldMap[dateTypeValue];
+
+    function buildDate(y, m, d, isEnd = false) {
+      if (!y) return null;
+
+      const year = parseInt(y);
+      const month = m ? parseInt(m) : (isEnd ? 12 : 1);
+      let day = d ? parseInt(d) : (isEnd ? new Date(year, month, 0).getDate() : 1);
+
+      const safeMonth = String(month).padStart(2, '0');
+      const safeDay = String(day).padStart(2, '0');
+      const hour = isEnd ? '23:59:59' : '00:00:00';
+
+      const date = new Date(`${year}-${safeMonth}-${safeDay}T${hour}Z`);
+      return isNaN(date.getTime()) ? null : date;
+    }
+
+    if (field) {
+      const startDate = buildDate(fy, fm, fd, false);
+      const endDate = buildDate(ty, tm, td, true);
+
+      if (startDate || endDate) {
+        if (field === 'dataPublicacao_datetime') {
+          filter[field] = {};
+          if (startDate) filter[field].$gte = startDate;
+          if (endDate) filter[field].$lte = endDate;
+        } else if (field === 'dataFechoContrato') {
+          // Assumindo que dataFechoContrato é STRING (yyyy-mm-dd)
+          const range = {};
+          if (startDate) range.$gte = startDate.toISOString().split('T')[0];
+          if (endDate) range.$lte = endDate.toISOString().split('T')[0];
+          filter[field] = range;
+        }
+      }
+    }
 
 
 
 
 
+    // ========================
+    //
+    // ========================
+
+    console.log('Filtros aplicados:', filter);
+
+    // Monta o pipeline de agregação
+    const pipeline = [
+      { $match: filter },
+      { $unionWith: { coll: "API_2021", pipeline: [{ $match: filter }] } },
+      { $sort: { dataPublicacao_datetime: -1 } },
+      { $skip: skip },
+      { $limit: limit }
+    ];
+
+    // Para a contagem total (sem paginação)
+    const countPipeline = [
+      { $match: filter },
+      { $unionWith: { coll: "API_2021", pipeline: [{ $match: filter }] } },
+      { $count: "total" }
+    ];
+
+    // Executa as duas agregações em paralelo
+    const [contracts, totalResult] = await Promise.all([
+      API_2020.aggregate(pipeline),
+      API_2020.aggregate(countPipeline)
+    ]);
+    const totalContracts = totalResult[0]?.total || 0;
+    const totalPages = Math.ceil(totalContracts / limit);
+    const pagination = {
+      currentPage: page,
+      totalPages,
+      totalContracts,
+      limit,
+      hasNextPage: page < totalPages,
+      hasPrevPage: page > 1,
+      startIndex: skip + 1,
+      endIndex: Math.min(skip + limit, totalContracts)
+    };
+
+    if (req.session) {
+      req.session.lastQuery = filter;
+    }
+
+
+    const isAjax = req.xhr || req.headers.accept?.includes('json');
+
+    if (isAjax) {
+      return res.json({ contracts, pagination });
+    }
+
+    return res.render('estat_mp', {
+      contracts,
+      pagination,
+      includeDetails: true
+    });
+
+  } catch (error) {
+    console.error('Erro completo:', error);
+    return res.status(500).send('Erro no servidor');
+  }
+};
+
+
+const contractDetail = async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).render('error', {
+        message: "ID do contrato inválido"
+      });
+    }
+
+    // Procura primeiro na API_2020
+    let contract = await API_2020.findById(id).lean();
+
+    // Se não encontrar, procura na API_2021
+    if (!contract) {
+      contract = await API_2021.findById(id).lean();
+    }
+
+    if (!contract) {
+      return res.status(404).render('error', {
+        message: "Contrato não encontrado"
+      });
+    }
+    return res.render("detalhescontrato", {
+      title: `Detalhes do Contrato ${contract.idcontrato}`,
+      contract
+    });
+
+  } catch (error) {
+    console.error("Erro ao buscar detalhes do contrato:", error);
+    return res.status(500).render('error', {
+      message: "Erro no servidor ao buscar detalhes do contrato"
+    });
+  }
+};
+
+
+const downloadContracts = async (req, res) => {
+  try {
+    const format = req.query.format || 'csv';
+    const filters = req.session?.lastQuery || {}; // guarda os filtros aplicados
+
+    // Aplicar os mesmos filtros usados na pesquisa
+    const contratos = await API_2020.find(filters).lean(); // ou usa o aggregation se necessário
+
+    if (format === 'csv') {
+      const fields = Object.keys(contratos[0] || {});
+      const parser = new Parser({ fields });
+      const csv = parser.parse(contratos);
+
+      res.setHeader('Content-Disposition', 'attachment; filename=contratos.csv');
+      res.setHeader('Content-Type', 'text/csv');
+      return res.send(csv);
+    }
+
+    if (format === 'xls') {
+      const workbook = new ExcelJS.Workbook();
+      const worksheet = workbook.addWorksheet('Contratos');
+      worksheet.columns = Object.keys(contratos[0] || {}).map(key => ({ header: key, key }));
+      worksheet.addRows(contratos);
+
+      res.setHeader('Content-Disposition', 'attachment; filename=contratos.xlsx');
+      res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+      await workbook.xlsx.write(res);
+      return res.end();
+    }
+
+    if (format === 'pdf') {
+      const doc = new PDFDocument();
+      res.setHeader('Content-Disposition', 'attachment; filename=contratos.pdf');
+      res.setHeader('Content-Type', 'application/pdf');
+      doc.pipe(res);
+      contratos.forEach(c => doc.text(JSON.stringify(c)).moveDown());
+      doc.end();
+      return;
+    }
+
+    return res.status(400).send('Formato inválido.');
+  } catch (err) {
+    console.error('Erro ao exportar contratos:', err);
+    res.status(500).send('Erro ao gerar ficheiro.');
+  }
+};
 
 
 
-
-
-
-
-
-
-        // ========== Popup de Download ==========
-                                const openBtn = qs('#openPopupBtn'), closeBtn = qs('#closeBtn'), overlay = qs('#overlay');
-                                const form = qs('#downloadForm'), verifyBtn = qs('#verifyCodeBtn'), resendBtn = qs('#resendCodeBtn');
-                                const step1 = qs('#downloadStep1'), step2 = qs('#downloadStep2'), step3 = qs('#downloadStep3');
-                                const inputs = qsa('.verification-input');
-                                let code = '', email = '';
-
-                                const showStep = step => [step1, step2, step3].forEach(s => s.classList.toggle('active', s === step));
-                                const genCode = () => (code = Math.floor(100 + Math.random() * 900).toString());
-                                const sendCode = (email, code) => {
-                                    console.log(`Enviando código ${code} para ${email}`);
-                                    return new Promise(res => setTimeout(() => res(true), 1000));
-                                };
-
-                                openBtn?.addEventListener('click', () => {
-                                    overlay.style.display = 'flex';
-                                    document.body.style.overflow = 'hidden';
-                                });
-
-                                const closePopup = () => {
-                                    overlay.style.display = 'none';
-                                    document.body.style.overflow = 'auto';
-                                    showStep(step1);
-                                    form.reset();
-                                };
-
-                                closeBtn?.addEventListener('click', closePopup);
-                                overlay?.addEventListener('click', e => e.target === overlay && closePopup());
-
-                                form?.addEventListener('submit', e => {
-                                    e.preventDefault();
-                                    email = qs('#email').value;
-                                    sendCode(email, genCode()).then(() => {
-                                        showStep(step2);
-                                        inputs[0]?.focus();
-                                    });
-                                });
+module.exports = { contractsGet, contractDetail, downloadContracts };
