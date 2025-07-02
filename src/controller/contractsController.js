@@ -97,7 +97,18 @@ const contractsGet = async (req, res) => {
     }
 
     if (req.query['cpv']?.trim()) {
-      filter.cpv = { $regex: req.query['cpv'].trim(), $options: 'i' };
+      const cpvList = req.query['cpv']
+        .split(',')
+        .map(c => c.trim())
+        .filter(c => c.length > 0);
+
+      if (cpvList.length === 1) {
+        filter.cpv = { $regex: cpvList[0], $options: 'i' };
+      } else if (cpvList.length > 1) {
+        filter.$or = cpvList.map(cpv => ({
+          cpv: { $regex: cpv, $options: 'i' }
+        }));
+      }
     }
 
     if (req.query['environmental-criteria'] === 'on') {
