@@ -383,12 +383,21 @@ const downloadContracts = async (req, res) => {
       const novoContrato = {};
 
       Object.entries(c).forEach(([key, value]) => {
-        if (['_id', 'idcontrato'].includes(key)) return; // Ignora campos indesejados
-        novoContrato[key] = value === null || value === undefined || value === '' ? 'Não aplicável' : value;
+        if (['_id', 'idcontrato'].includes(key)) return;
+
+        let val = value === null || value === undefined || value === '' ? 'Não aplicável' : value;
+
+        // ✂️ Limpa quebras de linha e múltiplos espaços
+        if (typeof val === 'string') {
+          val = val.replace(/\s+/g, ' ').trim();
+        }
+
+        novoContrato[key] = val;
       });
 
       return novoContrato;
     });
+
 
     if (format === 'csv') {
       const fields = Object.keys(contratosLimpos[0] || []).map(key => ({
@@ -429,7 +438,14 @@ const downloadContracts = async (req, res) => {
       const workbook = new ExcelJS.Workbook();
       const worksheet = workbook.addWorksheet('Contratos');
 
-      worksheet.columns = Object.keys(contratosLimpos[0] || {}).map(key => ({ header: key, key }));
+      worksheet.columns.forEach(col => {
+        let maxLength = col.header.length;
+        col.eachCell({ includeEmpty: true }, cell => {
+          const val = cell.value ? cell.value.toString().length : 0;
+          if (val > maxLength) maxLength = val;
+        });
+        col.width = Math.min(maxLength + 2, 50); // Máximo de 50 para evitar colunas enormes
+      });
       worksheet.addRows(contratosLimpos);
 
       res.setHeader('Content-Disposition', 'attachment; filename=contratos.xlsx');
@@ -446,7 +462,11 @@ const downloadContracts = async (req, res) => {
 
       contratosLimpos.forEach(c => {
         Object.entries(c).forEach(([key, value]) => {
-          doc.text(`${key}: ${value}`);
+          const texto = `${key}: ${value}`;
+          doc.text(texto, {
+            width: 500, // ou outro valor de largura adequado
+            continued: false
+          });
         });
         doc.moveDown();
       });
