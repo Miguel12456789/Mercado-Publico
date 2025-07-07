@@ -387,7 +387,17 @@ const downloadContracts = async (req, res) => {
 
         let val = value === null || value === undefined || value === '' ? 'Não aplicável' : value;
 
-        // ✂️ Limpa quebras de linha e múltiplos espaços
+        // Formatar datas no padrão dd/mm/yyyy
+        if (['dataPublicacao', 'dataCelebracaoContrato', 'dataDecisaoAdjudicacao', 'dataFechoContrato', 'dataPublicacao_datetime'].includes(key) && val) {
+          const dateObj = new Date(val);
+          if (!isNaN(dateObj.getTime())) {
+            const dia = String(dateObj.getDate()).padStart(2, '0');
+            const mes = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const ano = dateObj.getFullYear();
+            val = `${dia}/${mes}/${ano}`;
+          }
+        }
+
         if (typeof val === 'string') {
           val = val.replace(/\s+/g, ' ').trim();
         }
