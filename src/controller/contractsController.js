@@ -160,10 +160,9 @@ const contractsGet = async (req, res) => {
     // Mapeia os valores do dropdown
     const dateFieldMap = {
       "0": "dataPublicacao_datetime",
-      "1": "dataContrato_datetime",       // se não existir, ignore
+      "1": "dataCelebracaoContrato",
       "2": "dataFechoContrato"
     };
-
     const field = dateFieldMap[dateTypeValue];
 
     function buildDate(y, m, d, isEnd = false) {
@@ -190,15 +189,26 @@ const contractsGet = async (req, res) => {
           filter[field] = {};
           if (startDate) filter[field].$gte = startDate;
           if (endDate) filter[field].$lte = endDate;
-        } else if (field === 'dataFechoContrato') {
-          // Assumindo que dataFechoContrato é STRING (yyyy-mm-dd)
+        } else if (['dataCelebracaoContrato', 'dataFechoContrato'].includes(field)) {
+          // Converte datas para formato dd/mm/yyyy
+          function formatToDDMMYYYY(date) {
+            const d = String(date.getDate()).padStart(2, '0');
+            const m = String(date.getMonth() + 1).padStart(2, '0');
+            const y = date.getFullYear();
+            return `${d}/${m}/${y}`;
+          }
+
           const range = {};
-          if (startDate) range.$gte = startDate.toISOString().split('T')[0];
-          if (endDate) range.$lte = endDate.toISOString().split('T')[0];
+          if (startDate) range.$gte = formatToDDMMYYYY(startDate);
+          if (endDate) range.$lte = formatToDDMMYYYY(endDate);
+
           filter[field] = range;
         }
       }
     }
+
+
+
 
 
 
@@ -246,6 +256,14 @@ const contractsGet = async (req, res) => {
       startIndex: skip + 1,
       endIndex: Math.min(skip + limit, totalContracts)
     };
+
+    // ⚠️ Corrige a serialização do filtro localExecucao se for uma regex
+    if (filter.localExecucao?.$regex instanceof RegExp) {
+      filter.localExecucao = {
+        $regex: filter.localExecucao.$regex.source,
+        $options: 'i'
+      };
+    }
 
     if (req.session) {
       req.session.lastQuery = filter;
@@ -348,6 +366,13 @@ const downloadContracts = async (req, res) => {
   try {
     const format = req.query.format || 'csv';
     const filters = req.session?.lastQuery || {}; // guarda os filtros aplicados
+
+    // Reconstrói a RegExp do campo localExecucao, se necessário
+    if (filters.localExecucao?.$regex && typeof filters.localExecucao.$regex === 'string') {
+      filters.localExecucao = {
+        $regex: new RegExp(filters.localExecucao.$regex, filters.localExecucao.$options || '')
+      };
+    }
 
     // Aplicar os mesmos filtros usados na pesquisa
     const contratos2020 = await API_2020.find(filters).lean();
