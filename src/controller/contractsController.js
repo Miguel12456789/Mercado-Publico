@@ -387,19 +387,22 @@ const downloadContracts = async (req, res) => {
 
         let val = value === null || value === undefined || value === '' ? 'Não aplicável' : value;
 
-        // Formatar datas no padrão dd/mm/yyyy
-        if (['dataPublicacao', 'dataCelebracaoContrato', 'dataDecisaoAdjudicacao', 'dataFechoContrato', 'dataPublicacao_datetime'].includes(key) && val) {
-          const dateObj = new Date(val);
-          if (!isNaN(dateObj.getTime())) {
-            const dia = String(dateObj.getDate()).padStart(2, '0');
-            const mes = String(dateObj.getMonth() + 1).padStart(2, '0');
-            const ano = dateObj.getFullYear();
-            val = `${dia}/${mes}/${ano}`;
-          }
-        }
-
+        // ✂️ Limpa quebras de linha e múltiplos espaços
         if (typeof val === 'string') {
           val = val.replace(/\s+/g, ' ').trim();
+        }
+
+        // 🛠️ Se o campo for de data, converte para dd/MM/yyyy
+        const camposData = ['dataPublicacao', 'dataCelebracaoContrato', 'dataDecisaoAdjudicacao', 'dataFechoContrato', 'dataPublicacao_datetime'];
+
+        if (camposData.includes(key)) {
+          const dateObj = new Date(val);
+          if (!isNaN(dateObj)) {
+            const d = String(dateObj.getDate()).padStart(2, '0');
+            const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const y = dateObj.getFullYear();
+            val = `${d}/${m}/${y}`;
+          }
         }
 
         novoContrato[key] = val;
@@ -407,7 +410,6 @@ const downloadContracts = async (req, res) => {
 
       return novoContrato;
     });
-
 
     if (format === 'csv') {
       const fields = Object.keys(contratosLimpos[0] || []).map(key => ({
