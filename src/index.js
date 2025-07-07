@@ -29,9 +29,10 @@ app.use(session({
 app.use('/', router);
 
 
-connectDB().then(({ conn1, conn2 }) => {
+connectDB().then(({ conn1, conn2, conn3 }) => {
   app.locals.conn1 = conn1;
   app.locals.conn2 = conn2;
+  app.locals.conn3 = conn3;
   contractsController.initModels(app);
 });
 

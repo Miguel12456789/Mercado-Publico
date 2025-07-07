@@ -7,14 +7,15 @@ const ExcelJS = require('exceljs');     // para XLS
 const PDFDocument = require('pdfkit');  // para PDF
 
 
-let API_2020, API_2021;
+let API_2020, API_2021, API_2022;
 
 // Esta função vai inicializar os modelos com as conexões certas
 function initModels(app) {
-  const { conn1, conn2 } = app.locals;
-  const models = createModels(conn1, conn2);
+  const { conn1, conn2, conn3 } = app.locals;
+  const models = createModels(conn1, conn2, conn3);
   API_2020 = models.API_2020;
   API_2021 = models.API_2021;
+  API_2022 = models.API_2022;
 }
 
 // Modifique o contractsController:
@@ -235,15 +236,17 @@ const contractsGet = async (req, res) => {
     ];
 
     // Executa as duas agregações em paralelo
-    const [contracts2020, contracts2021, count2020, count2021] = await Promise.all([
+    const [contracts2020, contracts2021, contracts2022, count2020, count2021, count2022] = await Promise.all([
       API_2020.aggregate(pipeline),
       API_2021.aggregate(pipeline),
+      API_2022.aggregate(pipeline),
       API_2020.aggregate(countPipeline),
-      API_2021.aggregate(countPipeline)
+      API_2021.aggregate(countPipeline),
+      API_2022.aggregate(countPipeline),
     ]);
 
-    const contracts = [...contracts2020, ...contracts2021];
-    const totalContracts = (count2020[0]?.total || 0) + (count2021[0]?.total || 0);
+    const contracts = [...contracts2020, ...contracts2021, ...contracts2022];
+    const totalContracts = (count2020[0]?.total || 0) + (count2021[0]?.total || 0) + (count2022[0]?.total || 0);
 
     const totalPages = Math.ceil(totalContracts / limit);
     const pagination = {
@@ -302,6 +305,7 @@ const contractDetail = async (req, res) => {
     // Procura primeiro na API_2020
     let contract = await API_2020.findById(id).lean();
     if (!contract) contract = await API_2021.findById(id).lean();
+    if (!contract) contract = await API_2022.findById(id).lean();
 
 
     if (!contract) {
@@ -377,7 +381,8 @@ const downloadContracts = async (req, res) => {
     // Aplicar os mesmos filtros usados na pesquisa
     const contratos2020 = await API_2020.find(filters).lean();
     const contratos2021 = await API_2021.find(filters).lean();
-    const contratos = [...contratos2020, ...contratos2021]; // ou usa o aggregation se necessário
+    const contratos2022 = await API_2022.find(filters).lean();
+    const contratos = [...contratos2020, ...contratos2021, ...contratos2022]; // ou usa o aggregation se necessário
 
     const contratosLimpos = contratos.map(c => {
       const novoContrato = {};
