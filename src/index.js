@@ -5,6 +5,8 @@ const path = require('path');
 const router = require('./router/router');
 const connectDB = require("./config/config");
 const session = require('express-session');
+const contractsController = require('./controller/contractsController');
+
 
 // Configura o EJS como motor de visualização
 app.set('view engine', 'ejs');
@@ -26,6 +28,11 @@ app.use(session({
 // Usa o roteador
 app.use('/', router);
 
-connectDB();
+
+connectDB().then(({ conn1, conn2 }) => {
+  app.locals.conn1 = conn1;
+  app.locals.conn2 = conn2;
+  contractsController.initModels(app);
+});
 
 module.exports = app;

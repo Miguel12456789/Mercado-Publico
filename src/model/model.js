@@ -40,6 +40,10 @@ const contractSchema = new mongoose.Schema({
 });
 
 //collection Part
-const API_2020 = mongoose.model("API_2020", contractSchema, "API_2020");
+function createModels(conn1, conn2) {
+  const API_2020 = conn1.model("API_2020", contractSchema, "API_2020");
+  const API_2021 = conn2.model("API_2021", contractSchema, "API_2021");
+  return { API_2020, API_2021 };
+}
 
-module.exports = { API_2020 };
+module.exports = createModels;

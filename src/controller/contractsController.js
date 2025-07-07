@@ -1,10 +1,21 @@
 const mongoose = require('mongoose');
 const express = require('express');
-const { API_2020 } = require('../model/model'); // Ajuste o caminho conforme necessário
+const createModels = require('../model/model');
 
 const { Parser } = require('json2csv'); // para CSV
 const ExcelJS = require('exceljs');     // para XLS
 const PDFDocument = require('pdfkit');  // para PDF
+
+
+let API_2020, API_2021;
+
+// Esta função vai inicializar os modelos com as conexões certas
+function initModels(app) {
+  const { conn1, conn2 } = app.locals;
+  const models = createModels(conn1, conn2);
+  API_2020 = models.API_2020;
+  API_2021 = models.API_2021;
+}
 
 // Modifique o contractsController:
 // contractsController.js
@@ -117,9 +128,9 @@ const contractsGet = async (req, res) => {
       filter.ContratEcologico = "NÃ£o";
     }
     if (req.query['pais'] && req.query['pais'].toLowerCase() !== 'todos') {
-      const pais = req.query['pais'].toLowerCase();
-      const distrito = req.query['distrito']?.replace(/_/g, ' ').toLowerCase();
-      const concelho = req.query['concelho']?.replace(/_/g, ' ').toLowerCase();
+      const pais = req.query['pais'].toLowerCase().trim();
+      const distrito = req.query['distrito']?.replace(/_/g, ' ').toLowerCase().trim();
+      const concelho = req.query['concelho']?.replace(/_/g, ' ').toLowerCase().trim();
 
       let regexStr = pais;
 
@@ -128,9 +139,12 @@ const contractsGet = async (req, res) => {
         if (concelho) regexStr += `,\\s*${concelho}`;
       }
 
-      // Aplica filtro com regex (exato ou parcial, conforme os níveis escolhidos)
-      filter.localExecucao = { $regex: new RegExp(`^${regexStr}`, 'i') };
+      // Evita aplicar filtro inválido
+      if (regexStr && typeof regexStr === 'string') {
+        filter.localExecucao = { $regex: new RegExp(`^${regexStr}`, 'i') };
+      }
     }
+
 
 
     const {
@@ -211,11 +225,16 @@ const contractsGet = async (req, res) => {
     ];
 
     // Executa as duas agregações em paralelo
-    const [contracts, totalResult] = await Promise.all([
+    const [contracts2020, contracts2021, count2020, count2021] = await Promise.all([
       API_2020.aggregate(pipeline),
-      API_2020.aggregate(countPipeline)
+      API_2021.aggregate(pipeline),
+      API_2020.aggregate(countPipeline),
+      API_2021.aggregate(countPipeline)
     ]);
-    const totalContracts = totalResult[0]?.total || 0;
+
+    const contracts = [...contracts2020, ...contracts2021];
+    const totalContracts = (count2020[0]?.total || 0) + (count2021[0]?.total || 0);
+
     const totalPages = Math.ceil(totalContracts / limit);
     const pagination = {
       currentPage: page,
@@ -264,6 +283,8 @@ const contractDetail = async (req, res) => {
 
     // Procura primeiro na API_2020
     let contract = await API_2020.findById(id).lean();
+    if (!contract) contract = await API_2021.findById(id).lean();
+
 
     if (!contract) {
       return res.status(404).render('error', {
@@ -329,7 +350,9 @@ const downloadContracts = async (req, res) => {
     const filters = req.session?.lastQuery || {}; // guarda os filtros aplicados
 
     // Aplicar os mesmos filtros usados na pesquisa
-    const contratos = await API_2020.find(filters).lean(); // ou usa o aggregation se necessário
+    const contratos2020 = await API_2020.find(filters).lean();
+    const contratos2021 = await API_2021.find(filters).lean();
+    const contratos = [...contratos2020, ...contratos2021]; // ou usa o aggregation se necessário
 
     const contratosLimpos = contratos.map(c => {
       const novoContrato = {};
@@ -416,4 +439,4 @@ const downloadContracts = async (req, res) => {
 
 
 
-module.exports = { contractsGet, contractDetail, downloadContracts };
+module.exports = { contractsGet, contractDetail, downloadContracts, initModels };
