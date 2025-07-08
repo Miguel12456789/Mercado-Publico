@@ -7,15 +7,17 @@ const ExcelJS = require('exceljs');     // para XLS
 const PDFDocument = require('pdfkit');  // para PDF
 
 
-let API_2020, API_2021, API_2022;
+let API_2020, API_2021, API_2022, API_2023, API_2024;
 
 // Esta função vai inicializar os modelos com as conexões certas
 function initModels(app) {
-  const { conn1, conn2, conn3 } = app.locals;
-  const models = createModels(conn1, conn2, conn3);
+  const { conn1, conn2, conn3, conn4, conn5 } = app.locals;
+  const models = createModels(conn1, conn2, conn3, conn4, conn5);
   API_2020 = models.API_2020;
   API_2021 = models.API_2021;
   API_2022 = models.API_2022;
+  API_2023 = models.API_2023;
+  API_2024 = models.API_2024;
 }
 
 // Modifique o contractsController:
@@ -236,19 +238,25 @@ const contractsGet = async (req, res) => {
     ];
 
     // Executa as duas agregações em paralelo
-    const [contracts2020, contracts2021, contracts2022, count2020, count2021, count2022] = await Promise.all([
+    const [contracts2020, contracts2021, contracts2022, contracts2023, contracts2024, count2020, count2021, count2022, count2023, count2024] = await Promise.all([
       API_2020.aggregate(pipeline),
       API_2021.aggregate(pipeline),
       API_2022.aggregate(pipeline),
+      API_2023.aggregate(pipeline),
+      API_2024.aggregate(pipeline), // <-- Está sendo buscada aqui
+      // Contagem total de contratos
       API_2020.aggregate(countPipeline),
       API_2021.aggregate(countPipeline),
       API_2022.aggregate(countPipeline),
+      API_2023.aggregate(countPipeline),
+      API_2024.aggregate(countPipeline), // <-- E aqui também
     ]);
 
-    const contracts = [...contracts2020, ...contracts2021, ...contracts2022];
-    const totalContracts = (count2020[0]?.total || 0) + (count2021[0]?.total || 0) + (count2022[0]?.total || 0);
+    const contracts = [...contracts2020, ...contracts2021, ...contracts2022, ...contracts2023, ...contracts2024];
+    const totalContracts = (count2020[0]?.total || 0) + (count2021[0]?.total || 0) + (count2022[0]?.total || 0) + (count2023[0]?.total || 0) + (count2024[0]?.total || 0);
 
     const totalPages = Math.ceil(totalContracts / limit);
+
     const pagination = {
       currentPage: page,
       totalPages,
@@ -306,6 +314,8 @@ const contractDetail = async (req, res) => {
     let contract = await API_2020.findById(id).lean();
     if (!contract) contract = await API_2021.findById(id).lean();
     if (!contract) contract = await API_2022.findById(id).lean();
+    if (!contract) contract = await API_2023.findById(id).lean();
+    if (!contract) contract = await API_2024.findById(id).lean();
 
 
     if (!contract) {
@@ -382,7 +392,9 @@ const downloadContracts = async (req, res) => {
     const contratos2020 = await API_2020.find(filters).lean();
     const contratos2021 = await API_2021.find(filters).lean();
     const contratos2022 = await API_2022.find(filters).lean();
-    const contratos = [...contratos2020, ...contratos2021, ...contratos2022]; // ou usa o aggregation se necessário
+    const contratos2023 = await API_2023.find(filters).lean();
+    const contratos2024 = await API_2024.find(filters).lean();
+    const contratos = [...contratos2020, ...contratos2021, ...contratos2022, ...contratos2023, ...contratos2024]; // ou usa o aggregation se necessário
 
     const contratosLimpos = contratos.map(c => {
       const novoContrato = {};

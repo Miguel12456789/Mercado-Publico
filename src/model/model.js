@@ -40,11 +40,13 @@ const contractSchema = new mongoose.Schema({
 });
 
 //collection Part
-function createModels(conn1, conn2, conn3) {
+function createModels(conn1, conn2, conn3, conn4, conn5) {
     const API_2020 = conn1.model("API_2020", contractSchema, "API_2020");
     const API_2021 = conn2.model("API_2021", contractSchema, "API_2021");
     const API_2022 = conn3.model("API_2022", contractSchema, "API_2022");
-    return { API_2020, API_2021, API_2022 };
+    const API_2023 = conn4.model("API_2023", contractSchema, "API_2023");
+    const API_2024 = conn5.model("API_2024", contractSchema, "API_2024");
+    return { API_2020, API_2021, API_2022, API_2023, API_2024 };
 }
 
 

@@ -6,6 +6,8 @@ const connectDB = async () => {
         const conn1 = mongoose.createConnection(process.env.MONGO_URI_1, { dbName: 'banco1' });
         const conn2 = mongoose.createConnection(process.env.MONGO_URI_2, { dbName: 'banco2' });
         const conn3 = mongoose.createConnection(process.env.MONGO_URI_3, { dbName: 'banco3' });
+        const conn4 = mongoose.createConnection(process.env.MONGO_URI_4, { dbName: 'banco4' });
+        const conn5 = mongoose.createConnection(process.env.MONGO_URI_5, { dbName: 'banco5' });
 
         await Promise.all([
             new Promise((resolve, reject) => {
@@ -20,34 +22,54 @@ const connectDB = async () => {
                 conn3.once('connected', resolve);
                 conn3.once('error', reject);
             }),
+            new Promise((resolve, reject) => {
+                conn4.once('connected', resolve);
+                conn4.once('error', reject);
+            }),
+            new Promise((resolve, reject) => {
+                conn5.once('connected', resolve);
+                conn5.once('error', reject);
+            }),
         ]);
 
         console.log(`✅ MongoDB Cluster 1 Conectado - Banco: ${conn1.name}`);
         console.log(`✅ MongoDB Cluster 2 Conectado - Banco: ${conn2.name}`);
         console.log(`✅ MongoDB Cluster 3 Conectado - Banco: ${conn3.name}`);
+        console.log(`✅ MongoDB Cluster 4 Conectado - Banco: ${conn4.name}`);
+        console.log(`✅ MongoDB Cluster 5 Conectado - Banco: ${conn5.name}`);
 
         // Criando um Model de teste para cada conexão
         const TestModel1 = conn1.model('Teste', new mongoose.Schema({ msg: String }), 'teste');
         const TestModel2 = conn2.model('Teste', new mongoose.Schema({ msg: String }), 'teste');
         const TestModel3 = conn3.model('Teste', new mongoose.Schema({ msg: String }), 'teste');
+        const TestModel4 = conn4.model('Teste', new mongoose.Schema({ msg: String }), 'teste');
+        const TestModel5 = conn5.model('Teste', new mongoose.Schema({ msg: String }), 'teste');
+
 
         // Inserindo documento fictício apenas se a collection estiver vazia
         await Promise.all([
             TestModel1.create({ msg: 'Hello Banco 1' }),
             TestModel2.create({ msg: 'Hello Banco 2' }),
             TestModel3.create({ msg: 'Hello Banco 3' }),
+            TestModel4.create({ msg: 'Hello Banco 4' }),
+            TestModel5.create({ msg: 'Hello Banco 5' }),
         ]);
 
         // Listando as collections de cada conexão
         const collections1 = await conn1.db.listCollections().toArray();
         const collections2 = await conn2.db.listCollections().toArray();
         const collections3 = await conn3.db.listCollections().toArray();
+        const collections4 = await conn4.db.listCollections().toArray();
+        const collections5 = await conn5.db.listCollections().toArray();
 
         console.log(`📂 Collections do Cluster 1 (${conn1.name}):`, collections1.map(col => col.name));
         console.log(`📂 Collections do Cluster 2 (${conn2.name}):`, collections2.map(col => col.name));
         console.log(`📂 Collections do Cluster 3 (${conn3.name}):`, collections3.map(col => col.name));
+        console.log(`📂 Collections do Cluster 4 (${conn4.name}):`, collections4.map(col => col.name));
+        console.log(`📂 Collections do Cluster 5 (${conn5.name}):`, collections5.map(col => col.name));
 
-        return { conn1, conn2, conn3 };
+
+        return { conn1, conn2, conn3, conn4, conn5 };
     } catch (error) {
         console.error(`❌ Erro ao conectar: ${error.message}`);
         process.exit(1);
