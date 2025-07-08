@@ -39,17 +39,65 @@ const contractsGet = async (req, res) => {
       filter.objectoContrato = { $regex: req.query.search.trim(), $options: 'i' };
     }
 
+    // --- Filtros relacionados à Lei n.º 30/2021 (metodologia especial) ---
+
+    // Inicializamos um array de condições para o campo 'regime'
+    const regimeConditions = [];
+
+    // 1. Se checkbox "metodologia especial" estiver ativo
     if (req.query['special-measures'] === 'on') {
-      filter.medidasEspeciais = true;
+      regimeConditions.push(/Lei\s*n\.º\s*30\/2021/i); // genérico
     }
 
+    // 2. Se checkbox "incluir MEC ao abrigo do CCP" estiver ativo
     if (req.query['include-mec'] === 'on') {
-      filter.mec = true;
+      regimeConditions.push(/Lei\s*n\.º\s*30\/2021/i); // pode coincidir com o anterior — não tem problema
     }
 
+    // 3. Se uma tipologia estiver selecionada
     if (req.query['measure-type'] && req.query['measure-type'] !== 'Todos') {
-      filter.tipoMedidaEspecial = req.query['measure-type'];
+      const tipo = req.query['measure-type'].trim();
+
+      const tipologiaRegexMap = {
+        "Projetos financiados ou cofinanciados por fundos europeus - artigo 2º da Lei n.º 30/2021":
+          /artigo\s*2.*Lei\s*n\.º\s*30\/2021/i,
+        "Habitação e descentralização - artigo 3º da Lei n.º 30/2021":
+          /artigo\s*3.*Lei\s*n\.º\s*30\/2021/i,
+        "Tecnologias de informação e conhecimento - artigo 4º da Lei n.º 30/2021":
+          /artigo\s*4.*Lei\s*n\.º\s*30\/2021/i,
+        "Setor da saúde e do apoio social - artigo 5º da Lei n.º 30/2021":
+          /artigo\s*5.*Lei\s*n\.º\s*30\/2021/i,
+        "Programa de Estabilização Económica e Social (PEES) - artigo 6º da Lei n.º 30/2021":
+          /artigo\s*6.*Lei\s*n\.º\s*30\/2021/i,
+        "Plano de Recuperação e Resiliência (PRR) - artigo 2º da Lei n.º 30/2021, DL n.º 78/2022":
+          /artigo\s*2.*Lei\s*n\.º\s*30\/2021.*DL\s*n\.º\s*78\/2022/i,
+        "Plano de Recuperação e Resiliência (PRR) - artigo 6º da Lei n.º 30/2021":
+          /artigo\s*6.*Lei\s*n\.º\s*30\/2021.*PRR/i,
+        "Sistema de Gestão Integrada de Fogos Rurais - artigo 7º da Lei n.º 30/2021":
+          /artigo\s*7.*Lei\s*n\.º\s*30\/2021/i,
+        "Bens agro-alimentares - artigo 8º da Lei n.º 30/2021":
+          /artigo\s*8.*Lei\s*n\.º\s*30\/2021/i,
+        "Regime especial de empreitadas de conceção-construção - artigo 2º-A da Lei n.º 30/2021, DL n.º 78/2022":
+          /artigo\s*2-A.*Lei\s*n\.º\s*30\/2021.*DL\s*n\.º\s*78\/2022/i
+      };
+
+      const regex = tipologiaRegexMap[tipo];
+      if (regex) {
+        regimeConditions.push(regex);
+      }
     }
+
+    // 🔒 Aplica todos os filtros de forma segura (AND entre os regex)
+    if (regimeConditions.length === 1) {
+      filter.regime = { $regex: regimeConditions[0] };
+    } else if (regimeConditions.length > 1) {
+      filter.$and = filter.$and || [];
+      regimeConditions.forEach(rgx => {
+        filter.$and.push({ regime: { $regex: rgx } });
+      });
+    }
+
+
 
     const procedimentoMap = {
       1: "Ajuste Direto Regime Geral",
@@ -104,7 +152,6 @@ const contractsGet = async (req, res) => {
         filter.tipoContrato = tipoContratoStr;
       }
     }
-
 
     if (req.query['adjudicatario']?.trim()) {
       filter.adjudicatarios = { $regex: req.query['adjudicatario'].trim(), $options: 'i' };
@@ -379,7 +426,31 @@ const downloadContracts = async (req, res) => {
 
   try {
     const format = req.query.format || 'csv';
-    const filters = req.session?.lastQuery || {}; // guarda os filtros aplicados
+    let filters = req.session?.lastQuery || {};
+
+    // Reconstruir o campo regime se for RegExp serializada
+    if (filters.regime && typeof filters.regime === 'object' && filters.regime.$regex) {
+      const raw = filters.regime;
+      if (typeof raw.$regex === 'string') {
+        filters.regime = new RegExp(raw.$regex, raw.$options || 'i');
+      } else {
+        // evita regime: {}
+        delete filters.regime;
+      }
+    }
+
+    // Reconstruir múltiplas condições se houver $and
+    if (Array.isArray(filters.$and)) {
+      filters.$and = filters.$and.map(cond => {
+        if (cond.regime?.$regex && typeof cond.regime.$regex === 'string') {
+          return {
+            regime: new RegExp(cond.regime.$regex, cond.regime.$options || 'i')
+          };
+        }
+        return cond;
+      });
+    }
+
 
     // Reconstrói a RegExp do campo localExecucao, se necessário
     if (filters.localExecucao?.$regex && typeof filters.localExecucao.$regex === 'string') {
