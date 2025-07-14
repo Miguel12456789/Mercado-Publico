@@ -1,10 +1,7 @@
 // Renderiza a pagina normalmente
 const renderPage = (page) => (req, res) => {
-    res.render(page, {
-        navFile: 'nav',
-        footerFile: 'footer',
-    });
-};
+    res.render(page);
+};;
 
 const home = renderPage("home");
 const API_2020 = renderPage("API_2020")
