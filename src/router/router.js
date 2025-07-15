@@ -18,7 +18,7 @@ router.post('/components/verify_code', emailController.verify_code);
 
 
 router.get("/sPub", navegationController.sPub);
-router.get("/estat_spri", navegationController.estat_spri);
+router.get("/sPri", navegationController.sPri);
 router.get("/op_cp", navegationController.op_cp);
 router.get("/outros", navegationController.outros);
 router.get("/tab_sPub", navegationController.tab_sPub);
