@@ -6,6 +6,7 @@
     opacity: 0;
     transform: translateY(-0.25rem);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -31,13 +32,11 @@ body {
 
 .container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1300px;
   margin-left: auto;
   margin-right: auto;
   padding-left: 2rem;
   padding-right: 2rem;
-  margin-top: 1rem;
-  margin-bottom: 10rem;
 }
 
 /* Header */
@@ -289,33 +288,45 @@ main {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 2rem;
-  margin-bottom: 1.5rem;
   padding: 1rem 0;
   border-top: 1px solid #e5e7eb;
-  border-bottom: 1px solid #e5e7eb;
+  margin-top: 3rem; /* Adicionado para afastar do topo */
 }
 
 .info-display {
   display: flex;
-  flex-direction: column; /* Empilha label e value */
-  align-items: flex-start; /* Alinha à esquerda */
-  gap: 0.25rem; /* Espaçamento menor entre label e value */
-  padding: 0; /* Remove padding */
-  background-color: transparent; /* Remove fundo */
-  border: none; /* Remove borda */
+  flex-direction: column;
+  /* Empilha label e value */
+  align-items: flex-start;
+  /* Alinha à esquerda */
+  gap: 0.25rem;
+  /* Espaçamento menor entre label e value */
+  padding: 0;
+  /* Remove padding */
+  background-color: transparent;
+  /* Remove fundo */
+  border: none;
+  /* Remove borda */
 }
 
 .info-label {
-  font-size: 0.875rem; /* Tamanho da fonte original */
-  font-weight: 500; /* Peso da fonte original */
-  color: #6b7280; /* Cor original */
+  font-size: 0.875rem;
+  /* Tamanho da fonte original */
+  font-weight: 500;
+  /* Peso da fonte original */
+  color: #6b7280;
+  /* Cor original */
 }
 
 .info-value {
-  font-size: 1.5rem; /* Aumenta o tamanho da fonte para o valor */
-  font-weight: 700; /* Torna o valor mais negrito */
-  color: #1f2937; /* Cor mais escura para o valor */
-  display: inline; /* Garante que o valor seja exibido */
+  font-size: 1.5rem;
+  /* Aumenta o tamanho da fonte para o valor */
+  font-weight: 700;
+  /* Torna o valor mais negrito */
+  color: #1f2937;
+  /* Cor mais escura para o valor */
+  display: inline;
+  /* Garante que o valor seja exibido */
 }
 
 .form-divider {
@@ -403,11 +414,11 @@ main {
 }
 
 /* Modificando o posicionamento do botão LIMPAR */
-.clear-selection-container {
+.form-buttons {
   display: flex;
-  align-items: flex-end;
-  justify-content: flex-start;
-  margin-top: auto;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: -1.5rem;
 }
 
 .clear-selection-button {
@@ -441,50 +452,88 @@ main {
   cursor: not-allowed;
 }
 
+
+.submit-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  background-color: #3c6c2a;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+   margin-top: 1.7em; 
+}
+
+.submit-button:hover {
+  background-color: #4d8836;
+}
+
 /* Responsive styles */
 @media (max-width: 768px) {
   .search-row {
     flex-direction: column;
   }
+
   .dropdown,
   .search-input,
   .search-button,
   .advanced-search-button {
     width: 100%;
   }
+
   .form-buttons {
     flex-direction: column;
   }
+
   .clear-button,
   .submit-button {
     width: 100%;
   }
+
   .banner {
     border-radius: 25px;
     padding: 1.25rem;
   }
+
   .banner p {
     font-size: 1rem;
   }
+
   .form-row {
     grid-template-columns: 1fr;
   }
+
   /* Responsive para a seção de entidade */
   .geographic-row,
   .administrative-row {
     grid-template-columns: 1fr;
   }
+
   .entity-selection-section {
     padding: 1rem;
   }
+
   .statistics-row {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
+
   .info-display {
-    flex-direction: column; /* Mantém empilhado para telas menores */
-    align-items: flex-start; /* Alinha à esquerda */
+    flex-direction: column;
+    /* Mantém empilhado para telas menores */
+    align-items: flex-start;
+    /* Alinha à esquerda */
     gap: 0.25rem;
+  }
+
+  .clear-button,
+  .submit-button {
+    width: 100%;
   }
 }
 
@@ -492,12 +541,15 @@ main {
   .search-input {
     min-width: 200px;
   }
+
   .form-row {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .geographic-row {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .administrative-row {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -507,6 +559,7 @@ main {
   .geographic-row {
     grid-template-columns: repeat(3, 1fr);
   }
+
   .administrative-row {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -516,6 +569,7 @@ main {
   .geographic-row {
     grid-template-columns: repeat(4, 1fr);
   }
+
   .administrative-row {
     grid-template-columns: repeat(3, 1fr);
   }
