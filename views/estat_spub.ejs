@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-pt">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +8,6 @@
         rel="stylesheet">
     <title>Helpdesk Público</title>
 </head>
-
 <body>
     <main class="container py-8">
         <h1 class="titulo">Estatísticas Setor Público</h1>
@@ -20,68 +18,115 @@
                 Portugal.
             </p>
         </div>
-
         <div class="search-container">
             <!-- Entity Selection Form -->
             <div id="advanced-search-form">
                 <div class="form-content">
-                    <!-- Entity Type Selection Section - Modificado para ter apenas um input centralizado -->
-                    <h2 class="form-section-title">Seleção tipo de Entidade</h2>
-                    <div class="form-row">
-                        <div class="form-field">
-                            <label class="form-label">País</label>
-                            <div class="custom-select">
-                                <select class="form-select">
-                                    <option>Todos</option>
-                                    <option>Portugal</option>
-                                    <option>Outros</option>
-                                </select>
+                    <!-- Entity Type Selection Section - Reorganizado para melhor hierarquia -->
+                    <div class="entity-selection-section">
+                        <!-- Localização Geográfica -->
+                        <div class="entity-subsection">
+                            <h2 class="form-section-title">Localização Geográfica</h2>
+                            <div class="entity-selection-row geographic-row">
+                                <div class="form-field">
+                                    <label class="form-label">País</label>
+                                    <div class="custom-select">
+                                        <select class="form-select">
+                                            <option>Todos</option>
+                                            <option>Portugal</option>
+                                            <option>Outros</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-field">
+                                    <label class="form-label">Região</label>
+                                    <div class="custom-select">
+                                        <select class="form-select">
+                                            <option>Todos</option>
+                                            <option>Norte</option>
+                                            <option>Centro</option>
+                                            <option>Lisboa</option>
+                                            <option>Alentejo</option>
+                                            <option>Algarve</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-field">
+                                    <label class="form-label">Distrito</label>
+                                    <div class="custom-select">
+                                        <select class="form-select">
+                                            <option>Todos</option>
+                                            <option>Lisboa</option>
+                                            <option>Porto</option>
+                                            <option>Faro</option>
+                                            <option>Braga</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-field">
+                                    <label class="form-label">Conselho</label>
+                                    <div class="custom-select">
+                                        <select class="form-select">
+                                            <option>Todos</option>
+                                            <option>Lisboa</option>
+                                            <option>Cascais</option>
+                                            <option>Sintra</option>
+                                            <option>Oeiras</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
-                        <div class="form-field">
-                            <label class="form-label">Setor</label>
-                            <div class="custom-select">
-                                <select class="form-select">
-                                    <option>Todos</option>
-                                    <option value="publico">Público</option>
-                                    <option>Privado</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-field">
-                            <label class="form-label">Subsetor</label>
-                            <div class="custom-select">
-                                <select class="form-select">
-                                    <option>Todos</option>
-                                    <option>Administração Central</option>
-                                    <option>Administração Local</option>
-                                    <option>Empresas Públicas</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-field">
-                            <label class="form-label">Categorização</label>
-                            <div class="custom-select">
-                                <select class="form-select">
-                                    <option>Todos</option>
-                                    <option>Categoria 1</option>
-                                    <option>Categoria 2</option>
-                                    <option>Categoria 3</option>
-                                </select>
+                        <!-- Organização Administrativa -->
+                        <div class="entity-subsection">
+                            <h3 class="subsection-title">Organização Administrativa</h3>
+                            <div class="entity-selection-row administrative-row">
+                                <div class="form-field">
+                                    <label class="form-label">Setor</label>
+                                    <div class="custom-select">
+                                        <select class="form-select">
+                                            <option>Todos</option>
+                                            <option value="publico">Público</option>
+                                            <option>Privado</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-field">
+                                    <label class="form-label">Subsetor</label>
+                                    <div class="custom-select">
+                                        <select class="form-select">
+                                            <option>Todos</option>
+                                            <option>Administração Central</option>
+                                            <option>Administração Local</option>
+                                            <option>Empresas Públicas</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-field">
+                                    <label class="form-label">Categorização</label>
+                                    <div class="custom-select">
+                                        <select class="form-select">
+                                            <option>Todos</option>
+                                            <option>Administração Central</option>
+                                            <option>Administração Local</option>
+                                            <option>Empresas Públicas</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Input centralizado para Nº / Valor -->
-                    <div class="centered-input-container">
-                        <div class="centered-input-field">
-                            <input type="text" class="form-input" placeholder="Nº / Valor">
+                    <!-- Seção de Informações Estatísticas - Simplificada -->
+                    <div class="statistics-row">
+                        <div class="info-display">
+                            <span class="info-label">N.º de Entidades:</span>
+                            <span class="info-value" id="num-entities">1.500</span>
+                        </div>
+                        <div class="info-display">
+                            <span class="info-label">Registo Atividade Portal Base:</span>
+                            <span class="info-value" id="portal-activity">92.5%</span>
                         </div>
                     </div>
-
                     <!-- Movements and Changes Section -->
                     <h2 class="form-section-title">Movimentos e Alterações das Entidades</h2>
                     <div class="form-row">
@@ -89,18 +134,15 @@
                             <label class="form-label">Inclusões</label>
                             <input type="text" class="form-input" placeholder="Nº / Valor">
                         </div>
-
                         <div class="form-field">
                             <label class="form-label">Exclusões</label>
                             <input type="text" class="form-input" placeholder="Nº / Valor">
                         </div>
-
                         <div class="form-field">
                             <label class="form-label">Extinções</label>
                             <input type="text" class="form-input" placeholder="Nº / Valor">
                         </div>
                     </div>
-
                     <!-- Define Text Section 1 -->
                     <h2 class="form-section-title">Definir Texto</h2>
                     <div class="form-row">
@@ -115,7 +157,6 @@
                             </div>
                             <input type="text" class="form-input mt-2" placeholder="Nº / Valor">
                         </div>
-
                         <div class="form-field">
                             <label class="form-label">Detentor</label>
                             <div class="custom-select">
@@ -127,18 +168,11 @@
                             </div>
                             <input type="text" class="form-input mt-2" placeholder="Nº / Valor">
                         </div>
-
                         <div class="form-field">
                             <label class="form-label">Enquadramento Sujeito CCP</label>
                             <input type="text" class="form-input" placeholder="Nº / Valor">
                         </div>
-
-                        <div class="form-field">
-                            <label class="form-label">Registo Atividade Portal Base</label>
-                            <input type="text" class="form-input" placeholder="% / Percentagem">
-                        </div>
                     </div>
-
                     <!-- Define Text Section 2 -->
                     <h2 class="form-section-title">Definir Texto</h2>
                     <div class="form-row">
@@ -156,7 +190,6 @@
                             </div>
                             <input type="text" class="form-input mt-2" placeholder="Nº / Valor">
                         </div>
-
                         <div class="form-field">
                             <label class="form-label">Distritos</label>
                             <div class="custom-select">
@@ -170,7 +203,6 @@
                             </div>
                             <input type="text" class="form-input mt-2" placeholder="Nº / Valor">
                         </div>
-
                         <div class="form-field">
                             <label class="form-label">Concelhos</label>
                             <div class="custom-select">
@@ -185,7 +217,6 @@
                             <input type="text" class="form-input mt-2" placeholder="Nº / Valor">
                         </div>
                     </div>
-
                     <!-- Botão LIMPAR movido para fora da última form-row e posicionado mais abaixo -->
                     <div class="clear-selection-container">
                         <button class="clear-selection-button">
@@ -197,26 +228,20 @@
             </div>
         </div>
     </main>
-
-    <%- include('components/button') %>
-
-        <script>
-            document.addEventListener('DOMContentLoaded', () => {
-                // Initialize Lucide icons
-                (window.lucide || (
-                    console.warn('Lucide is not globally defined. Ensure Lucide library is properly included.'),
-                    window.lucide = { createIcons: () => { } }
-                )).createIcons();
-
-                // Clear selection button functionality
-                document.querySelector('.clear-selection-button')?.addEventListener('click', () => {
-                    document.querySelectorAll('.form-select').forEach(select => select.selectedIndex = 0);
-                    document.querySelectorAll('.form-input').forEach(input => input.value = '');
-                });
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize Lucide icons
+            (window.lucide || (
+                console.warn('Lucide is not globally defined. Ensure Lucide library is properly included.'),
+                window.lucide = { createIcons: () => { } }
+            )).createIcons();
+            // Clear selection button functionality
+            document.querySelector('.clear-selection-button')?.addEventListener('click', () => {
+                document.querySelectorAll('.form-select').forEach(select => select.selectedIndex = 0);
+                document.querySelectorAll('.form-input').forEach(input => input.value = '');
             });
-        </script>
-
+            // Os valores fictícios são agora estáticos no HTML, não há necessidade de JS para atualizá-los.
+        });
+    </script>
 </body>
-
-
 </html>
