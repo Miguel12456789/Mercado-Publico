@@ -237,6 +237,9 @@
                 </div>
             </div>
         </div>
+
+        <%- include('components/button') %>
+
     </main>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -245,7 +248,7 @@
                 console.warn('Lucide is not globally defined. Ensure Lucide library is properly included.'),
                 window.lucide = { createIcons: () => { } }
             )).createIcons();
-            
+
             // Clear selection button functionality
             document.querySelector('.clear-selection-button')?.addEventListener('click', () => {
                 // Limpa selects e inputs
