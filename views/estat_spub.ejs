@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-pt">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="estat_spub.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+
     <title>Helpdesk Público</title>
 </head>
+
 <body>
     <main class="container py-8">
         <h1 class="titulo">Estatísticas Setor Público</h1>
@@ -24,54 +28,63 @@
                 <div class="form-content">
                     <!-- Entity Type Selection Section - Reorganizado para melhor hierarquia -->
                     <div class="entity-selection-section">
+                        <h2 class="form-section-title">Seleção tipo de Entidade</h2>
                         <!-- Localização Geográfica -->
                         <div class="entity-subsection">
-                            <h2 class="form-section-title">Localização Geográfica</h2>
+                            <h3 class="subsection-title">Localização Geográfica</h3>
                             <div class="entity-selection-row geographic-row">
                                 <div class="form-field">
                                     <label class="form-label">País</label>
                                     <div class="custom-select">
-                                        <select class="form-select">
-                                            <option>Todos</option>
-                                            <option>Portugal</option>
-                                            <option>Outros</option>
+                                        <select id="pais-select" class="form-select">
+                                            <option value="todos">Todos</option>
+                                            <option value="portugal">Portugal</option>
+                                            <option value="outros">Outros</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-field">
                                     <label class="form-label">Região</label>
                                     <div class="custom-select">
-                                        <select class="form-select">
-                                            <option>Todos</option>
-                                            <option>Norte</option>
-                                            <option>Centro</option>
-                                            <option>Lisboa</option>
-                                            <option>Alentejo</option>
-                                            <option>Algarve</option>
+                                        <select id="regiao-select" class="form-select" disabled>
+                                            <option value="todos">Todos</option>
+                                            <option value="continental">Continental</option>
+                                            <option value="acores">Açores</option>
+                                            <option value="madeira">Madeira</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-field">
                                     <label class="form-label">Distrito</label>
                                     <div class="custom-select">
-                                        <select class="form-select">
-                                            <option>Todos</option>
-                                            <option>Lisboa</option>
-                                            <option>Porto</option>
-                                            <option>Faro</option>
-                                            <option>Braga</option>
+                                        <select id="distrito-select" class="form-select" disabled>
+                                            <option value="">Todos os distritos</option>
+                                            <option value="aveiro">Aveiro</option>
+                                            <option value="beja">Beja</option>
+                                            <option value="braga">Braga</option>
+                                            <option value="braganca">Bragança</option>
+                                            <option value="castelo_branco">Castelo Branco</option>
+                                            <option value="coimbra">Coimbra</option>
+                                            <option value="Évora">Évora</option>
+                                            <option value="faro">Faro</option>
+                                            <option value="guarda">Guarda</option>
+                                            <option value="leiria">Leiria</option>
+                                            <option value="lisboa">Lisboa</option>
+                                            <option value="portalegre">Portalegre</option>
+                                            <option value="porto">Porto</option>
+                                            <option value="santarem">Santarém</option>
+                                            <option value="setubal">Setúbal</option>
+                                            <option value="viana_do_castelo">Viana do Castelo</option>
+                                            <option value="vila_real">Vila Real</option>
+                                            <option value="viseu">Viseu</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-field">
-                                    <label class="form-label">Conselho</label>
+                                    <label class="form-label">Concelho</label>
                                     <div class="custom-select">
-                                        <select class="form-select">
-                                            <option>Todos</option>
-                                            <option>Lisboa</option>
-                                            <option>Cascais</option>
-                                            <option>Sintra</option>
-                                            <option>Oeiras</option>
+                                        <select id="concelho-select" class="form-select" disabled>
+                                            <option value="">Todos os concelhos</option>
                                         </select>
                                     </div>
                                 </div>
@@ -84,32 +97,29 @@
                                 <div class="form-field">
                                     <label class="form-label">Setor</label>
                                     <div class="custom-select">
-                                        <select class="form-select">
+                                        <select id="setor-select" class="form-select">
                                             <option>Todos</option>
-                                            <option value="publico">Público</option>
-                                            <option>Privado</option>
+                                            <option value="S11">S11 - Sociedades não financeiras</option>
+                                            <option value="S12">S12</option>
+                                            <option value="S13">S13</option>
+                                            <option value="S14/S15">S14 / S15</option>
+                                            <option value="S40">S40</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-field">
                                     <label class="form-label">Subsetor</label>
                                     <div class="custom-select">
-                                        <select class="form-select">
+                                        <select id="subsetor-select" class="form-select" disabled>
                                             <option>Todos</option>
-                                            <option>Administração Central</option>
-                                            <option>Administração Local</option>
-                                            <option>Empresas Públicas</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-field">
                                     <label class="form-label">Categorização</label>
                                     <div class="custom-select">
-                                        <select class="form-select">
+                                        <select id="categorizacao-select" class="form-select" disabled>
                                             <option>Todos</option>
-                                            <option>Administração Central</option>
-                                            <option>Administração Local</option>
-                                            <option>Empresas Públicas</option>
                                         </select>
                                     </div>
                                 </div>
@@ -119,12 +129,12 @@
                     <!-- Seção de Informações Estatísticas - Simplificada -->
                     <div class="statistics-row">
                         <div class="info-display">
-                            <span class="info-label">N.º de Entidades:</span>
+                            <span class="info-label">N.º de Entidades</span>
                             <span class="info-value" id="num-entities">1.500</span>
                         </div>
                         <div class="info-display">
-                            <span class="info-label">Registo Atividade Portal Base:</span>
-                            <span class="info-value" id="portal-activity">92.5%</span>
+                            <span class="info-label">Registo Atividade Portal Base</span>
+                            <span class="info-value" id="portal-activity">92</span>
                         </div>
                     </div>
                     <!-- Movements and Changes Section -->
@@ -235,13 +245,265 @@
                 console.warn('Lucide is not globally defined. Ensure Lucide library is properly included.'),
                 window.lucide = { createIcons: () => { } }
             )).createIcons();
+            
             // Clear selection button functionality
+            document.querySelector('.clear-selection-button')?.addEventListener('click', () => {
+                // Limpa selects e inputs
+                document.querySelectorAll('.form-select').forEach(select => select.selectedIndex = 0);
+                document.querySelectorAll('.form-input').forEach(input => input.value = '');
+
+                // Restaura o estado inicial dos selects dependentes
+                document.getElementById('regiao-select').disabled = true;
+                document.getElementById('distrito-select').disabled = true;
+                document.getElementById('concelho-select').disabled = true;
+
+                document.getElementById('subsetor-select').disabled = true;
+                document.getElementById('categorizacao-select').disabled = true;
+
+                // Limpa conteúdo de concelhos, subsetores e categorizações
+                document.getElementById('concelho-select').innerHTML = '<option value="">Todos os concelhos</option>';
+                document.getElementById('subsetor-select').innerHTML = '<option value="">Todos</option>';
+                document.getElementById('categorizacao-select').innerHTML = '<option value="">Todos</option>';
+            });
+
+            const selectById = id => document.getElementById(id);
+            const paisSelect = selectById('pais-select');
+            const regiaoSelect = selectById('regiao-select');
+            const distritoSelect = selectById('distrito-select');
+            const concelhoSelect = selectById('concelho-select');
+            const subsetorSelect = selectById('subsetor-select');
+            const categorizacaoSelect = selectById('categorizacao-select');
+            const setorSelect = selectById('setor-select');
+
+            const toggleSelect = (id, enable) => {
+                const el = selectById(id);
+                el.disabled = !enable;
+                if (!enable) {
+                    el.selectedIndex = 0;
+                    if (id === 'concelho-select') {
+                        el.innerHTML = '<option value=\"\">Todos os concelhos</option>';
+                    }
+                }
+            };
+
+
+            const preencherConcelhos = (select, lista) => {
+                select.innerHTML = '<option value="">Todos os concelhos</option>';
+                lista.forEach(nome => {
+                    const value = nome.toLowerCase().replace(/\s+/g, '_');
+                    select.appendChild(new Option(nome, value));
+                });
+            };
+
+            if (window.lucide && typeof window.lucide.createIcons === 'function') {
+                window.lucide.createIcons();
+            }
+
             document.querySelector('.clear-selection-button')?.addEventListener('click', () => {
                 document.querySelectorAll('.form-select').forEach(select => select.selectedIndex = 0);
                 document.querySelectorAll('.form-input').forEach(input => input.value = '');
+                ['regiao-select', 'distrito-select', 'concelho-select', 'subsetor-select', 'categorizacao-select'].forEach(id => toggleSelect(id, false));
             });
-            // Os valores fictícios são agora estáticos no HTML, não há necessidade de JS para atualizá-los.
+
+            paisSelect.addEventListener('change', () => {
+                if (paisSelect.value === 'portugal') {
+                    toggleSelect('regiao-select', true);
+                    regiaoSelect.dispatchEvent(new Event('change'));
+                } else {
+                    ['regiao-select', 'distrito-select', 'concelho-select'].forEach(id => toggleSelect(id, false));
+                }
+            });
+
+            regiaoSelect.addEventListener('change', () => {
+                const region = regiaoSelect.value;
+                if (region === 'continental') {
+                    toggleSelect('distrito-select', true);
+                    toggleSelect('concelho-select', false);
+                } else if (['acores', 'madeira'].includes(region)) {
+                    toggleSelect('distrito-select', false);
+                    toggleSelect('concelho-select', true);
+                    preencherConcelhos(concelhoSelect, regiaoConcelhos[region] || []);
+                } else {
+                    toggleSelect('distrito-select', false);
+                    toggleSelect('concelho-select', false);
+                }
+            });
+
+            distritoSelect.addEventListener('change', () => {
+                const concelhos = distritosConcelhos[distritoSelect.value] || [];
+                preencherConcelhos(concelhoSelect, concelhos);
+                toggleSelect('concelho-select', concelhos.length > 0);
+            });
+
+            setorSelect.addEventListener('change', () => {
+                const setor = setorSelect.value;
+                subsetorSelect.innerHTML = '<option value="">Todos</option>';
+                categorizacaoSelect.innerHTML = '<option value="">Todos</option>';
+                subsetorSelect.disabled = true;
+                categorizacaoSelect.disabled = true;
+
+                const info = estrutura[setor];
+                if (!info) return;
+
+                if (info.tipo === 'comSubsetor') {
+                    Object.keys(info.dados).forEach(sub => {
+                        subsetorSelect.appendChild(new Option(sub, sub));
+                    });
+                    subsetorSelect.disabled = false;
+                } else {
+                    info.dados.forEach(cat => {
+                        categorizacaoSelect.appendChild(new Option(cat, cat));
+                    });
+                    categorizacaoSelect.disabled = false;
+                }
+            });
+
+            subsetorSelect.addEventListener('change', () => {
+                const setor = setorSelect.value;
+                const subsetor = subsetorSelect.value;
+                const categorias = estrutura[setor]?.dados[subsetor] || [];
+                categorizacaoSelect.innerHTML = '<option value="">Todos</option>';
+                categorias.forEach(cat => {
+                    categorizacaoSelect.appendChild(new Option(cat, cat));
+                });
+                categorizacaoSelect.disabled = categorias.length === 0;
+            });
+
+            const distritosConcelhos = {
+                aveiro: ["Águeda", "Albergaria-a-Velha", "Anadia", "Arouca", "Aveiro", "Castelo de Paiva", "Espinho", "Estarreja", "Ílhavo", "Mealhada", "Murtosa", "Oliveira de Azeméis", "Oliveira do Bairro", "Ovar", "Santa Maria da Feira", "São João da Madeira", "Sever do Vouga", "Vagos", "Vale de Cambra"],
+                beja: ["Aljustrel", "Almodôvar", "Alvito", "Barrancos", "Beja", "Castro Verde", "Cuba", "Ferreira do Alentejo", "Mértola", "Moura", "Odemira", "Ourique", "Serpa", "Vidigueira"],
+                braga: ["Amares", "Barcelos", "Braga", "Cabeceiras de Basto", "Celorico de Basto", "Esposende", "Fafe", "Guimarães", "Póvoa de Lanhoso", "Terras de Bouro", "Vieira do Minho", "Vila Nova de Famalicão", "Vila Verde", "Vizela"],
+                braganca: ["Alfândega da Fé", "Bragança", "Carrazeda de Ansiães", "Freixo de Espada à Cinta", "Macedo de Cavaleiros", "Miranda do Douro", "Mirandela", "Mogadouro", "Torre de Moncorvo", "Vila Flor", "Vimioso", "Vinhais"],
+                castelo_branco: ["Belmonte", "Castelo Branco", "Covilhã", "Fundão", "Idanha-a-Nova", "Oleiros", "Penamacor", "Proença-a-Nova", "Sertã", "Vila de Rei", "Vila Velha de Ródão"],
+                coimbra: ["Arganil", "Cantanhede", "Coimbra", "Condeixa-a-Nova", "Figueira da Foz", "Góis", "Lousã", "Mira", "Miranda do Corvo", "Montemor-o-Velho", "Oliveira do Hospital", "Pampilhosa da Serra", "Penacova", "Penela", "Soure", "Tábua", "Vila Nova de Poiares"],
+                Évora: ["Alandroal", "Arraiolos", "Borba", "Estremoz", "Évora", "Montemor-o-Novo", "Mora", "Mourão", "Portel", "Redondo", "Reguengos de Monsaraz", "Vendas Novas", "Viana do Alentejo", "Vila Viçosa"],
+                faro: ["Albufeira", "Alcoutim", "Aljezur", "Castro Marim", "Faro", "Lagoa", "Lagos", "Loulé", "Monchique", "Olhão", "Portimão", "São Brás de Alportel", "Silves", "Tavira", "Vila do Bispo", "Vila Real de Santo António"],
+                guarda: ["Aguiar da Beira", "Almeida", "Celorico da Beira", "Figueira de Castelo Rodrigo", "Fornos de Algodres", "Gouveia", "Guarda", "Manteigas", "Mêda", "Pinhel", "Sabugal", "Seia", "Trancoso", "Vila Nova de Foz Côa"],
+                leiria: ["Alcobaça", "Alvaiázere", "Ansião", "Batalha", "Bombarral", "Caldas da Rainha", "Castanheira de Pêra", "Figueiró dos Vinhos", "Leiria", "Marinha Grande", "Nazaré", "Óbidos", "Pedrógão Grande", "Peniche", "Pombal", "Porto de Mós"],
+                lisboa: ["Alenquer", "Amadora", "Arruda dos Vinhos", "Azambuja", "Cadaval", "Cascais", "Lisboa", "Loures", "Lourinhã", "Mafra", "Odivelas", "Oeiras", "Sintra", "Sobral de Monte Agraço", "Torres Vedras", "Vila Franca de Xira"],
+                portalegre: ["Alter do Chão", "Arronches", "Avis", "Campo Maior", "Castelo de Vide", "Crato", "Elvas", "Fronteira", "Gavião", "Marvão", "Monforte", "Nisa", "Ponte de Sor", "Portalegre", "Sousel"],
+                porto: ["Amarante", "Baião", "Felgueiras", "Gondomar", "Lousada", "Maia", "Marco de Canaveses", "Matosinhos", "Paços de Ferreira", "Paredes", "Penafiel", "Porto", "Póvoa de Varzim", "Santo Tirso", "São João da Madeira", "Trofa", "Valongo", "Vila do Conde", "Vila Nova de Gaia"],
+                santarem: ["Abrantes", "Alcanena", "Almeirim", "Alpiarça", "Benavente", "Cartaxo", "Chamusca", "Constância", "Coruche", "Entroncamento", "Ferreira do Zêzere", "Golegã", "Mação", "Ourém", "Rio Maior", "Salvaterra de Magos", "Santarém", "Sardoal", "Tomar", "Torres Novas", "Vila Nova da Barquinha"],
+                setubal: ["Alcácer do Sal", "Almada", "Barreiro", "Grândola", "Moita", "Montijo", "Palmela", "Santiago do Cacém", "Seixal", "Sesimbra", "Setúbal", "Sines"],
+                viana_do_castelo: ["Arcos de Valdevez", "Caminha", "Melgaço", "Monção", "Paredes de Coura", "Ponte da Barca", "Ponte de Lima", "Valença", "Viana do Castelo", "Vila Nova de Cerveira"],
+                vila_real: ["Alijó", "Boticas", "Chaves", "Mesão Frio", "Mondim de Basto", "Montalegre", "Murça", "Peso da Régua", "Ribeira de Pena", "Sabrosa", "Santa Marta de Penaguião", "Valpaços", "Vila Pouca de Aguiar", "Vila Real"],
+                viseu: ["Armamar", "Carregal do Sal", "Castro Daire", "Cinfães", "Lamego", "Mangualde", "Moimenta da Beira", "Mortágua", "Nelas", "Oliveira de Frades", "Penalva do Castelo", "Penedono", "Resende", "Santa Comba Dão", "São João da Pesqueira", "São Pedro do Sul", "Sátão", "Sernancelhe", "Tabuaço", "Tarouca", "Tondela", "Vila Nova de Paiva", "Viseu", "Vouzela"]
+            };
+            const regiaoConcelhos = {
+                acores: ["Corvo", "Flores", "Faial", "Pico", "Graciosa", "São Jorge", "Terceira", "São Miguel", "Santa Maria"],
+                madeira: ["Calheta", "Câmara de Lobos", "Funchal", "Machico", "Ponta do Sol", "Porto Moniz", "Porto Santo", "Ribeira Brava", "Santa Cruz", "Santana", "São Vicente"]
+            };
+
+            // Dados em estrutura de árvore (Setor > Subsetor > Categorização)
+            const estrutura = {
+                "S12": {
+                    tipo: "comSubsetor",
+                    dados: {
+                        "S121 - Banco Central": [],
+                        "S122 -  Entidades depositárias exceto o banco central": [
+                            "1220001 - Bancos",
+                            "1222002 - Caixas de crédito agrícola mútuo",
+                            "1220003 - Caixas económicas",
+                            "1220004 - Instituições de moeda eletrónica"
+                        ],
+                        "S123 - Fundos de Mercado Monetário (FMM)": [],
+                        "S124 - Fundos de Investimento exceto FMM": [
+                            "S1240001 - Fundos de investimento mobiliários (exceto FMM)",
+                            "S1240002 - Fundos de investimento imobiliários",
+                            "S1240003 - Fundos de capital de risco"
+                        ],
+                        "S125 - Outros intermediários financeiros exceto sociedades de seguros e fundos de pensões": [
+                            "S1250001 - Contrapartes centrais",
+                            "S1250002 - Sociedades de capital de risco",
+                            "S1250003 - Sociedades de factoring",
+                            "S1250004 - Sociedades de locação financeira",
+                            "S1250005 - Sociedades financeiras de corretagem",
+                            "S1250006 - Sociedades financeiras para aquisições a crédito",
+                            "S1250007 - Sociedades de desenvolvimento regional",
+                            "S1250008 - Sociedades de fomento empresarial",
+                            "S1250009 - Sociedades de investimento",
+                            "S1250010 - Sociedades emitentes ou gestoras de cartões de crédito",
+                            "S1250011 - Sociedades de titularização de créditos",
+                            "S1250012 - Sociedades de garantia mútua",
+                            "S1250013 - Instituições financeiras de crédito",
+                            "S1250014 - Fundos de titularização de créditos",
+                            "S1250019 - Outros"
+                        ],
+                        "S126 - Auxiliares financeiros": [
+                            "S1260001 - Auxiliares de seguros",
+                            "S1260002 - Agências de câmbios",
+                            "S1260003 - Sociedades corretoras",
+                            "S1260004 - Sociedades gestoras de fundos de investimento",
+                            "S1260005 - Sociedades gestoras de fundos de titularização de créditos",
+                            "S1260006 - Sociedades gestoras de fundos de pensões",
+                            "S1260007 - Sociedades gestoras de patrimónios",
+                            "S1260008 - Sociedades administradoras de compras em grupo",
+                            "S1260009 - Sociedades mediadoras do mercado monetário e do mercado de câmbios",
+                            "S1260010 - Sedes sociais de sociedades financeiras",
+                            "S1260011 - Instituições de pagamentos",
+                            "S1260012 - Outros auxiliares financeiros"
+                        ],
+                        "S127 - Instituições financeiras cativas e prestamistas": [
+                            "S1270001 - Holdings financeiras",
+                            "S1270002 - Holdings não financeiras",
+                            "S1270003 - Prestamistas",
+                            "S1270004 - Trusts e atividades similares",
+                            "S1270005 - Sociedades de finalidade especial que obtêm fundos para utilização da casa mãe",
+                            "S1270006 - Outras instituições financeiras cativas e prestamistas"
+                        ],
+                        "S128 - Sociedades de seguros": [
+                            "S1280001 - Sociedades de seguros",
+                            "S1280002 - Associações de socorros mútuos"
+                        ],
+                        "S129 - Fundos de Pensões": []
+                    }
+                },
+                "S13": {
+                    tipo: "comSubsetor",
+                    dados: {
+                        "S1311 - Administração Central (exceto fundos de segurança social)": [
+                            "S1311201 - Estado",
+                            "S1311202 - Serviços e Fundos Autónomos da Administração Central",
+                            "S1311203 - Empresas públicas da Administração Central",
+                            "S1311204 - Instituições Sem Fim Lucrativos da Administração Central"
+                        ],
+                        "S1312 - Administração Regional": [
+                            "S1312121000 - Região Autónoma dos Açores",
+                            "S1312122000 - Região Autónoma da Madeira",
+                        ],
+                        "S1313 - Administração Local": [
+                            "S1313131000 - Administração Local - Continente",
+                            "S1313132000 - Administração Local - Açores",
+                            "S1313133000 - Administração Local - Madeira"
+                        ],
+                        "S1314 - Fundos de Segurança Social": []
+                    }
+                },
+                "S14/S15": {
+                    tipo: "semSubsetor",
+                    dados: [
+                        "Associações",
+                        "Misericórdias",
+                        "Instituto de Organização Religiosa",
+                        "Fundação",
+                        "Centro Social Paroquial",
+                        "Cooperativa",
+                    ]
+                },
+                "S40": {
+                    tipo: "semSubsetor",
+                    dados: [
+                        "S401100 - Sociedades não Financeiras pertencentes ao setor público",
+                        "S401201 - Instituições Financeiras Monetárias pertencentes ao setor público",
+                        "S401311 - Outros Intermediários Financeiros, Auxiliares Financeiros e Instituições Cativas e Prestamistas pertencentes ao setor público",
+                        "S401341 - Fundos de Investimento exceto Fundos do Mercado Monetário pertencentes ao setor público",
+                        "S401351 - Sociedades de Seguros e Fundos de Pensões pertencentes ao setor público",
+
+                    ]
+                }
+            };
         });
     </script>
 </body>
+
 </html>
