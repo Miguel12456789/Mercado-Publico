@@ -1,0 +1,91 @@
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Helpdesk Público</title>
+  <link rel="stylesheet" href="/tab_sPub.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+
+<div id="results-table">
+  <div class="container">
+    <!-- Breadcrumb Navigation -->
+    <div class="breadcrumb">
+      <a href="/sPub">Início</a> / Pesquisa
+    </div>
+    
+    <!-- Last Update -->
+    <div class="last-update">
+      Última atualização: <span id="data-atualizacao"></span>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+      <h1>PESQUISA</h1>
+      <h2>ENTIDADES</h2>
+      
+      <!-- Results Table -->
+      <div class="results-section">
+        <h3 class="section-title">Informação detalhada</h3>
+        <div class="table-container">
+          <table class="results-table">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th class="text-right">País</th>
+                <th class="text-right">NIPC</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Nome" class="table-cell-truncate">
+                  Exemplo de Nome da Entidade
+                </td>
+                <td data-label="Pais" class="table-cell-truncate text-right">
+                  Portugal
+                </td>
+                <td data-label="NIPC" class="table-cell-truncate text-right">
+                  123456789
+                </td>
+                <td data-label="Ver detalhe">
+                  <a href="/detalhes_sPub" class="details-button">
+                    <i class="fas fa-plus-circle"></i>
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="4" class="no-results">Nenhuma entidade encontrada. Tente outros critérios de pesquisa.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // Atualiza contador de entidades
+    const countDisplay = document.getElementById('count-display');
+    const countNumber = document.getElementById('count-number');
+    if (countDisplay && countNumber) {
+      const contractCount = parseInt(countDisplay.dataset.totalContracts, 10) || 0;
+      countNumber.textContent = contractCount;
+      countDisplay.classList.add('visible');
+    }
+    
+    // Atualiza data atual
+    const spanData = document.getElementById('data-atualizacao');
+    if (spanData) {
+      const hoje = new Date();
+      const meses = ['jan.', 'fev.', 'mar.', 'abr.', 'mai.', 'jun.', 'jul.', 'ago.', 'set.', 'out.', 'nov.', 'dez.'];
+      spanData.textContent = `${hoje.getDate()} ${meses[hoje.getMonth()]} ${hoje.getFullYear()}`;
+    }
+    
+    // Inicializa ícones (Lucide)
+    if (typeof lucide !== 'undefined' && lucide.createIcons) {
+      lucide.createIcons();
+    }
+  });
+</script>

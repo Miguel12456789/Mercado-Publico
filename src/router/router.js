@@ -21,5 +21,6 @@ router.get("/sPub", navegationController.sPub);
 router.get("/estat_spri", navegationController.estat_spri);
 router.get("/op_cp", navegationController.op_cp);
 router.get("/outros", navegationController.outros);
-
+router.get("/tab_sPub", navegationController.tab_sPub);
+router.get("/detalhes_sPub", navegationController.detalhes_sPub);
 module.exports = router;

@@ -12,5 +12,7 @@ const op_cp = renderPage("op_cp")
 const outros = renderPage("outros")
 
 const detalhescontrato = renderPage("detalhescontrato")
+const tab_sPub = renderPage("tab_sPub")
+const detalhes_sPub = renderPage("detalhes_sPub")
 
-module.exports = { home, API_2020, sPub, estat_spri, op_cp, outros, tab_mp, detalhescontrato };
+module.exports = { home, API_2020, sPub, estat_spri, op_cp, outros, tab_mp, detalhescontrato, tab_sPub, detalhes_sPub };

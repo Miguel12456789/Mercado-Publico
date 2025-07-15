@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="detalhes_sPub.css">
+    <title>Helpdesk Público</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- Breadcrumb Navigation -->
+        <div class=" breadcrumb">
+            <a href="javascript:history.back()">Início</a> / Detalhes
+        </div>
+
+        <!-- Last Update -->
+        <div class="last-update">
+            Última atualização: <span id="data-atualizacao"></span>
+        </div>
+        </h1> 
+
+
+        <main class="content-container">
+
+            <div class="contract-details">
+                <div class="page-header">
+                    <div class="title-section">
+                        <h1 class="main-title">DETALHES</h1>
+                        <h2 class="subtitle">Entidades</h2>
+                    </div>
+                </div>
+                <section class="detail-section">
+
+                    <h3 class="section-title">Informação detalhada</h3>
+
+                    <div class="info-card">
+
+                        <div class="info-table-container">
+
+                            <table class="info-table">
+                                <tbody>
+                                    <tr>
+                                        <th>NIPC</th>
+                                        <td>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Descrição</th>
+                                        <td>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Localização da sede</th>
+                                        <td>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Nº de contratos como adjudicante</th>
+                                        <td>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Total gasto</th>
+                                        <td>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Contratos como adjudicante</th>
+                                        <td>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Nº de contratos como adjudicatária</th>
+                                        <td>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Total ganho</th>
+                                        <td>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>Contratos como adjudicatária</th>
+                                        <td>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="actions-footer">
+                        <a href="javascript:history.back()" class="back-button close-details">
+                            <i data-lucide="arrow-left" class="back-icon"></i>
+                            Voltar à pesquisa
+                        </a>
+                    </div>
+                </section>
+        </main>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize Lucide icons
+            lucide.createIcons();
+        });
+
+        // =================== Data Atual =========================
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+
+            const spanData = document.getElementById('data-atualizacao');
+            if (!spanData) return;
+
+            const hoje = new Date();
+            const meses = ['jan.', 'fev.', 'mar.', 'abr.', 'mai.', 'jun.', 'jul.', 'ago.', 'set.', 'out.', 'nov.', 'dez.'];
+
+            spanData.textContent = `${hoje.getDate()} ${meses[hoje.getMonth()]} ${hoje.getFullYear()}`;
+        });
+    </script>
+</body>
+
+</html>
