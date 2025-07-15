@@ -55,7 +55,7 @@
     let currentFilters = {};
 
     // 🔸 Submit do formulário
-    document.querySelector('form[action="/estat_mp"]').addEventListener('submit', e => {
+    document.querySelector('form[action="/mp"]').addEventListener('submit', e => {
       e.preventDefault();
 
       const form = e.currentTarget;
@@ -73,7 +73,7 @@
     // 🔸 Carrega contratos com filtros ativos
     const loadContracts = (page = 1, limit = itemsSelect.value) => {
       window.loadContracts = loadContracts;
-      const url = new URL('/estat_mp', window.location.origin);
+      const url = new URL('/mp', window.location.origin);
       url.searchParams.set('page', page);
       url.searchParams.set('limit', limit);
 
@@ -186,7 +186,7 @@
     });
 
     // 🔸 Inicializa (carrega tudo sem filtros se não houver formulário)
-    const searchForm = document.querySelector('form[action="/estat_mp"]');
+    const searchForm = document.querySelector('form[action="/mp"]');
     if (!searchForm) loadContracts();
   });
 </script>

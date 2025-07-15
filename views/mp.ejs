@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/estat_mp.css">
+    <link rel="stylesheet" href="/mp.css">
     <!-- Include Lucide icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <title>Helpdesk Público</title>
@@ -35,7 +35,7 @@
         </div>
         </div>
 
-        <form action="/estat_mp" method="get">
+        <form action="/mp" method="get">
             <div class="search-container">
                 <div class="search-row">
                     <input type="text" name="search" placeholder="Pesquisar pelo objeto do Contrato"
@@ -343,7 +343,7 @@
     </div>
 
     <% if (typeof contracts !=='undefined' ) { %>
-        <%- include('components/tab_estat_mp', {contracts: contracts}) %>
+        <%- include('components/tab_mp', {contracts: contracts}) %>
             <% } else { %>
                 <div class="no-contracts">
                     <p>Nenhum dado de contrato disponível no momento.</p>
@@ -419,7 +419,7 @@
                                     // ========== Limpar formulário ==========
                                     document.querySelector('#clear-form-btn')?.addEventListener('click', (e) => {
                                         e.preventDefault(); // Impede o submit
-                                        const form = document.querySelector('form[action="/estat_mp"]');
+                                        const form = document.querySelector('form[action="/mp"]');
                                         if (!form) return;
 
                                         form.reset(); // Limpa todos os campos automaticamente
@@ -527,7 +527,7 @@
                                     let currentFilters = {}; // fora do escopo da função
 
                                     // Envio do formulário com AJAX
-                                    document.querySelector('form[action="/estat_mp"]').addEventListener('submit', e => {
+                                    document.querySelector('form[action="/mp"]').addEventListener('submit', e => {
                                         const submitter = e.submitter;
 
                                         // Só prossegue se foi o botão "Pesquisar"
@@ -691,7 +691,7 @@
 
 
                                     // ========== Atalhos de teclado Enter ==========
-                                    const searchForm = document.querySelector('form[action="/estat_mp"]');
+                                    const searchForm = document.querySelector('form[action="/mp"]');
                                     if (searchForm) {
                                         searchForm.addEventListener('keydown', function (e) {
                                             // Só dispara se for Enter e não estiver num textarea ou botão
@@ -735,7 +735,7 @@
                                     }
 
                                     // Sempre que o utilizador faz uma nova pesquisa, reseta o popup
-                                    const estatForm = document.querySelector('form[action="/estat_mp"]');
+                                    const estatForm = document.querySelector('form[action="/mp"]');
                                     if (estatForm) {
                                         estatForm.addEventListener('submit', function () {
                                             resetDownloadPopup();

@@ -7,7 +7,7 @@ const e = require('express');
 
 router.get("/", navegationController.home);
 
-router.get("/estat_mp", contractsController.contractsGet);
+router.get("/mp", contractsController.contractsGet);
 
 router.get("/detalhescontrato/:id", contractsController.contractDetail);
 

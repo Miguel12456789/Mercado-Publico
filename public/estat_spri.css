@@ -430,6 +430,12 @@ main {
 
 }
 
+.form-select:disabled {
+  background-color: #f3f4f6;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
 /* Responsive styles */
 @media (max-width: 768px) {
     .search-row {

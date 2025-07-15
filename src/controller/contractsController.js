@@ -334,7 +334,7 @@ const contractsGet = async (req, res) => {
       return res.json({ contracts, pagination });
     }
 
-    return res.render('estat_mp', {
+    return res.render('mp', {
       contracts,
       pagination,
       includeDetails: true

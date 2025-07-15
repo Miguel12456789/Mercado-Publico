@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="estat_spri.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <title>Helpdesk Privado</title>
 </head>
 
@@ -26,48 +27,67 @@
                 <div class="form-content">
                     <!-- Seleção Geográfica Section -->
                     <h2 class="form-section-title">Seleção Geográfica</h2>
-                    <div class="form-row">
+                    <div class="form-row location-container">
                         <div class="form-field">
                             <label class="form-label">País</label>
                             <div class="custom-select">
-                                <select class="form-select">
-                                    <option>Todos</option>
-                                    <option>Portugal</option>
-                                    <option>Outros</option>
+                                <select id="pais-select" name="pais" class="form-select location-select">
+                                    <option value="todos">Todos</option>
+                                    <option value="portugal">Portugal</option>
+                                    <option value="outros">Outros</option>
                                 </select>
                             </div>
                         </div>
 
-                        <div class="form-field">
+                        <div class="form-field location-select">
                             <label class="form-label">Região</label>
                             <div class="custom-select">
-                                <select class="form-select">
-                                    <option>Todos</option>
-                                    <option>Norte</option>
-                                    <option>Centro</option>
-                                    <option>Lisboa</option>
-                                    <option>Alentejo</option>
-                                    <option>Algarve</option>
+                                <select id="regiao-select" name="regiao" class="form-select" disabled>
+                                    <option value="todos">Todos</option>
+                                    <option value="continental">Continental</option>
+                                    <option value="acores">Acores</option>
+                                    <option value="madeira">Madeira</option>
                                 </select>
                             </div>
                         </div>
 
-                        <div class="form-field">
+                        <div class="form-field location-select">
                             <label class="form-label">Distritos</label>
                             <div class="custom-select">
-                                <select class="form-select">
-                                    <option>Todos</option>
-                                    <option>Lisboa</option>
-                                    <option>Porto</option>
-                                    <option>Braga</option>
-                                    <option>Faro</option>
+                                <select id="distrito-select" name="distrito" class="form-select location-select"
+                                    disabled>
+                                    <option value="">Todos os distrito</option>
+                                    <option value="aveiro">Aveiro</option>
+                                    <option value="beja">Beja</option>
+                                    <option value="braga">Braga</option>
+                                    <option value="braganca">Bragança</option>
+                                    <option value="castelo_branco">Castelo Branco</option>
+                                    <option value="coimbra">Coimbra</option>
+                                    <option value="Évora">Évora</option>
+                                    <option value="faro">Faro</option>
+                                    <option value="guarda">Guarda</option>
+                                    <option value="leiria">Leiria</option>
+                                    <option value="lisboa">Lisboa</option>
+                                    <option value="portalegre">Portalegre</option>
+                                    <option value="porto">Porto</option>
+                                    <option value="santarem">Santarém</option>
+                                    <option value="setubal">Setúbal</option>
+                                    <option value="viana_do_castelo">Viana do Castelo</option>
+                                    <option value="vila_real">Vila Real</option>
+                                    <option value="viseu">Viseu</option>
                                 </select>
                             </div>
                         </div>
 
-                        <div class="form-field">
+                        <div class="form-field location-select">
                             <label class="form-label">Concelhos</label>
-                            <input type="text" class="form-input">
+                            <div class="custom-select">
+                                <select id="concelho-select" name="concelho" class="form-select location-select"
+                                    disabled>
+                                    <option value="">Todos os concelhos</option>
+                                    <!-- Será preenchido dinamicamente com JavaScript -->
+                                </select>
+                            </div>
                         </div>
                     </div>
 
@@ -155,18 +175,158 @@
     </main>
     <%- include('components/button') %>
 
-    <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    // Initialize Lucide icons if available
-    (window.lucide || (console.warn('Lucide is not globally defined. Ensure Lucide library is properly included.'), window.lucide = { createIcons: () => {} })).createIcons();
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                // Initialize Lucide icons if available
+                (window.lucide || (console.warn('Lucide is not globally defined. Ensure Lucide library is properly included.'), window.lucide = { createIcons: () => { } })).createIcons();
 
-    // Clear selection button functionality
-    document.querySelector('.clear-selection-button')?.addEventListener('click', () => {
-      document.querySelectorAll('.form-select').forEach(select => select.selectedIndex = 0);
-      document.querySelectorAll('.form-input').forEach(input => input.value = '');
-    });
-  });
-</script>
+                // Clear selection button functionality
+                document.querySelector('.clear-selection-button')?.addEventListener('click', () => {
+                    document.querySelectorAll('.form-select').forEach(select => select.selectedIndex = 0);
+                    document.querySelectorAll('.form-input').forEach(input => input.value = '');
+                    // Reset selects
+                    regiaoSelect.disabled = true;
+                    distritoSelect.disabled = true;
+                    concelhoSelect.disabled = true;
+                    concelhoSelect.innerHTML = '<option value="">Todos os concelhos</option>';
+                });
+
+                const paisSelect = document.getElementById('pais-select');
+                const regiaoSelect = document.getElementById('regiao-select');
+                const distritoSelect = document.getElementById('distrito-select');
+                const concelhoSelect = document.getElementById('concelho-select');
+
+                const distritosConcelhos = {
+                    aveiro: ["Águeda", "Albergaria-a-Velha", "Anadia", "Arouca", "Aveiro", "Castelo de Paiva", "Espinho", "Estarreja", "Ílhavo", "Mealhada", "Murtosa", "Oliveira de Azeméis", "Oliveira do Bairro", "Ovar", "Santa Maria da Feira", "São João da Madeira", "Sever do Vouga", "Vagos", "Vale de Cambra"],
+                    beja: ["Aljustrel", "Almodôvar", "Alvito", "Barrancos", "Beja", "Castro Verde", "Cuba", "Ferreira do Alentejo", "Mértola", "Moura", "Odemira", "Ourique", "Serpa", "Vidigueira"],
+                    braga: ["Amares", "Barcelos", "Braga", "Cabeceiras de Basto", "Celorico de Basto", "Esposende", "Fafe", "Guimarães", "Póvoa de Lanhoso", "Terras de Bouro", "Vieira do Minho", "Vila Nova de Famalicão", "Vila Verde", "Vizela"],
+                    braganca: ["Alfândega da Fé", "Bragança", "Carrazeda de Ansiães", "Freixo de Espada à Cinta", "Macedo de Cavaleiros", "Miranda do Douro", "Mirandela", "Mogadouro", "Torre de Moncorvo", "Vila Flor", "Vimioso", "Vinhais"],
+                    castelo_branco: ["Belmonte", "Castelo Branco", "Covilhã", "Fundão", "Idanha-a-Nova", "Oleiros", "Penamacor", "Proença-a-Nova", "Sertã", "Vila de Rei", "Vila Velha de Ródão"],
+                    coimbra: ["Arganil", "Cantanhede", "Coimbra", "Condeixa-a-Nova", "Figueira da Foz", "Góis", "Lousã", "Mira", "Miranda do Corvo", "Montemor-o-Velho", "Oliveira do Hospital", "Pampilhosa da Serra", "Penacova", "Penela", "Soure", "Tábua", "Vila Nova de Poiares"],
+                    Évora: ["Alandroal", "Arraiolos", "Borba", "Estremoz", "Évora", "Montemor-o-Novo", "Mora", "Mourão", "Portel", "Redondo", "Reguengos de Monsaraz", "Vendas Novas", "Viana do Alentejo", "Vila Viçosa"],
+                    faro: ["Albufeira", "Alcoutim", "Aljezur", "Castro Marim", "Faro", "Lagoa", "Lagos", "Loulé", "Monchique", "Olhão", "Portimão", "São Brás de Alportel", "Silves", "Tavira", "Vila do Bispo", "Vila Real de Santo António"],
+                    guarda: ["Aguiar da Beira", "Almeida", "Celorico da Beira", "Figueira de Castelo Rodrigo", "Fornos de Algodres", "Gouveia", "Guarda", "Manteigas", "Mêda", "Pinhel", "Sabugal", "Seia", "Trancoso", "Vila Nova de Foz Côa"],
+                    leiria: ["Alcobaça", "Alvaiázere", "Ansião", "Batalha", "Bombarral", "Caldas da Rainha", "Castanheira de Pêra", "Figueiró dos Vinhos", "Leiria", "Marinha Grande", "Nazaré", "Óbidos", "Pedrógão Grande", "Peniche", "Pombal", "Porto de Mós"],
+                    lisboa: ["Alenquer", "Amadora", "Arruda dos Vinhos", "Azambuja", "Cadaval", "Cascais", "Lisboa", "Loures", "Lourinhã", "Mafra", "Odivelas", "Oeiras", "Sintra", "Sobral de Monte Agraço", "Torres Vedras", "Vila Franca de Xira"],
+                    portalegre: ["Alter do Chão", "Arronches", "Avis", "Campo Maior", "Castelo de Vide", "Crato", "Elvas", "Fronteira", "Gavião", "Marvão", "Monforte", "Nisa", "Ponte de Sor", "Portalegre", "Sousel"],
+                    porto: ["Amarante", "Baião", "Felgueiras", "Gondomar", "Lousada", "Maia", "Marco de Canaveses", "Matosinhos", "Paços de Ferreira", "Paredes", "Penafiel", "Porto", "Póvoa de Varzim", "Santo Tirso", "São João da Madeira", "Trofa", "Valongo", "Vila do Conde", "Vila Nova de Gaia"],
+                    santarem: ["Abrantes", "Alcanena", "Almeirim", "Alpiarça", "Benavente", "Cartaxo", "Chamusca", "Constância", "Coruche", "Entroncamento", "Ferreira do Zêzere", "Golegã", "Mação", "Ourém", "Rio Maior", "Salvaterra de Magos", "Santarém", "Sardoal", "Tomar", "Torres Novas", "Vila Nova da Barquinha"],
+                    setubal: ["Alcácer do Sal", "Almada", "Barreiro", "Grândola", "Moita", "Montijo", "Palmela", "Santiago do Cacém", "Seixal", "Sesimbra", "Setúbal", "Sines"],
+                    viana_do_castelo: ["Arcos de Valdevez", "Caminha", "Melgaço", "Monção", "Paredes de Coura", "Ponte da Barca", "Ponte de Lima", "Valença", "Viana do Castelo", "Vila Nova de Cerveira"],
+                    vila_real: ["Alijó", "Boticas", "Chaves", "Mesão Frio", "Mondim de Basto", "Montalegre", "Murça", "Peso da Régua", "Ribeira de Pena", "Sabrosa", "Santa Marta de Penaguião", "Valpaços", "Vila Pouca de Aguiar", "Vila Real"],
+                    viseu: ["Armamar", "Carregal do Sal", "Castro Daire", "Cinfães", "Lamego", "Mangualde", "Moimenta da Beira", "Mortágua", "Nelas", "Oliveira de Frades", "Penalva do Castelo", "Penedono", "Resende", "Santa Comba Dão", "São João da Pesqueira", "São Pedro do Sul", "Sátão", "Sernancelhe", "Tabuaço", "Tarouca", "Tondela", "Vila Nova de Paiva", "Viseu", "Vouzela"]
+                };
+
+                const regiaoConcelhos = {
+                    acores: ["Corvo", "Flores", "Faial", "Pico", "Graciosa", "São Jorge", "Terceira", "São Miguel", "Santa Maria"],
+                    madeira: ["Calheta", "Câmara de Lobos", "Funchal", "Machico", "Ponta do Sol", "Porto Moniz", "Porto Santo", "Ribeira Brava", "Santa Cruz", "Santana", "São Vicente"]
+                };
+
+                // País selecionado
+                paisSelect.addEventListener('change', () => {
+                    if (paisSelect.value === 'portugal') {
+                        regiaoSelect.disabled = false;
+                        // Região default: desabilita ambos
+                        if (regiaoSelect.value === 'continental') {
+                            distritoSelect.disabled = false;
+                            concelhoSelect.disabled = true;
+                            concelhoSelect.innerHTML = '<option value="">Todos os concelhos</option>';
+                        } else if (regiaoSelect.value === 'acores' || regiaoSelect.value === 'madeira') {
+                            distritoSelect.disabled = true;
+                            distritoSelect.selectedIndex = 0;
+                            concelhoSelect.disabled = false;
+                            // Preenche concelhos conforme a região
+                            const concelhos = regiaoConcelhos[regiaoSelect.value] || [];
+                            concelhoSelect.innerHTML = '<option value="">Todos os concelhos</option>';
+                            concelhos.forEach(nome => {
+                                const option = new Option(nome, nome.toLowerCase().replace(/\s+/g, '_'));
+                                concelhoSelect.appendChild(option);
+                            });
+                        } else {
+                            distritoSelect.disabled = true;
+                            concelhoSelect.disabled = true;
+                            concelhoSelect.innerHTML = '<option value="">Todos os concelhos</option>';
+                        }
+                    } else {
+                        regiaoSelect.disabled = true;
+                        distritoSelect.disabled = true;
+                        concelhoSelect.disabled = true;
+                        regiaoSelect.selectedIndex = 0;
+                        distritoSelect.selectedIndex = 0;
+                        concelhoSelect.selectedIndex = 0;
+                        concelhoSelect.innerHTML = '<option value="">Todos os concelhos</option>';
+                    }
+                });
+
+                // Região selecionada
+                regiaoSelect.addEventListener('change', () => {
+                    if (regiaoSelect.value === 'continental') {
+                        distritoSelect.disabled = false;
+                        concelhoSelect.disabled = true;
+                        concelhoSelect.innerHTML = '<option value="">Todos os concelhos</option>';
+                    } else if (regiaoSelect.value === 'acores' || regiaoSelect.value === 'madeira') {
+                        distritoSelect.disabled = true;
+                        distritoSelect.selectedIndex = 0;
+                        concelhoSelect.disabled = false;
+                        // Preenche concelhos conforme a região
+                        const concelhos = regiaoConcelhos[regiaoSelect.value] || [];
+                        concelhoSelect.innerHTML = '<option value="">Todos os concelhos</option>';
+                        concelhos.forEach(nome => {
+                            const option = new Option(nome, nome.toLowerCase().replace(/\s+/g, '_'));
+                            concelhoSelect.appendChild(option);
+                        });
+                    } else {
+                        distritoSelect.disabled = true;
+                        concelhoSelect.disabled = true;
+                        distritoSelect.selectedIndex = 0;
+                        concelhoSelect.selectedIndex = 0;
+                        concelhoSelect.innerHTML = '<option value="">Todos os concelhos</option>';
+                    }
+                });
+
+                // Distrito selecionado
+                distritoSelect.addEventListener('change', () => {
+                    const concelhos = distritosConcelhos[distritoSelect.value] || [];
+                    concelhoSelect.innerHTML = '<option value="">Todos os concelhos</option>';
+                    if (concelhos.length > 0) {
+                        concelhoSelect.disabled = false;
+                        concelhos.forEach(nome => {
+                            const option = new Option(nome, nome.toLowerCase().replace(/\s+/g, '_'));
+                            concelhoSelect.appendChild(option);
+                        });
+                    } else {
+                        concelhoSelect.disabled = true;
+                    }
+                });
+
+                // Inicialização: desativa selects se país não for Portugal
+                if (paisSelect.value !== 'portugal') {
+                    regiaoSelect.disabled = true;
+                    distritoSelect.disabled = true;
+                    concelhoSelect.disabled = true;
+                } else {
+                    // Garante o estado correto ao carregar a página
+                    if (regiaoSelect.value === 'continental') {
+                        distritoSelect.disabled = false;
+                        concelhoSelect.disabled = true;
+                        concelhoSelect.innerHTML = '<option value="">Todos os concelhos</option>';
+                    } else if (regiaoSelect.value === 'acores' || regiaoSelect.value === 'madeira') {
+                        distritoSelect.disabled = true;
+                        concelhoSelect.disabled = false;
+                        const concelhos = regiaoConcelhos[regiaoSelect.value] || [];
+                        concelhoSelect.innerHTML = '<option value="">Todos os concelhos</option>';
+                        concelhos.forEach(nome => {
+                            const option = new Option(nome, nome.toLowerCase().replace(/\s+/g, '_'));
+                            concelhoSelect.appendChild(option);
+                        });
+                    } else {
+                        distritoSelect.disabled = true;
+                        concelhoSelect.disabled = true;
+                        concelhoSelect.innerHTML = '<option value="">Todos os concelhos</option>';
+                    }
+                }
+            });
+        </script>
 
 </body>
 
