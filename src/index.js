@@ -1,22 +1,25 @@
-require('dotenv').config(); // Carrega as variáveis de ambiente do arquivo .env
-const express = require('express');
-const app = express();
-const path = require('path');
-const router = require('./router/router');
-const connectDB = require("./config/config");
-const session = require('express-session');
-const contractsController = require('./controller/contractsController');
+require('dotenv').config(); // Carrega variáveis de ambiente do ficheiro .env
+const express = require('express'); // Framework para criação de servidor web
+const app = express(); // Instância do servidor Express
+const path = require('path'); // Módulo nativo para lidar com caminhos de ficheiros
+const router = require('./router/router'); // Importa as rotas definidas
+const connectDB = require("./config/config"); // Importa função para conectar à base de dados
+const session = require('express-session'); // Middleware para sessões
+const contractsController = require('./controller/contractsController'); // Controlador para contratos
+
 
 
 // Configura o EJS como motor de visualização
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, '../views')); // Garante o caminho correto para as views
+app.set('view engine', 'ejs'); // Define o EJS como motor de templates
+app.set('views', path.join(__dirname, '../views')); // Define o caminho da pasta de views
+
 
 // Static file
-app.use(express.json()); 
-app.use(express.urlencoded({ extended: true })); // Para formulários tradicionais
-app.use(express.static("public")); // Serve static files from the public folder
-app.use(express.static("src")); // Serve static files from the src folder
+app.use(express.json()); // Permite ler JSON no corpo das requisições
+app.use(express.urlencoded({ extended: true })); // Permite ler dados de formulários
+app.use(express.static("public")); // Serve ficheiros estáticos da pasta public
+app.use(express.static("src")); // Serve ficheiros estáticos da pasta src
+
 
 app.use(session({
   secret: 'sua_chave_secreta_segura',
