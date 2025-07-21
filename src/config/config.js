@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const connectDB = async () => {
     try {
         const conn1 = mongoose.createConnection(process.env.MONGO_URI_1);
+        const conn1_1 = mongoose.createConnection(process.env.MONGO_URI_1_1);
         const conn2 = mongoose.createConnection(process.env.MONGO_URI_2);
         const conn3 = mongoose.createConnection(process.env.MONGO_URI_3);
         const conn4 = mongoose.createConnection(process.env.MONGO_URI_4);
@@ -12,6 +13,10 @@ const connectDB = async () => {
             new Promise((resolve, reject) => {
                 conn1.once('connected', resolve);
                 conn1.once('error', reject);
+            }),
+            new Promise((resolve, reject) => {
+                conn1_1.once('connected', resolve);
+                conn1_1.once('error', reject);
             }),
             new Promise((resolve, reject) => {
                 conn2.once('connected', resolve);
@@ -32,6 +37,7 @@ const connectDB = async () => {
         ]);
 
         console.log(`MongoDB Cluster 1 Connected: ${conn1.name}`);
+        console.log(`MongoDB Cluster 1_1 Connected: ${conn1_1.name}`);
         console.log(`MongoDB Cluster 2 Connected: ${conn2.name}`);
         console.log(`MongoDB Cluster 3 Connected: ${conn3.name}`);
         console.log(`MongoDB Cluster 4 Connected: ${conn4.name}`);
@@ -46,13 +52,14 @@ const connectDB = async () => {
 
         await Promise.all([
             listCollections(conn1, 'Cluster 1'),
+            listCollections(conn1_1, 'Cluster 1_1'),
             listCollections(conn2, 'Cluster 2'),
             listCollections(conn3, 'Cluster 3'),
             listCollections(conn4, 'Cluster 4'),
             listCollections(conn5, 'Cluster 5'),
         ]);
 
-        return { conn1, conn2, conn3, conn4, conn5 };
+        return { conn1, conn1_1, conn2, conn3, conn4, conn5 };
     } catch (error) {
         console.error(`Error: ${error.message}`);
         process.exit(1);

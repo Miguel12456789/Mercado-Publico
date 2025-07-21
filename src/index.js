@@ -32,8 +32,9 @@ app.use(session({
 app.use('/', router);
 
 
-connectDB().then(({ conn1, conn2, conn3, conn4, conn5 }) => {
+connectDB().then(({ conn1, conn1_1, conn2, conn3, conn4, conn5 }) => {
   app.locals.conn1 = conn1;
+  app.locals.conn1_1 = conn1_1;
   app.locals.conn2 = conn2;
   app.locals.conn3 = conn3;
   app.locals.conn4 = conn4;
