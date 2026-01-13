@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const navegationController = require('./navegationController');
-const emailController = require('../controller/emailController');
+// const emailController = require('../controller/emailController');
+const teste1Controller = require('../controller/teste1Controller');
 const contractsController = require('../controller/contractsController');
 const e = require('express');
 
@@ -13,8 +14,12 @@ router.get("/detalhescontrato/:id", contractsController.contractDetail);
 
 router.get('/download_contracts', contractsController.downloadContracts);
 
-router.post('/components/mail_receive', emailController.sendEmail);
-router.post('/components/verify_code', emailController.verify_code);
+// router.post('/components/mail_receive', emailController.sendEmail);
+// router.post('/components/verify_code', emailController.verify_code);
+
+router.post('/components/mail_receive', teste1Controller.sendEmail);
+router.post('/components/mail_receive', teste1Controller.verify_code);
+router.post('/components/mail_receive', teste1Controller.sendHubSpot);
 
 
 router.get("/sPub", navegationController.sPub);

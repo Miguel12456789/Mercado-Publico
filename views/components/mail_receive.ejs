@@ -7,8 +7,6 @@
   <title>Notificação</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="tab_mp.css">
-  <script src="https://unpkg.com/lucide@latest"></script>
-
 </head>
 
 <body>
@@ -17,368 +15,108 @@
       <button class="close-btn" id="closeBtn">&times;</button>
       <h2 class="popup-title">Formulário de Download</h2>
 
-      <div id="downloadStep1" class="download-step active">
-        <form id="downloadForm">
-          <!-- Nome -->
-          <div class="name-fields">
-            <!-- Nome -->
-            <div class="overlay-form-group">
-              <label for="nome" class="form-label">Nome*</label>
-              <input type="text" id="nome" name="nome" class="form-input" required>
-            </div>
+      <!-- Onde o formulário do HubSpot será inserido -->
+      <div id="meu-form"></div>
 
-            <!-- Sobrenome -->
-            <div class="overlay-form-group">
-              <label for="sobrenome" class="form-label">Sobrenome*</label>
-              <input type="text" id="sobrenome" name="sobrenome" class="form-input" required>
-            </div>
-          </div>
-
-          <!-- E-mail Profissional -->
-          <div class="overlay-form-group">
-            <label for="email" class="form-label">E-mail Profissional*</label>
-            <input type="email" id="email" name="email" class="form-input" required />
-
-          </div>
-
-          <!-- Telefone Profissional -->
-          <div class="overlay-form-group">
-            <label for="telefone" class="form-label">Telefone Profissional</label>
-            <div class="phone-input-container">
-              <div class="country-code">+351</div>
-              <input type="tel" id="telefone" name="telefone" class="form-input phone-input" pattern="\d{9}"
-                maxlength="9" minlength="9" inputmode="numeric" placeholder="912345678"
-                title="Introduza exatamente 9 dígitos numéricos.">
-
-            </div>
-          </div>
-
-          <!-- Setor de Atividade Profissional (Setor Público/Privado) -->
-          <div class="overlay-form-group">
-            <label for="setor-principal" class="form-label">Setor de Atividade Profissional*</label>
-            <select id="setor-principal" name="setor-principal" class="form-select" required>
-              <option value="" disabled selected>Selecione um setor</option>
-              <option value="01">01 - Setor Público </option>
-              <option value="02">02 - Setor Privado</option>
-            </select>
-          </div>
-
-          <!-- Setor de Atividade Profissional (Área de atividade) -->
-          <div class="overlay-form-group">
-            <label for="setor-atividade" class="form-label">Área de Atividade Profissional*</label>
-            <select id="setor-atividade" name="setor-atividade" class="form-select" required>
-              <option value="" disabled selected>Selecione um setor</option>
-              <option value="1">Agricultura, produção animal, caça, floresta e pesca</option>
-              <option value="2">Indústrias extractivas</option>
-              <option value="3">Indústrias transformadoras</option>
-              <option value="4">Electricidade, gás, vapor, água quente e fria e ar frio</option>
-              <option value="5">Captação, tratamento e distribuição de água; saneamento, gestão de
-                resíduos e despoluição</option>
-              <option value="6">Construção</option>
-              <option value="7">Comércio por grosso e a retalho; reparação de veículos automóveis
-                e
-                motociclos</option>
-              <option value="8">Transportes e armazenagem</option>
-              <option value="9">Alojamento, restauração e similares</option>
-              <option value="10">Actividades de informação e de comunicação</option>
-              <option value="11">Actividades financeiras e de seguros</option>
-              <option value="12">Actividades imobiliárias</option>
-              <option value="13">Actividades de consultoria, científicas, técnicas e similares
-              </option>
-              <option value="14">Actividades administrativas e dos serviços de apoio</option>
-              <option value="15">Administração Pública e Defesa; Segurança Social Obrigatória
-              </option>
-              <option value="16">Educação</option>
-              <option value="17">Actividades de saúde humana e apoio social</option>
-              <option value="18">Actividades artísticas, de espectáculos, desportivas e
-                recreativas
-              </option>
-              <option value="19">Outras actividades de serviços</option>
-              <option value="20">Actividades das famílias empregadoras de pessoal doméstico e
-                actividades de produção das famílias para uso próprio</option>
-              <option value="21">Actividades dos organismos internacionais e outras instituições
-                extra-territoriais</option>
-            </select>
-          </div>
-          <!-- Formato de Download -->
-          <div class="download-format-group">
-            <label class="form-label">Em que formato pretende efetuar o download:*</label>
-            <div class="format-options">
-              <div class="format-option">
-                <input type="radio" id="formatCsv" name="formato" value="csv" class="format-radio" required checked>
-                <label for="formatCsv">CSV</label>
-              </div>
-              <div class="format-option">
-                <input type="radio" id="formatXls" name="formato" value="xls" class="format-radio">
-                <label for="formatXls">XLS</label>
-              </div>
-              <div class="format-option">
-                <input type="radio" id="formatPdf" name="formato" value="pdf" class="format-radio">
-                <label for="formatPdf">PDF</label>
-              </div>
-            </div>
-            <div class="overlay-form-group" style="margin-top: 1.25rem;">
-              <label class="form-label" style="display: flex; align-items: flex-start; gap: 0.5rem;">
-                <input type="checkbox" id="aceito-privacidade" name="aceito-privacidade" class="form-checkbox" required
-                  style="margin-top: 0.2em;">
-                <span>Ao submeter o formulário declaro que li, que compreendi e que aceito a política de
-                  privacidade do Helpdesk Público.</span>
-              </label>
-            </div>
-          </div>
-          <button type="submit" class="submit-btn">Continuar</button>
-        </form>
+      <!-- Campo de verificação (inicialmente escondido) -->
+      <div id="codigo-verificacao" style="display:none; margin-top:20px;">
+        <label>Digite o código que enviámos por email:</label>
+        <input type="text" id="inputCodigo" placeholder="Ex: 123456" />
+        <button id="btnVerificar">Verificar Código</button>
       </div>
 
-      <!-- Etapa 2: Verificação por Email -->
-      <div id="downloadStep2" class="download-step">
-        <div class="verification-container">
-          <div class="verification-icon">
-            <i data-lucide="mail"></i>
-          </div>
-          <h3>Verificação por Email</h3>
-          <p>Enviamos um código de verificação de 5 dígitos para o seu email.</p>
-          <p>Por favor, verifique sua caixa de entrada e insira o código abaixo:</p>
+      <!-- Script do HubSpot -->
+      <script charset="utf-8" src="https://js-eu1.hsforms.net/forms/v2.js"></script>
 
-          <!-- Mensagens simplificadas para o código de verificação -->
-          <div id="resend-message" class="verification-alert verification-alert--success" style="display:none;">
-            <i data-lucide="check" class="verification-alert__icon"></i>
-            O código foi reenviado para o seu email.
-          </div>
+      <script>
+        // Cria o formulário HubSpot
+        hbspt.forms.create({
+          region: "eu1",
+          portalId: "139646329",
+          formId: "1eb1ed6d-1f1b-4c3c-aef6-44c3c31499a3",
+          target: "#meu-form",
+          onFormReady: function ($form) {
+            console.log("✅ Formulário carregado!");
 
-          <div id="verify-message" class="verification-alert verification-alert--error" style="display:none;">
-            <i data-lucide="x" class="verification-alert__icon"></i>
-            O código introduzido está incorreto.
-          </div>
+            // Intercepta o envio do formulário original do HubSpot
+            $form.on('submit', function (e) {
+              e.preventDefault(); // impede o envio para o HubSpot
 
-          <div class="verification-code-container">
-            <input type="text" class="verification-input" maxlength="1" data-index="0">
-            <input type="text" class="verification-input" maxlength="1" data-index="1">
-            <input type="text" class="verification-input" maxlength="1" data-index="2">
-            <input type="text" class="verification-input" maxlength="1" data-index="3">
-            <input type="text" class="verification-input" maxlength="1" data-index="4">
-          </div>
+              // Obtém os valores dos campos
+              const email = $form.find('input[name="email"]').val();
+              const nome = $form.find('input[name="firstname"]').val();
 
-          <div class="verification-actions">
-            <button id="verifyCodeBtn" class="submit-btn">Verificar</button>
-            <button id="resendCodeBtn" class="resend-btn">Reenviar Código</button>
-          </div>
-        </div>
-      </div>
+              if (!email) {
+                alert("Por favor, preencha o email.");
+                return;
+              }
 
-      <!-- Etapa 3: Download Concluído -->
-      <div id="downloadStep3" class="download-step">
-        <div class="success-container">
-          <div class="success-icon">
-            <i data-lucide="check-circle" class="icon-large"></i>
-          </div>
-          <h3>Download Pronto!</h3>
-          <p>O seu download começará automaticamente em alguns segundos.</p>
-          <p>Se o download não iniciar, clique no botão abaixo:</p>
+              // Envia dados para o backend gerar e enviar o código
+              fetch("/sendEmail", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, nome })
+              })
+                .then(res => res.json())
+                .then(data => {
+                  if (data.ok) {
+                    alert("Enviámos um código de verificação para o seu email!");
+                    document.getElementById("codigo-verificacao").style.display = "block";
+                    // guarda dados temporariamente
+                    window._lead = { email, nome };
+                  } else {
+                    alert("Erro ao enviar o código. Tente novamente.");
+                  }
+                })
+                .catch(err => {
+                  console.error(err);
+                  alert("Erro no servidor.");
+                });
+            });
+          }
+        });
 
-          <a href="/download_contracts?format=csv" id="downloadLink" class="download-link" download>
-            <i data-lucide="download" class="icon-small"></i>
-            <span>Baixar Arquivo</span>
-          </a>
-        </div>
-      </div>
+        // Quando o utilizador clica em "Verificar Código"
+        document.addEventListener("click", async (e) => {
+          if (e.target.id === "btnVerificar") {
+            const codigo = document.getElementById("inputCodigo").value.trim();
+            const lead = window._lead;
+            if (!codigo) return alert("Digite o código recebido.");
+            if (!lead) return alert("Formulário não preenchido ainda.");
+
+            const res = await fetch("/verify_code", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email: lead.email, codigo })
+            });
+            const data = await res.json();
+
+            if (data.valido) {
+              alert("Código verificado! Enviando seus dados...");
+
+              // Envia os dados para o HubSpot via API do teu backend
+              fetch("/sendHubSpot", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(lead)
+              })
+                .then(r => r.json())
+                .then(r => {
+                  if (r.sucesso) {
+                    alert("Formulário concluído com sucesso!");
+                    document.getElementById("codigo-verificacao").style.display = "none";
+                  } else {
+                    alert("Erro ao enviar para o HubSpot.");
+                  }
+                });
+
+            } else {
+              alert("Código incorreto. Verifique e tente novamente.");
+            }
+          }
+        });
+      </script>
     </div>
   </div>
-
 </body>
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const inputs = document.querySelectorAll(".verification-input");
-    const verifyCodeBtn = document.getElementById('verifyCodeBtn');
-
-    // Verifica se todos os campos estão preenchidos e envia automaticamente
-    function checkAndSubmitCode() {
-      const codeComplete = Array.from(inputs).every(input => input.value.trim() !== "");
-      if (codeComplete) {
-        verifyCodeBtn.click();
-      }
-    }
-
-    inputs.forEach((input, index) => {
-      input.addEventListener("input", (e) => {
-        const value = e.target.value;
-
-        // Se colaram múltiplos caracteres
-        if (value.length > 1) {
-          handlePaste(value);
-          return;
-        }
-
-        // Avança se digitou algo
-        if (value && index < inputs.length - 1) {
-          inputs[index + 1].focus();
-        }
-
-        // Verifica se todos os campos estão preenchidos
-        checkAndSubmitCode();
-      });
-
-      input.addEventListener("keydown", (e) => {
-        if (e.key === "Backspace" && !input.value && index > 0) {
-          inputs[index - 1].focus();
-        }
-        if (e.key === "Enter") {
-          e.preventDefault();
-          verifyCodeBtn.click();
-        }
-      });
-    });
-
-    // Colar o código inteiro
-    const container = document.querySelector(".verification-code-container");
-    container.addEventListener("paste", (e) => {
-      const paste = (e.clipboardData || window.clipboardData).getData("text");
-      handlePaste(paste);
-      e.preventDefault();
-    });
-
-    function handlePaste(paste) {
-      const chars = paste.replace(/\D/g, "").split("").slice(0, inputs.length);
-      inputs.forEach((input, i) => {
-        input.value = chars[i] || "";
-      });
-      const next = inputs[chars.length] || inputs[inputs.length - 1];
-      next.focus();
-      checkAndSubmitCode();
-    }
-
-    lucide.createIcons();
-
-    // Validação do telefone ao submeter o formulário
-    const telefoneInput = document.getElementById('telefone');
-    const downloadForm = document.getElementById('downloadForm');
-    const regex = /^\d{9}$/;
-
-    if (downloadForm && telefoneInput) {
-      downloadForm.addEventListener('submit', function (e) {
-        const telefone = telefoneInput.value.trim();
-        if (telefone !== "" && !regex.test(telefone)) {
-          telefoneInput.classList.add('input-error');
-          telefoneInput.focus();
-          e.preventDefault();
-        } else {
-          telefoneInput.classList.remove('input-error');
-        }
-      });
-    }
-
-    // --- REENVIAR CÓDIGO ---
-    const resendBtn = document.getElementById('resendCodeBtn');
-    let resendCooldown = false;
-    let cooldownTimeout = null;
-    let cooldownInterval = null;
-    let cooldownSeconds = 30;
-
-    // Garante que só adiciona o listener UMA vez
-    if (resendBtn && !resendBtn.dataset.listener) {
-      resendBtn.dataset.listener = "true";
-      resendBtn.addEventListener('click', async function (e) {
-        e.preventDefault();
-
-        // Se estiver em cooldown, só mostra a mensagem e retorna
-        if (resendCooldown) {
-          showCooldownMessage();
-          return;
-        }
-
-        // Inicia cooldown
-        resendCooldown = true;
-        resendBtn.disabled = true;
-        cooldownSeconds = 30;
-        showCooldownMessage();
-
-        // Atualiza o número a cada segundo
-        if (cooldownInterval) clearInterval(cooldownInterval);
-        cooldownInterval = setInterval(() => {
-          cooldownSeconds--;
-          showCooldownMessage();
-          if (cooldownSeconds <= 0) {
-            clearInterval(cooldownInterval);
-          }
-        }, 1000);
-
-        // Timer de 30 segundos para liberar o botão
-        if (cooldownTimeout) clearTimeout(cooldownTimeout);
-        cooldownTimeout = setTimeout(() => {
-          resendCooldown = false;
-          resendBtn.disabled = false;
-          let resendMsg = document.getElementById('resend-message');
-          if (resendMsg) resendMsg.style.display = 'none';
-          clearInterval(cooldownInterval);
-        }, 30000);
-
-        // Envio do código normalmente
-        const form = document.getElementById('downloadForm');
-        const formData = new FormData(form);
-        const data = Object.fromEntries(formData.entries());
-
-        try {
-          const response = await fetch('/components/mail_receive', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-          });
-
-          const result = await response.json();
-          if (result.success) {
-            // Mensagem de sucesso já tratada pelo cooldown
-          } else {
-            alert('Erro ao reenviar código: ' + (result.message || 'Tente novamente.'));
-          }
-        } catch (error) {
-          alert('Erro ao reenviar código: ' + error.message);
-        }
-      });
-    }
-
-    // Função para mostrar a mensagem de cooldown com o número de segundos
-    function showCooldownMessage() {
-      let resendMsg = document.getElementById('resend-message');
-      let seconds = resendCooldown ? cooldownSeconds : 30;
-      if (resendMsg) {
-        resendMsg.innerHTML = `<i data-lucide="check" class="verification-alert__icon"></i> Aguarde <span id="cooldown-timer">${seconds}</span> segundo${seconds === 1 ? '' : 's'} para reenviar o código.`;
-        resendMsg.style.display = 'block';
-        lucide.createIcons();
-      } else {
-        // Cria a mensagem se não existir (fallback)
-        resendMsg = document.createElement('div');
-        resendMsg.id = 'resend-message';
-        resendMsg.className = 'verification-alert verification-alert--success';
-        resendMsg.innerHTML = `<i data-lucide="check" class="verification-alert__icon"></i> Aguarde <span id="cooldown-timer">${seconds}</span> segundo${seconds === 1 ? '' : 's'} para reenviar o código.`;
-        document.querySelector('.verification-container')?.appendChild(resendMsg);
-        resendMsg.style.display = 'block';
-        lucide.createIcons();
-      }
-    }
-
-    const overlay = document.getElementById('overlay');
-    const popup = overlay.querySelector('.popup');
-    const closeBtn = document.getElementById('closeBtn');
-
-    // Fecha ao clicar no X
-    if (closeBtn) {
-      closeBtn.addEventListener('click', function () {
-        overlay.style.display = 'none';
-        document.body.style.overflow = 'auto';
-      });
-    }
-
-    // Fecha ao clicar fora (no overlay)
-    overlay.addEventListener('click', function (e) {
-      // Se clicou diretamente no overlay (e não dentro do popup)
-      if (e.target === overlay) {
-        overlay.style.display = 'none';
-        document.body.style.overflow = 'auto';
-      }
-    });
-
-  });
-</script>
-
-
 </html>
