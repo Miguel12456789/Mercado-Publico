@@ -1,4 +1,37 @@
-# Helpdesk
+# Helpdesk Público
+
+**Helpdesk Público** is a web application developed to facilitate the consultation, analysis, and export of data related to public procurement in Portugal. The platform integrates information from the **Base Gov** portal and other databases, allowing users to access public contract data in a clear, organized, and transparent way, in accordance with the Public Contracts Code.
+
+## Features
+
+### Users
+
+- Advanced search for public contracts  
+- Filtering by contract object, location, procedure type, and legal regime  
+- Detailed visualization of contracts and entities  
+- Result pagination for improved performance  
+- Data export in CSV, XLS, and PDF formats  
+- Intuitive and responsive interface  
+
+### Administration / System
+
+- Integration with multiple MongoDB databases (organized by year)  
+- Modular back-end and front-end architecture  
+- Dynamic page rendering using EJS  
+- Route and controller management with Express.js  
+- Scalable structure prepared for future features  
+
+## Technologies Used
+
+- **Front-end:** HTML, CSS, JavaScript, EJS  
+- **Back-end:** Node.js, Express.js  
+- **Database:** MongoDB  
+- **Other Tools:**  
+  - Git & GitHub (version control)  
+  - Visual Studio Code  
+  - Multer (file handling)  
+  - dotenv (environment variables)  
+
 
 First, run the development server:
 
