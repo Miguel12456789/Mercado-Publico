@@ -1,6 +1,6 @@
-# Helpdesk Público
+# Mercado Público
 
-**Helpdesk Público** is a web application developed to facilitate the consultation, analysis, and export of data related to public procurement in Portugal. The platform integrates information from the **Base Gov** portal and other databases, allowing users to access public contract data in a clear, organized, and transparent way, in accordance with the Public Contracts Code.
+**Mercado Público** is a web application developed to facilitate the consultation, analysis, and export of data related to public procurement in Portugal. The platform integrates information from the **Base Gov** portal and other databases, allowing users to access public contract data in a clear, organized, and transparent way, in accordance with the Public Contracts Code.
 
 ## Features
 
